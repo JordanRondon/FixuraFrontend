@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Reseteo de márgenes y rellenos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos básicos para el body */
+body {
+    font-family: Arial, sans-serif; /* Fuente básica y moderna */
+    line-height: 1.6; /* Mejora la legibilidad */
+    color: #333; /* Color de texto por defecto */
+    background-color: #f4f4f4; /* Color de fondo de la página */
+}
+
+a {
+    text-decoration: none; /* Quitar subrayado */
+}

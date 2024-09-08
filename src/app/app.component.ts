@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarUsuarioComponent } from './capaPresentacion/componentes/navbar-usuario/navbar-usuario.component';
+import { MuroUsuarioComponent } from "./capaPresentacion/modulos/muro-usuario/muro-usuario.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarUsuarioComponent],
+  imports: [RouterOutlet, MuroUsuarioComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
