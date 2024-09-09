@@ -5,19 +5,17 @@
     height: 100vh;
 }
 
-.muro__col-izq, .muro__col-der {
-    background: #002642;
-}
-
 /*-----------cabecera de muro personal-------------*/
 .muro__header-perfil {
     background: #E59500;
-    height: 25%;
+    height: 13rem;
     padding-left: 50px;
     padding-right: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 .muro__perfil-info {
