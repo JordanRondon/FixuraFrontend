@@ -14,12 +14,13 @@
     padding-left: 50px;
     padding-right: 50px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
 .muro__perfil-info {
-    background: chartreuse;
-    width: 390px;
+    background: black;
+    width: auto;
     height: 150px;
     display: flex;
 }
@@ -31,7 +32,33 @@
 }
 
 .muro__perfil-details {
+    background: white;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    margin-left: 10px;
+}
+
+.muro__perfil-data {
+    background: green;
+    margin: 0%;
+}
+
+.muro__perfil-configuracion {
+    background: white;
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.muro__perfil-editar {
+    background: black;
+    display: flex;        /* Asegura que el texto y el ícono estén en línea */
+    align-items: center;  /* Centra verticalmente el texto y el ícono */
+    text-decoration: none; /* Quita el subrayado del enlace */
+}
+
+.muro__perfil-editar i {
+    margin-left: 5px;   /* Agrega espacio entre el ícono y el texto */
+    font-size: 24px;     /* Ajusta el tamaño del ícono */
 }
