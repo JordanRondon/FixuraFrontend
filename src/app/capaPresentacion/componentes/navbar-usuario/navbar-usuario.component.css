@@ -1,0 +1,33 @@
+.navbar {
+    background: #02040F;
+    height: 75px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar__menu {
+    width: 100%; /* Ancho completo del contenedor */
+    max-width: 150px; /* Ancho máximo para pantallas grandes */
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px; 
+    box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho total */
+}
+
+.navbar__link {
+    color: #E59500;
+    display: flex;
+    align-items: center;
+}
+
+.navbar__link i {
+    font-size: 43px;
+}
+
+.navbar__button {
+    background: #840032;
+    color: #E5DADA;
+}
