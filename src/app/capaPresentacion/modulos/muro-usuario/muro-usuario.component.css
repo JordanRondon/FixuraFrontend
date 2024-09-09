@@ -65,14 +65,14 @@
     height: 55px;
     width: 100%;
     display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Alinea verticalmente el contenido */
-    position: relative; /* Permite posicionar el botón de manera absoluta */
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .reportes__title {
     text-align: center;
-    margin: 0; /* Asegura que no haya márgenes no deseados */
+    margin: 0;
 }
 
 .reportes__button {
