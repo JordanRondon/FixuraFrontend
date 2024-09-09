@@ -1,0 +1,94 @@
+.post {
+    background: #424B54;
+    height: 500px;
+    margin-top: 1rem;
+    margin-left: 7rem;
+    margin-right: 7rem;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.post__header {
+    padding: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post__info {
+    height: 90px;
+    width: auto;
+    display: flex;
+}
+
+.post__info-img {
+    height: 65px;
+    max-width: auto;
+    border-radius: 50%
+}
+
+.post__info-details {
+    margin-left: 10px;
+}
+
+.post__info-data {
+    margin: 0%;
+    color: aliceblue;
+}
+
+.post__info-user-name {
+    font-size: 16px;
+}
+
+.post__info-fecha {
+    font-size: 14px;
+}
+
+/*--------------------------------*/
+.post__ranking {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.post__ranking-estado {
+    display: flex;
+    align-items: center;
+    color: aliceblue;
+}
+
+.post__ranking-estado i {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #aa0101;
+}
+
+.post-ranking__voto-btn i{
+    font-size: 26px;
+    color: aliceblue;
+}
+
+/*------------------------------------*/
+.post__descripcion {
+    color: aliceblue;
+    margin-left: 5rem;
+    margin-right: 1rem;
+}
+
+.post__ubicacion {
+    color: aliceblue;
+    margin-left: 5rem;
+    margin-right: 1rem;
+}
+
+.post__incidencia {
+    height: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.post__incidencia-img {
+    height: 100%;
+    width: auto;
+}
