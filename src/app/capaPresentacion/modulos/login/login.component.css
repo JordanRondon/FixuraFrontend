@@ -11,6 +11,39 @@ body, input, h2, p{
   font-family: 'Poppins', sans-serif;
 }
 
+/* HEADER */
+nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  z-index: 99;
+}
+
+.nav__content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav .logo a {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  transition: 0.3s;
+}
+nav .logo a:hover {
+  color: var(--primary-color-dark);
+}
+
+
+/* LOGIN */
+
+/*Contenedor principal*/
 .container{
   display: flex;
   position: absolute;
@@ -37,6 +70,7 @@ body, input, h2, p{
   transform: translateY(-50%);
 }
 
+/*Contenedor del formulario*/
 .container-form{
   display: flex;
   align-items: center;
@@ -46,6 +80,7 @@ body, input, h2, p{
   margin: 7px 30px;
 }
 
+/*Boton del formulario*/
 .container-form h2{
   font-size: 25px;
   font-weight: 700;
@@ -72,6 +107,7 @@ form{
   padding: 0 .4rem;
 }
 
+/*Iconos de los inputs*/
 .container-input span{
   text-align: center;
   line-height: 55px;
@@ -94,6 +130,11 @@ form{
   font-weight: 450;
 }
 
+p{
+  font-size: 13px;
+}
+
+/*Boton del formulario*/
 .btn{
   width: 150px;
   height: 45px;
@@ -112,6 +153,7 @@ form{
   background-color: #4d84e2;
 }
 
+/*Contenedor de la imagen*/
 .container-image{
   display: flex;
   position: relative;
@@ -125,6 +167,4 @@ img{
   width: 100%;
 }
 
-p{
-  font-size: 13px;
-}
+
