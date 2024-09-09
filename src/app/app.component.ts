@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MuroUsuarioComponent } from "./capaPresentacion/modulos/muro-usuario/muro-usuario.component";
+import { LandingPageComponent } from './capaPresentacion/modulos/landing-page/landing-page.component';
+
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MuroUsuarioComponent],
+  imports: [RouterOutlet, LandingPageComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'fixuraFrontend';
