@@ -5,5 +5,6 @@ import { MuroUsuarioComponent } from './capaPresentacion/modulos/muro-usuario/mu
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
     { path:'muro-usuario', component:MuroUsuarioComponent },
-    { path:'login', loadComponent: () => import('./capaPresentacion/modulos/login/login.component')}
+    { path:'login', loadComponent: () => import('./capaPresentacion/modulos/login/login.component')},
+    { path:'register', loadComponent: () => import('./capaPresentacion/modulos/register/register.component')}
 ];

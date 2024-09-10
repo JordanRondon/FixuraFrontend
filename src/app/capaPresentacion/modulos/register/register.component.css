@@ -4,18 +4,17 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
 }
 
 html, body {
   height: 100%;
   margin: 0;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
 
-input, h2, p{
+input, h2, p, select{
+  height: 100%;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -55,16 +54,18 @@ nav .logo a:hover {
 .container{
   display: flex;
   position: absolute;
-  align-items: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
-  height: 350px;
+  width: 1000px;
+  height: auto;
   min-width: 100vh;
+  max-width: 1000px;
   overflow: hidden;
+  padding: 20px;
   background-color: #fff;
   border-radius: 10px;
+  align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -88,6 +89,7 @@ nav .logo a:hover {
   width: 600px;
   height: 100%;
   margin: 7px 30px;
+  overflow-y: auto;
 }
 
 /*Boton del formulario*/
@@ -106,11 +108,12 @@ form{
   height: 100%;
 }
 
+/*Inputs del formulario*/
 .container-input{
   width: 100%;
   height: 50px;
   background-color: #f0f0f0;
-  margin: 13px 0;
+  margin: 5px 0;
   border-radius: 55px;
   display: grid;
   grid-template-columns: 15% 85%;
@@ -138,6 +141,20 @@ form{
 .container-input input::placeholder{
   color: #aaa; 
   font-weight: 450;
+}
+
+.container-input select{
+  line-height: 1;
+  background: none;
+  outline: none;
+  border: none;
+  color: #aaa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.container-input select option{
+  background-color: #000; 
 }
 
 p{
@@ -174,7 +191,5 @@ p{
 }
 
 img{
-  width: 80%;
+  width: 100%;
 }
-
-
