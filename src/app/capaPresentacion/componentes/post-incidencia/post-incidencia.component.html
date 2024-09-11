@@ -6,8 +6,8 @@
                     <img src="images/fotoPerfil.jpg" alt="Foto de perfil">
                 </div>
                 <div class="user-info">
-                    <span>Yassine Zanina</span>
-                    <p>Wednesday, March 13th at 2:45pm</p>
+                    <span>Juanito Alimaña</span>
+                    <p>Miércoles, 13 de marzo a las 2:45pm</p>
                 </div>
             </div>
             <p class="category-content"><span>Categoria: </span>Categoria 01</p>
@@ -15,25 +15,25 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora sunt tempore beatae quae itaque! Deserunt vel ab sunt eum architecto ullam recusandae nam. Officia perspiciatis, eos modi eius natus odio.
             </p>
             <p class="location-content"><span>Ubicacion: </span>Trujillo-Trujillo</p>
-            <div class="img-content">
-
-            </div>
         </div>
 
         <div class="comment-react">
             <div class="content-state">
-                <svg fill="currentColor" viewBox="0 0 24 24" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
+                <svg fill="none" viewBox="0 0 24 24" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                     </svg> 
             </div>
             <hr>
-            <button>
-                <svg fill="none" viewBox="0 0 24 24" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#707277" stroke-linecap="round" stroke-width="2" stroke="#707277" d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z"></path>
-                </svg>
+            <button (click)="toggleActive()" [ngClass]="{'active': isActive}">
+                <svg fill="none" viewBox="0 0 24 24" height="19" width="19" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clip-rule="evenodd" />
+                  </svg>                  
             </button>
             <hr>
             <span>14</span>
         </div>
+    </div>
+    <div class="post-img-content">
+
     </div>
   </div>
