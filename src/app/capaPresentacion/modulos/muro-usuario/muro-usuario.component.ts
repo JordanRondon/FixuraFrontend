@@ -9,6 +9,6 @@ import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-
   templateUrl: './muro-usuario.component.html',
   styleUrl: './muro-usuario.component.css'
 })
-export class MuroUsuarioComponent {
+export default class MuroUsuarioComponent {
 
 }
