@@ -1,8 +1,7 @@
 <app-navbar-usuario></app-navbar-usuario>
 <main class="muro">
-    <aside class="muro__col-izq"></aside>
-    <section class="muro__col-mid">
-
+  <aside class="muro__col-izq"></aside>
+  <section class="muro__col-mid">
         <div class="muro__header-perfil">
             <div class="muro__perfil-info">
                 <div class="muro__perfil-img-container">
@@ -25,7 +24,7 @@
         
         <div class="reportes__header">
             <h2 class="reportes__title">Historial de Reportes</h2>
-            <button class="reportes__button">
+            <button class="reportes__button" (click)="abrirRegistroIncidencia()>
                 <span>
                   <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h24v24H0z" fill="none"></path>
@@ -44,3 +43,12 @@
     </section>
     <aside class="muro__col-der"></aside>
 </main>
+<!-- Contenedor del formulario-->
+<div class="overlay" *ngIf="mostrarFormulario" (click)="cerrarFormulario()">
+  <div class="formulario-contenedor" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="cerrarFormulario()">
+      <label class="close-label-button">X</label>
+    </button>
+    <app-registro-incidencia></app-registro-incidencia>
+  </div>
+</div>
