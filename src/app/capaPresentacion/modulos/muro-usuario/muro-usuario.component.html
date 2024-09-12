@@ -23,16 +23,22 @@
         
         <div class="reportes__header">
             <h2 class="reportes__title">Historial de Reportes</h2>
-            <button type="button" class="btn btn-primary reportes__button">
-                <i class="material-icons">add</i>
-                Nuevo Reporte
-            </button>
+            <button>
+                <span>
+                  <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+                  </svg>
+                  Nuevo Reporte
+                </span>
+            </button>              
         </div>
-
-        <app-post-incidencia></app-post-incidencia>
-        <app-post-incidencia></app-post-incidencia>
-        <app-post-incidencia></app-post-incidencia>
-
+        
+        <div class="muro__post-container">
+            <app-post-incidencia></app-post-incidencia>
+            <app-post-incidencia></app-post-incidencia>
+            <app-post-incidencia></app-post-incidencia>
+        </div>
     </section>
     <aside class="muro__col-der"></aside>
 </main>
