@@ -7,6 +7,7 @@
 
 /*-----------cabecera de muro personal-------------*/
 .muro__header-perfil {
+    margin-top: 75px;
     background-image: radial-gradient(circle, #5bd1f1, #4eccf3, #41c7f5, #34c2f7, #2abcf9, #1db6f9, #12b0f9, #0ea9f9, #02a1f7, #0598f4, #138ff0, #2186ec);
     height: 13rem;
     padding-left: 50px;
@@ -104,7 +105,7 @@
 }
   
 .perfil-config-button:hover {
-    background: #5e41de4d;
+    background: #ffffff;
 }
   
 .perfil-config-button:hover .svg-icon {
