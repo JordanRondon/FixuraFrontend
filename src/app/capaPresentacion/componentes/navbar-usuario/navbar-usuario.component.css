@@ -42,7 +42,7 @@
     border: none;
     background-color: transparent;
     position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .btn:active {
@@ -118,7 +118,7 @@
 }
 
 .navbar__button:active {
-    background-color: #e03d3d; /* Color más oscuro para el estado activo */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra más pequeña en estado activo */
-    transform: translateY(2px); /* Efecto de desplazamiento hacia abajo al hacer clic */
+    background-color: #e03d3d;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
 }
