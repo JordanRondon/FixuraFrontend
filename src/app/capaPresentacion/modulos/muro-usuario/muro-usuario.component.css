@@ -7,7 +7,8 @@
 
 /*-----------cabecera de muro personal-------------*/
 .muro__header-perfil {
-    background: #E59500;
+    margin-top: 75px;
+    background-image: radial-gradient(circle, #5bd1f1, #4eccf3, #41c7f5, #34c2f7, #2abcf9, #1db6f9, #12b0f9, #0ea9f9, #02a1f7, #0598f4, #138ff0, #2186ec);
     height: 13rem;
     padding-left: 50px;
     padding-right: 50px;
@@ -16,6 +17,7 @@
     align-items: center;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
+    box-shadow: rgba(56, 56, 56, 0.25) 0px 14px 28px, rgba(58, 58, 58, 0.22) 0px 10px 10px;
 }
 
 .muro__perfil-info {
@@ -24,10 +26,24 @@
     display: flex;
 }
 
-.muro__perfil-img {
+.muro__perfil-img-container {
+    width: 150px;
     height: 150px;
-    max-width: auto;
-    border-radius: 50%
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    overflow: hidden; /* Oculta los bordes excedentes de la imagen */
+}
+
+.muro__perfil-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta la imagen y asegura que mantenga la proporción */
+    object-position: center; /* Centra la imagen en el contenedor */
+    border-radius: 50%;
 }
 
 .muro__perfil-details {
@@ -37,8 +53,17 @@
     margin-left: 10px;
 }
 
-.muro__perfil-data {
+.muro__perfil-details span {
     margin: 0%;
+    font-weight: 700;
+    font-size: 25px;
+    color: black;
+}
+
+.muro__perfil-details p {
+    margin: 0%;
+    font-size: 14px;
+    color: black;
 }
 
 .muro__perfil-configuracion {
@@ -47,7 +72,7 @@
     align-items: flex-end;
 }
 
-.muro__perfil-editar {
+/* .muro__perfil-editar {
     display: flex;
     align-items: center;
     color: black;
@@ -56,6 +81,52 @@
 .muro__perfil-editar i {
     margin-left: 5px;
     font-size: 24px;
+} */
+
+.perfil-config-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 12px;
+    gap: 8px;
+    height: 36px;
+    width: 120px;
+    border: none;
+    background: #5e41de33;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+  
+.lable {
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #5D41DE;
+    letter-spacing: 1px;
+}
+  
+.perfil-config-button:hover {
+    background: #ffffff;
+}
+  
+.perfil-config-button:hover .svg-icon {
+    animation: spin 2s linear infinite;
+}
+
+.perfil-config-button:active {
+    transform: scale(0.95); /* Efecto de presionado */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+  
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
 }
 
 /*----------cabecera apartado reportes-----------*/
@@ -66,6 +137,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    margin-top: 2rem;
 }
 
 .reportes__title {
@@ -73,11 +145,44 @@
     margin: 0;
 }
 
+
 .reportes__button {
-    position: absolute;
+    position: fixed;
     right: 25px;
+    bottom: 25px;
+    z-index: 1000;
+    border: none;
+    background-color: #24b4fb;
+    border-radius: 0.9em;
+    cursor: pointer;
+    padding: 0.5em 1.2em 0.5em 1em;
+    transition: all ease-in-out 0.1s;
+    font-size: 16px;
+}
+  
+.reportes__button span {
     display: flex;
+    justify-content: center;
     align-items: center;
+    color: #fff;
+    font-weight: 600;
+}
+  
+.reportes__button:hover {
+    background-color: #0071e2;
+}
+
+.reportes__button:active {
+    background-color: #0071e2;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+}
+  
+
+.muro__post-container {
+    height: 100vh;
+    padding-left: 10rem;
+    padding-right: 10rem;
 }
 /* Estilo para el fondo oscuro */
 .overlay {

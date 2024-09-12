@@ -1,33 +1,124 @@
 .navbar {
-    background: #02040F;
+    background: #ffffff;
+    position: fixed;
+    right: 0px;
+    z-index: 1000;
     height: 75px;
-    padding-left: 20px;
-    padding-right: 20px;
+    width: 100%;
+    padding: 0 25rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+}
+
+.navbar__logo a {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: black;
+}
+
+.navbar__logo a:hover {
+    color: #249afb;
 }
 
 .navbar__menu {
-    width: 100%; /* Ancho completo del contenedor */
-    max-width: 150px; /* Ancho máximo para pantallas grandes */
+    width: 100%;
+    max-width: 140px;
     display: flex;
     justify-content: space-between;
     padding: 0 10px; 
-    box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho total */
+    box-sizing: border-box;
 }
 
-.navbar__link {
-    color: #E59500;
+/*************************/
+.btn {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    position: relative;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.navbar__link i {
-    font-size: 43px;
+.btn:active {
+    transform: scale(0.95); /* Efecto de presionado */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+  
+.btn::after {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    font-size: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s linear;
+    top: 115%;
+}
+  
+.icon {
+    width: 30px;
+    height: 30px;
+    transition: 0.2s linear;
+}
+  
+.icon path {
+    stroke: #47484b;
+    transition: 0.2s linear;
+}
+  
+.btn:hover > .icon {
+    transform: scale(1.2);
+}
+  
+.btn:hover > .icon path {
+    fill: #E59500
+}
+  
+.btn:hover::after {
+    visibility: visible;
+    opacity: 1;
+    top: 105%;
 }
 
+/*************************/
 .navbar__button {
-    background: #840032;
-    color: #E5DADA;
+    z-index: 1000;
+    border: none;
+    background-color: #24b4fb;
+    border-radius: 0.9em;
+    cursor: pointer;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    transition: all ease-in-out 0.1s;
+    font-size: 14px;
+}
+  
+.navbar__button span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.navbar__button span svg {
+    height: 18px;
+    width: 18px;
+    margin-right: 5px;
+}
+  
+.navbar__button:hover {
+    background-color: #ff2542;
+}
+
+.navbar__button:active {
+    background-color: #e03d3d;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
 }
