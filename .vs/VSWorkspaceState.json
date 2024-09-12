@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\capaPresentacion",
+    "\\src\\app\\capaPresentacion\\componentes",
+    "\\src\\app\\capaPresentacion\\modulos",
+    "\\src\\app\\capaPresentacion\\modulos\\landing-page",
+    "\\src\\app\\capaPresentacion\\modulos\\login",
+    "\\src\\app\\capaPresentacion\\modulos\\muro-usuario",
+    "\\src\\app\\capaPresentacion\\modulos\\register"
+  ],
+  "SelectedNode": "\\src\\index.html",
+  "PreviewInSolutionExplorer": false
+}
