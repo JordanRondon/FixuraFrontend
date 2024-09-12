@@ -1,0 +1,45 @@
+<div class="formulario-ubicacion">
+
+  <div class="mapa">
+    <h2>Registro Incidencia</h2>
+    <google-map height="300px"
+                width="94%"
+                (mapClick)="onUbicacionSeleccionada($event)">
+    </google-map>
+  </div>
+
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <label for="ubicacion">Ubicación seleccionada:</label>
+    <p id="ubicacion">{{ ubicacionSeleccionada }}</p>
+
+    <label for="categoria">Categoría:</label>
+    <select formControlName="categoria" id="categoria">
+      <option value="" disabled selected>Selecciona una categoría</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+    </select>
+
+    <label for="descripcion">Descripción:</label>
+    <textarea formControlName="descripcion" id="descripcion" placeholder="Danos una descripcion." class="bg-slate-100 text-slate-600 h-28 placeholder:text-slate-600 placeholder:opacity-50 border border-slate-200 col-span-6 resize-none outline-none rounded-lg p-2 duration-300 focus:border-slate-600"></textarea>
+    
+    <label for="foto" class="input-file-label">
+      <input type="file" id="foto" name="foto" (change)="onFileSelected($event)">
+      <img src="images/camra.png" alt="Agregar foto" class="input-file-button">
+      Agregar una foto para el reporte
+    </label>
+    <!-- Previsualización de la imagen cargada -->
+    <div *ngIf="imagenPrevisualizacion" class="image-preview">
+      <img [src]="imagenPrevisualizacion" alt="Previsualización" class="preview-img">
+    </div>
+    <button type="submit" [disabled]="formulario.invalid" class="button">
+      <svg xmlns="http://www.w3.org/2000/svg"  fill="none" style="transform: translateY(1px);" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+      </svg>
+      <div class="text">
+        Subir
+      </div>
+    </button>
+    
+  </form>
+
+</div>
