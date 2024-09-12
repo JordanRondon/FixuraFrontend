@@ -56,7 +56,7 @@
 .muro__perfil-details span {
     margin: 0%;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 25px;
     color: black;
 }
 
@@ -100,7 +100,8 @@
   
 .lable {
     line-height: 20px;
-    font-size: 17px;
+    font-size: 16px;
+    font-weight: 500;
     color: #5D41DE;
     letter-spacing: 1px;
 }
