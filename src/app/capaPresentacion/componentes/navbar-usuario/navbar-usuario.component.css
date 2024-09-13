@@ -222,43 +222,42 @@
         gap: 8px;
         padding: 0px 10px;
     }
-      
-    .card .list .element {
+
+    .card .list .element-link {
         display: flex;
         align-items: center;
         color: #6d7179;
         gap: 10px;
         transition: all 0.3s ease-out;
-        padding: 4px 7px;
+        padding: 8px 7px;
         border-radius: 6px;
-        cursor: pointer;
     }
       
-    .card .list .element svg {
+    .card .list .element-link svg {
         width: 19px;
         height: 19px;
         transition: all 0.3s ease-out;
     }
       
-    .card .list .element .label {
+    .card .list .element-link span {
         font-weight: 600;
     }
       
-    .card .list .element:hover {
+    .card .list .element-link:hover {
         background-color: #24b4fb;
         color: #ffffff;
         transform: translate(1px, -1px);
     }
     
-    .card .list .element:hover svg{
+    .card .list .element-link:hover svg{
         stroke: #ffffff;
     }
     
-    .card .list .delete:hover {
+    .card .list .delete .element-link:hover {
         background-color: #d30707;
     }
       
-    .card .list .element:active {
+    .card .list .element-link:active {
         transform: scale(0.99);
     }
 }
