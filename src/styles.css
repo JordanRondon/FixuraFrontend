@@ -19,3 +19,7 @@ body {
 a {
     text-decoration: none; /* Quitar subrayado */
 }
+
+html, body {
+    overflow-x: hidden; /* Evita el desplazamiento horizontal no deseado */
+}
