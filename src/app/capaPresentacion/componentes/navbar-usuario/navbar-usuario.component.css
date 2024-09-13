@@ -1,7 +1,7 @@
 .navbar {
     background: #ffffff;
     position: fixed;
-    right: 0px;
+    top: 0px;
     z-index: 1000;
     height: 75px;
     width: 100%;
@@ -246,20 +246,20 @@
     }
 
     .card .list .delete .element-link {
-        color: #d30707; /* Rojo por defecto */
+        color: #d30707;
     }
     
     .card .list .delete .element-link svg {
-        stroke: #d30707; /* Rojo por defecto */
+        stroke: #d30707;
     }
     
     .card .list .delete .element-link:hover {
         background-color: #d30707;
-        color: #ffffff; /* Blanco al pasar el mouse */
+        color: #ffffff;
     }
     
     .card .list .delete .element-link:hover svg {
-        stroke: #ffffff; /* SVG en blanco al pasar el mouse */
+        stroke: #ffffff;
     }
       
     .card .list .element-link:hover {

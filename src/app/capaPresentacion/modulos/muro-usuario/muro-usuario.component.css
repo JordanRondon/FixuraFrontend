@@ -221,3 +221,53 @@
 .close-button :hover{
     color: #840032;
 }
+
+@media (max-width: 768px) {
+    .muro__col-izq, .muro__col-der {
+        display: none;
+    }
+
+    .muro{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .muro__header-perfil {
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 15px 0;
+    }
+
+    .muro__perfil-info {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }    
+
+    .muro__perfil-configuracion {
+        display: none;
+    }
+
+    .muro__perfil-img-container {
+        width: 7.375em;
+        height: 7.375em;
+    }
+
+    .muro__perfil-details {
+        margin: 0px;
+        display: flex;
+        align-items: center;
+    }
+
+    .muro__perfil-details span {
+        text-align: center;
+    }
+
+    .muro__post-container {
+        padding: 0 0.6rem;
+    }
+}
