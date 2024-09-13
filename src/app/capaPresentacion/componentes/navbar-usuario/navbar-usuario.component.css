@@ -130,15 +130,16 @@
     transform: translateY(2px);
 }
 
-@media(max-width: 1210px) {
+
+@media(max-width: 1024px) {
     .navbar {
-        padding: 0%;
+        padding: 0 2rem;
     }
 }
 
 @media(max-width: 768px) {
     .navbar {
-        max-width: 768px;
+        max-width: auto;
         padding: 0 1.5rem;
     }
 
