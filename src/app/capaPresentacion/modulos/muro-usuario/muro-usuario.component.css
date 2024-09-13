@@ -10,8 +10,7 @@
     margin-top: 75px;
     background-image: radial-gradient(circle, #5bd1f1, #4eccf3, #41c7f5, #34c2f7, #2abcf9, #1db6f9, #12b0f9, #0ea9f9, #02a1f7, #0598f4, #138ff0, #2186ec);
     height: 13rem;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding: 0 4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,8 +26,8 @@
 }
 
 .muro__perfil-img-container {
-    width: 150px;
-    height: 150px;
+    width: 9.375em;
+    height: 9.375em;
     position: relative;
     display: flex;
     align-items: center;
