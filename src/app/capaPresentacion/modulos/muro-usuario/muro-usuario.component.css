@@ -180,8 +180,7 @@
 
 .muro__post-container {
     height: 100vh;
-    padding-left: 10rem;
-    padding-right: 10rem;
+    padding: 0 10%;
 }
 /* Estilo para el fondo oscuro */
 .overlay {
@@ -220,6 +219,17 @@
 }
 .close-button :hover{
     color: #840032;
+}
+
+@media(max-width: 1200px) {
+    .muro {
+        display: grid;
+        grid-template-columns: 0.5fr 9fr 0.5fr;
+    }
+    
+    .muro__post-container {
+        padding: 0 3rem;
+    }
 }
 
 @media (max-width: 768px) {
