@@ -1,0 +1,43 @@
+<app-navbar-usuario></app-navbar-usuario>
+<main class="body">
+    <div class = "portada-perfil">
+        <div class = "portada-perfil-superior">
+            <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
+        </div>
+        <div class = "portada-perfil-inferior">
+            <h2 class="reportes__title">Municipalidad Provincial de Trujillo</h2>
+            <button type="button" class="btn btn-primary reportes__button">
+                <i class="material-icons">edit</i>
+                Editar Perfil
+            </button>
+        </div>
+    </div>
+    <div class = "muro">
+        <aside class="muro__col-izq">
+            <div class = "panel-herramientas">
+                <div class = "cabecera-herramienta" (click)="toggleHerramientas()">
+                    <h3 class ="herramientas-title">Herramientas</h3>
+                    <img class="flecha-despliegue" src="/images/flecha-abajo.png" alt="Flecha Despliegue" [ngClass]="{'rotate': mostrarHerramientas}">
+                </div>
+                <div class="contenedor-herramientas" [ngClass]="{'mostrar': mostrarHerramientas}">
+                    <div class = "herramienta">Herramienta 1</div>
+                    <div class = "herramienta">Herramienta 2</div>
+                </div>
+            </div>
+        </aside>
+        <section class="muro__col-mid">
+            <app-post-incidencia></app-post-incidencia>
+            <app-post-incidencia></app-post-incidencia>
+            <app-post-incidencia></app-post-incidencia>
+            <app-post-incidencia></app-post-incidencia>
+        </section>
+        <aside class="muro__col-der">
+            <div class = "panel-noticias">
+                <h3>Panel Extra</h3>
+                <div class = "elemento">Elemento 1</div>
+                <div class = "elemento">Elemento 2</div>
+            </div>
+        </aside>
+    </div>
+    
+</main>

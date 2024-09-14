@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+/*------------configuracion de layout------------*/
+.body{
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    
+}
+.muro {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100vh; */
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    min-height: 100vh; 
+    background-color: rgb(234, 246, 255);
+    /* background-color: #000000; */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+/* Imagen de fondo */
+.banner{
+    width:100%;
+    height: 300px;
+    background: linear-gradient(to bottom,rgba(4, 9, 30, 0) 70%, rgba(4,9,30,0.7) 100%),url('/images/municipalidad-trujillo.jpg') no-repeat center top;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    /* background-attachment: fixed; */
+}
+/*-----------cabecera de muro personal-------------*/
+.portada-perfil-superior{
+    position: relative;
+    width: 100%;
+    height: 73px;
+    background: #23A1F5;
+    background-size: cover;
+}
+.portada-perfil-inferior{
+    min-height: 73px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+.foto-perfil{
+    position: absolute;
+    bottom: -70px;
+    left: 17%;
+    transform: translateX(-50%);
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    border: 5px solid white;
+
+}
+.portada-perfil-superior::before{
+    content: '';
+    position: absolute;
+    bottom: -80px; /* Se alinea con la posición de la foto de perfil */
+    left: 17%;
+    transform: translateX(-50%);
+    width: 145px; /* Radio mayor que la imagen */
+    height: 145px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5), rgba(255,255,255,0)); /*Gradiente que se desvanece*/
+    border-radius: 50%;
+    pointer-events: none; 
+}
+
+.muro__header-perfil {
+    /* background: #22A1F5; */
+    height: 13rem;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px; */
+}
+
+.muro__perfil-info {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+.muro__perfil-img {
+    height: 150px;
+    max-width: auto;
+    border-radius: 50%
+}
+
+.muro__perfil-details {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    justify-content: flex-end;
+    margin-left: 10px;
+}
+
+.muro__perfil-data {
+    font-family: 'Poppins', sans-serif;
+    /* margin: 0%; */
+}
+
+.muro__perfil-configuracion {
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.muro__perfil-editar {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.muro__perfil-editar i {
+    margin-left: 5px;
+    font-size: 24px;
+}
+
+/*----------cabecera apartado reportes-----------*/
+.reportes__header {
+    height: 55px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    position: relative;
+}
+
+.reportes__title {
+    color: rgb(0, 0, 0);
+    margin-left: 22%;
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+.reportes__button {
+    /* position: absolute;
+    right: 25px;*/
+    display: flex;
+    align-items: center; 
+    margin-right: 12%;
+}
+/* Columnas */
+.muro__col-mid {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 45%;
+    min-width: 45%;
+    
+    overflow-y: auto;
+
+    max-height: 100vh;
+  }
+  
+.muro__col-izq, .muro__col-der {
+    width: 25%;
+    border-radius: 10px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 10px;
+}
+.panel-herramientas{
+    margin-left: 30%;
+    background-color: rgb(230, 244, 255);    
+}
+.herramienta {
+    background-color: rgb(231, 245, 255);
+    margin-bottom: 1px;
+    margin-left: 0px;
+    padding: 10px;
+}
+.panel-noticias{
+    padding: 10px;
+}
+.elemento{
+    background-color: #d0d0d0;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.herramientas-title{
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-inline-start: 10px;
+}
+.flecha-despliegue{
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+}
+.cabecera-herramienta{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.flecha-despliegue{
+    transition: transform 0.3s ease;
+}
+.flecha-despliegue.rotate{
+    transform: rotate(180deg);
+}
+.contenedor-herramientas {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease; /* Controla la velocidad del despliegue */
+}
+.contenedor-herramientas.mostrar {
+    max-height: 100px; /* Ajusta este valor según el contenido o pon un valor grande */
+}
+.material-icons{
+    margin-right: 5px;
+}
