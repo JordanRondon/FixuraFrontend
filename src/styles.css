@@ -1,4 +1,5 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
 /* Reseteo de márgenes y rellenos */
 * {
@@ -9,7 +10,7 @@
 
 /* Estilos básicos para el body */
 body {
-    font-family: Arial, sans-serif; /* Fuente básica y moderna */
+    font-family: 'Poppins', sans-serif;; /* Fuente básica y moderna */
     line-height: 1.6; /* Mejora la legibilidad */
     color: #333; /* Color de texto por defecto */
     background-color: #f4f4f4; /* Color de fondo de la página */
@@ -17,4 +18,8 @@ body {
 
 a {
     text-decoration: none; /* Quitar subrayado */
+}
+
+html, body {
+    overflow-x: hidden; /* Evita el desplazamiento horizontal no deseado */
 }
