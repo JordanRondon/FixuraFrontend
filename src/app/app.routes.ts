@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from './capaPresentacion/modulos/landing-page/landing-page.component';
-
-import { MuroUsuarioComponent } from './capaPresentacion/modulos/muro-usuario/muro-usuario.component';
 import { MuroAdministradorComponent } from './capaPresentacion/modulos/muro-administrador/muro-administrador.component';
 
 
