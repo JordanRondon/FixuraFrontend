@@ -195,32 +195,59 @@
   align-items: center;
   z-index: 1000;
   overflow-y: auto;
-  padding: 20px; 
 }
 /* Estilos para centrar el formulario */
 .formulario-contenedor {
-  background: #E59500;
-  padding: 20px;
+  background: white;
   border-radius: 10px;
   width: 80%;
-  max-width: 500px;
+  max-width: 600px;
   position: relative; 
   max-height: 90vh;
   overflow-y: auto;
 }
 .close-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 1%;
+  right: 2%;
+  overflow: hidden;
   background-color: transparent;
   border: none;
-  font-size: 20px;
+  border-radius: 50%;
   cursor: pointer;
+  width: 40px;
+  height: 40px;
 }
-.close-button :hover{
-    color: #840032;
+.icon-path{
+    stroke:white;
+}
+.close-icon{
+    width: 23px;
+    height: 23px;
+}
+.close-button:hover .icon-path{
+    stroke: rgb(0, 0, 0);
+    transition: stroke 1.2s;
+}
+.close-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(78, 78, 78, 0.212); /* Color de la onda (rojo con algo de transparencia) */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.9s, opacity 0.1s; /* Controla la animación */
 }
 
+.close-button:hover::before {
+    transform: translate(-50%, -50%) scale(1); /* Onda se expande */
+    opacity: 1; /* Onda se hace visible */
+}
+/* ---hasta aqui boton------------ */
 @media(max-width: 1200px) {
     .muro {
         display: grid;
