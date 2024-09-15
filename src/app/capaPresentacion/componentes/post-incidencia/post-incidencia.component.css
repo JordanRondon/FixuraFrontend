@@ -234,5 +234,15 @@
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
-    background: #f1f1f1; /*provisional*/
+    background: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    overflow: hidden; /* Oculta los bordes excedentes de la imagen */
+}
+
+.post-img-content img {
+    height: auto;
+    width: 14rem;
+    object-fit: cover; /* Recorta la imagen y asegura que mantenga la proporción */
+    object-position: center; /* Centra la imagen en el contenedor */
 }
