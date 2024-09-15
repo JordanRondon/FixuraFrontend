@@ -7,21 +7,17 @@
                 </div>
                 <div class="user-info">
                     <span>Juanito Alimaña</span>
-                    <p>Miércoles, 13 de marzo a las 2:45pm</p>
+                    <p>{{incidente?.fecha_publicacion}}</p>
                 </div>
             </div>
             <p class="category-content"><span>Categoria: </span>Categoria 01</p>
-            <p class="comment-content">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora sunt tempore beatae quae itaque! Deserunt vel ab sunt eum architecto ullam recusandae nam. Officia perspiciatis, eos modi eius natus odio.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi quo ullam ipsa, dolores iusto asperiores adipisci et corrupti eum deleniti saepe dignissimos tenetur amet ut sapiente officiis, exercitationem aliquid expedita?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi reprehenderit fugit nemo, quis aspernatur, molestiae perspiciatis laboriosam eos nam accusamus corrupti ducimus laudantium, doloribus quae ratione maxime consectetur laborum dolorem.
-            </p>
-            <p class="location-content"><span>Ubicacion: </span>Trujillo-Trujillo</p>
+            <p class="comment-content">{{incidente?.descripcion}}</p>
+            <p class="location-content"><span>Ubicacion: </span>{{incidente?.ubicacion}}</p>
         </div>
 
         <div class="comment-react">
             <div class="content-state">
-                <svg fill="none" viewBox="0 0 24 24" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
+                <svg [ngClass]="{'state--pending': incidente?.id_estado === 3, 'state--in-progress': incidente?.id_estado === 2, 'state--completed': incidente?.id_estado === 1}" fill="none" viewBox="0 0 24 24" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                     </svg> 
             </div>
@@ -32,7 +28,7 @@
                   </svg>                  
             </button>
             <hr>
-            <span>14</span>
+            <span>{{incidente?.total_votos}}</span>
         </div>
     </div>
     <div class="post-img-content">

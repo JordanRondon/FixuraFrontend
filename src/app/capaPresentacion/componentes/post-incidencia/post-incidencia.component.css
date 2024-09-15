@@ -123,9 +123,16 @@
     justify-content: center;
 }
 
-.comment-react .content-state svg {
-    fill: #707277;
+.comment-react .content-state .state--pending {
+    fill: #be0f0f;
 }
+.comment-react .content-state .state--in-progress {
+    fill: #e6c925;
+}
+.comment-react .content-state .state--completed {
+    fill: #31b320;
+}
+
   
 .comment-react button {
     width: 35px;

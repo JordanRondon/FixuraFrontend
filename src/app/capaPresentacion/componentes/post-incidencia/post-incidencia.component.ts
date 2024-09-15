@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Incidente } from '../../../Model/Incidente';
 
 @Component({
   selector: 'app-post-incidencia',
@@ -9,6 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./post-incidencia.component.css']
 })
 export class PostIncidenciaComponent {
+
+  @Input() incidente: Incidente | undefined;
   isActive = false;
 
   toggleActive() {
