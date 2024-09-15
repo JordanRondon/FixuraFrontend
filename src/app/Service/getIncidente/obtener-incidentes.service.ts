@@ -18,14 +18,14 @@ export class IncidenteService {
   getListaIncidencia(DNI_usuario: string): Observable<Incidente[]> {
     return this.http.get<Incidente[]>(`${this.apiUrl}/list/usuario/${DNI_usuario}`). pipe(
       map((data: any[]) => data.map(item => new Incidente(
-        item.id_incidente,
+        item.id_incidencia,
         parseISO(item.fecha_publicacion),
         item.descripcion,
         item.ubicacion,
         item.imagen,
         item.total_votos,
         item.id_estado,
-        item.DNI_usuario,
+        item.dni,
         item.id_categoria
       )))
     );
