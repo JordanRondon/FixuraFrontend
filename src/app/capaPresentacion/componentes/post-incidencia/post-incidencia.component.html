@@ -7,7 +7,7 @@
                 </div>
                 <div class="user-info">
                     <span>Juanito Alimaña</span>
-                    <p>{{incidente?.fecha_publicacion}}</p>
+                    <p>{{formatearFecha(incidente?.fecha_publicacion)}}</p>
                 </div>
             </div>
             <p class="category-content"><span>Categoria: </span>Categoria 01</p>
@@ -32,6 +32,6 @@
         </div>
     </div>
     <div class="post-img-content">
-        <img src="images/images.png" alt="">
+        <img src={{incidente?.imagen}} alt="">
     </div>
   </div>
