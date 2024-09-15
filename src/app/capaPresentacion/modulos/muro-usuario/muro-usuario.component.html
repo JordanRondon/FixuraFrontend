@@ -35,11 +35,13 @@
             </button>              
         </div>
         
-        <div class="muro__post-container">
-            <app-post-incidencia></app-post-incidencia>
-            <app-post-incidencia></app-post-incidencia>
-            <app-post-incidencia></app-post-incidencia>
+        <div class="muro__post-container" *ngIf="incidentes.length > 0; else noData">
+            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente">
+            </app-post-incidencia>
         </div>
+        <ng-template #noData>
+          <p>No hay incidentes para mostrar.</p>
+        </ng-template>
     </section>
     <aside class="muro__col-der"></aside>
 </main>

@@ -123,9 +123,16 @@
     justify-content: center;
 }
 
-.comment-react .content-state svg {
-    fill: #707277;
+.comment-react .content-state .state--pending {
+    fill: #be0f0f;
 }
+.comment-react .content-state .state--in-progress {
+    fill: #e6c925;
+}
+.comment-react .content-state .state--completed {
+    fill: #31b320;
+}
+
   
 .comment-react button {
     width: 35px;
@@ -227,5 +234,15 @@
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
-    background: #f1f1f1; /*provisional*/
+    background: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    overflow: hidden; /* Oculta los bordes excedentes de la imagen */
+}
+
+.post-img-content img {
+    height: auto;
+    width: 14rem;
+    object-fit: cover; /* Recorta la imagen y asegura que mantenga la proporción */
+    object-position: center; /* Centra la imagen en el contenedor */
 }
