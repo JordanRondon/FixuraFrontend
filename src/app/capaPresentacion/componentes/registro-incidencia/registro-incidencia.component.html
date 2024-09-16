@@ -6,15 +6,19 @@
     <!-- <div class="titulo-formulario">
       <h2>Registro Incidencia</h2>
     </div> -->
-    <div class="mapa">
-      <google-map height="300px"
-                  width="94%"
-                  (mapClick)="onUbicacionSeleccionada($event)">
+    <div id="map" class="mapa">
+      <google-map 
+          height="300px"
+          width="94%"
+          [center]="center" 
+          [zoom]="zoom"
+          (mapClick)="onUbicacionSeleccionada($event)">
       </google-map>
     </div>
     <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <label for="ubicacion">Ubicación seleccionada:</label>
-      <p id="ubicacion">{{ ubicacionSeleccionada }}</p>
+      <input formControlName="ubicacion" type="text">
+      <!--<p id="ubicacion">{{ ubicacionSeleccionada }}</p>-->
   
       <label for="categoria">Categoría:</label>
       <select formControlName="categoria" id="categoria">
@@ -26,7 +30,7 @@
       <textarea formControlName="descripcion" id="descripcion" placeholder="Danos una descripcion." class="bg-slate-100 text-slate-600 h-28 placeholder:text-slate-600 placeholder:opacity-50 border border-slate-200 col-span-6 resize-none outline-none rounded-lg p-2 duration-300 focus:border-slate-600"></textarea>
       
       <label for="foto" class="input-file-label">
-        <input type="file" id="foto" name="foto" (change)="onFileSelected($event)">
+        <input formControlName="foto" type="file" id="foto" name="foto" (change)="onFileSelected($event)">
         <svg class="camera-icon" viewBox="0 -2 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
