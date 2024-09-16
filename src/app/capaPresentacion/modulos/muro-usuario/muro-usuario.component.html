@@ -36,7 +36,7 @@
         </div>
         
         <div class="muro__post-container" *ngIf="incidentes.length > 0; else noData">
-            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente">
+            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente" [nombreUsuario]="dataUsuario?.nombre">
             </app-post-incidencia>
         </div>
         <ng-template #noData>

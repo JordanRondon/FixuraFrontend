@@ -15,6 +15,7 @@ import { es } from 'date-fns/locale';
 export class PostIncidenciaComponent implements OnChanges {
 
   @Input() incidente: Incidente | undefined;
+  @Input() nombreUsuario: string | undefined;
   isActive = false;
 
   ngOnChanges(changes: SimpleChanges) { }
