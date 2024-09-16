@@ -1,36 +1,43 @@
 <app-navbar-usuario></app-navbar-usuario>
 <main class="muro">
-    <aside class="muro__col-izq"></aside>
-    <section class="muro__col-mid">
+  <aside class="muro__col-izq"></aside>
+  <section class="muro__col-mid">
+    <div class="muro__header-perfil">
+      <div class="muro__perfil-info">
+        <img
+          class="muro__perfil-img"
+          src="images/fotoPerfil.jpg"
+          alt="Foto de perfil"
+        />
 
-        <div class="muro__header-perfil">
-            <div class="muro__perfil-info">
-                <img class="muro__perfil-img" src="images/fotoPerfil.jpg" alt="Foto de perfil">
-                
-                <div class="muro__perfil-details">
-                    <p class="muro__perfil-data">Juanito alimaña</p>
-                    <p class="muro__perfil-data">tuChikill0M4sN4&#64;hotmail.com</p>
-                </div>
-            </div>
-
-            <div class="muro__perfil-configuracion">
-                <a class="muro__perfil-editar" href="configuracion.html">
-                    Editar perfil
-                    <i class="material-icons">edit</i>
-                </a>
-            </div>
+        <div class="muro__perfil-details">
+          <p class="muro__perfil-data">Juanito Rodriguez</p>
+          <p class="muro__perfil-data">juanRo14&#64;hotmail.com</p>
         </div>
-        
-        <div class="reportes__header">
-            <h2 class="reportes__title">Historial de Reportes</h2>
-            <button type="button" class="btn btn-primary reportes__button">
-                <i class="material-icons">add</i>
-                Nuevo Reporte
-            </button>
-        </div>
+      </div>
 
-        <app-post-incidencia></app-post-incidencia>
+      <div class="muro__perfil-configuracion">
+        <a class="muro__perfil-editar" href="configuracion.html">
+          Editar perfil
+          <i class="material-icons">edit</i>
+        </a>
+      </div>
+    </div>
 
-    </section>
-    <aside class="muro__col-der"></aside>
+    <div class="reportes__header">
+      <h2 class="reportes__title">Historial de Reportes</h2>
+      <button type="button" class="btn btn-primary reportes__button">
+        <i class="material-icons">add</i>
+        Nuevo Reporte
+      </button>
+    </div>
+
+    <app-post-incidencia></app-post-incidencia>
+    <app-post-incidencia></app-post-incidencia>
+    <app-post-incidencia></app-post-incidencia>
+    <app-post-incidencia></app-post-incidencia>
+    <app-post-incidencia></app-post-incidencia>
+    <app-post-incidencia></app-post-incidencia>
+  </section>
+  <aside class="muro__col-der"></aside>
 </main>
