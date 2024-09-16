@@ -22,7 +22,7 @@ export default class MuroUsuarioComponent implements OnInit {
   constructor(private incidenteService: IncidenteService) { }
 
   ngOnInit(): void {
-    this.getIncidentesPorUsuario('32542163');
+    this.getIncidentesPorUsuario('70212217');
   }
 
   abrirRegistroIncidencia() {
