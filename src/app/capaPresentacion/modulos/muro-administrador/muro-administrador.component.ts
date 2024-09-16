@@ -10,7 +10,7 @@ import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css'
 })
-export class MuroAdministradorComponent {
+export class MuroAdministradorComponent{
   mostrarHerramientas: boolean = true;
   toggleHerramientas(){
     console.log('Desplegando herramientas');

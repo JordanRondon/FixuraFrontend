@@ -1,15 +1,14 @@
-/*
-.formulario-ubicacion {
-  max-width: 600px;
-  margin: 0 auto;
-  color: black;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  padding: 2%;
+.cabecera-formulario{
+  background-color: #24b4fb;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
 }
-*/
+.formulario-ubicacion {
+ background-color: white;
+ padding: 15px;
+}
+
 .mapa {
   text-align: center;
   margin-left: 30px;
@@ -30,6 +29,7 @@ textarea {
   align-items: center;
   cursor: pointer;
   margin-top: 10px;
+  gap: 8px;
 }
 
   .input-file-label input[type="file"] {
@@ -48,12 +48,13 @@ textarea {
 }
 
 .preview-img {
-  max-width: 100%;
-  height: auto;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
-  width: 54%;
+  min-width: 250px;
+  min-height: 250px;
+  width: 250px;
+  height: 250px;
 }
 
 /* Estilo boton */
@@ -62,35 +63,48 @@ button {
 }
 
 .button {
-  background-color: black;
+  background-color: #24b4fb;
   color: #fff;
   width: 8.5em;
+  border: none;
   height: 2.9em;
-  border: black 0.2em solid;
   border-radius: 11px;
-  text-align: right;
   transition: all 0.6s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-end;
 }
 
 .button:hover {
-  background-color: #840032;
-  border: #840032 0.2em solid;
+  background-color: #0071e2;
+  border: #0071e2 0.2em solid;
   cursor: pointer;
 }
 
-.button svg {
-  width: 1.6em;
-  margin: -0.2em 0.8em 1em;
-  position: absolute;
-  display: flex;
-  transition: all 0.6s ease;
+.titulo-formulario{
+  color: white;
 }
 
-.button:hover svg {
-  transform: translateX(5px);
-}
-
-.text {
-  margin-right: 40px;
+.enviar-icon{
+  width: 30px;
+  height: 30px;
   margin-bottom: 2px;
+  margin-right: 10px;
+}
+.enviar-path{
+  stroke:white
+}
+form{
+  display: flex;
+  flex-direction: column;
+}
+.camera-icon{
+  width: 40px;
+  height: 40px;
+}
+.button:hover .enviar-icon {
+  margin-right: 1px;
+  transition: margin-right 0.3s;
 }
