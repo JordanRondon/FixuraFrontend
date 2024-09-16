@@ -5,30 +5,30 @@
   </div>
 </nav>
 
-<!--LOGIN-->
+<!--REGISTER-->
 <div class="container">
 		<div class="container-form">
-			<form action="" class="form">
+			<form [formGroup]="formUsuario" action="" class="form" (submit)="saveUsuario()">
 				<h2 class="title">Registrarse</h2>
         <div class="container-input">
 					<span class="material-icons">person</span>
-					<input type="text" placeholder="Nombre">
+					<input type="text" placeholder="Nombre" formControlName="nombre">
 				</div>
         <div class="container-input">
 					<span class="material-icons">badge</span>
-					<input type="text" placeholder="DNI">
+					<input type="text" placeholder="DNI" formControlName="dni">
 				</div>
 				<div class="container-input">
 					<span class="material-icons">mail</span>
-					<input type="text" placeholder="Correo Electronico">
+					<input type="text" placeholder="Correo Electronico" formControlName="correo">
 				</div>
 				<div class="container-input">
 					<span class="material-icons">password</span>
-					<input type="password" placeholder="Contraseña">
+					<input type="password" placeholder="Contraseña" formControlName="contrasenia">
 				</div>
         <div class="container-input">
 					<span class="material-icons">password</span>
-					<input type="password" placeholder="Confirmar Contraseña">
+					<input type="password" placeholder="Confirmar Contraseña" formControlName="confirmarContrasenia">
 				</div>
         <div class="container-input">
           <span class="material-icons">map</span>
@@ -46,12 +46,12 @@
 				</div>
         <div class="container-input" *ngIf="selectedProvincia && selectedDepartamento">
           <span class="material-icons">location_on</span>
-					<select id="select-distrito">
+					<select id="select-distrito" (change)="onDistritoChange($event)">
             <option disabled selected>Distrito</option>
 						<option *ngFor="let distrito of listDistrito" [value] = "distrito.idDist">{{distrito.nameDist}}</option>
           </select>
 				</div>
-				<button type="submit" class="btn">Registrarse</button>
+				<button type="submit" class="btn" (click)="saveUsuario()">Registrarse</button>
 				<p class="switch-animation">¿Tienes un cuenta? <a [routerLink]="['/login']"><b>Inicia Sesion</b></a></p>
 			</form>
 		</div>
