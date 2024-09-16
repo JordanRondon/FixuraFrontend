@@ -29,7 +29,7 @@ export default class LoginComponent implements OnInit{
     this.registroUsuarioService.login(this.correo, this.contrasenia).subscribe(
       user => {
         alert("Bienvenido")
-        this.route.navigate(['/muro-usuario'], {state: {}});
+        this.route.navigate(['/muro-usuario'], {state: {user}});
       },
       error => {
         console.error('Error durante el inicio de sesión', error);

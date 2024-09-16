@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RegistroIncidenciaComponent } from '../../componentes/registro-incidencia/registro-incidencia.component';
 import { IncidenteService } from '../../../Service/getIncidente/obtener-incidentes.service';
 import { Incidente } from '../../../Model/Incidente';
+import { Usuario } from '../../../Model/Usuario';
 
 @Component({
   selector: 'app-muro-usuario',
@@ -17,12 +18,15 @@ import { Incidente } from '../../../Model/Incidente';
 export default class MuroUsuarioComponent implements OnInit {
   
   mostrarFormulario: boolean = false;
-  incidentes: Incidente[] = []
+  incidentes: Incidente[] = [];
+  dataUsuario: Usuario | null  = null;
 
   constructor(private incidenteService: IncidenteService) { }
 
   ngOnInit(): void {
-    this.getIncidentesPorUsuario('32542163');
+    this.dataUsuario = history.state.user;
+    console.log(this.dataUsuario)
+    this.getIncidentesPorUsuario(this.dataUsuario?.dni ?? '');
   }
 
   abrirRegistroIncidencia() {

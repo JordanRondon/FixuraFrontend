@@ -16,9 +16,16 @@ export class RegistroUsuariosService {
 
   login(correo: string, contrasenia: string): Observable<Usuario> {
     return this.httpClient.post<any>('http://localhost:8080/api/usuario/login', { correo, contrasenia }).pipe(
-      map(response => {
-        return response;
-      }),
+      map((data: any) => new Usuario(
+        data.nombre,
+        data.dni,
+        data.correo,
+        data.contrasenia,
+        data.fotoPerfil,
+        data.tiempo_ban,
+        data.id_rol,
+        data.idDist
+      )),
       catchError(error => {
         console.error('Error durante el inicio de sesión', error);
         throw error;

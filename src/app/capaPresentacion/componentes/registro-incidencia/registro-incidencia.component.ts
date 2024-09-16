@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ImagenServiceService } from '../../../Service/imagen-service.service';
 import { RegistroIncidentesService } from '../../../Service/registro-incidentes.service';
+import { Incidente } from '../../../Model/Incidente';
 @Component({
   selector: 'app-registro-incidencia',
   standalone: true,
@@ -21,6 +22,9 @@ export class RegistroIncidenciaComponent implements OnInit {
   imagenPrevisualizacion: string | ArrayBuffer | null = null;
   archivoSeleccionado: File | null = null;
   usuario: number=32542163;
+
+  @Input() dniUsuario: string | undefined;
+
   constructor(private fb: FormBuilder,private imagenService: ImagenServiceService,private registroIncideten: RegistroIncidentesService,private http: HttpClient) {
     this.formulario = this.fb.group({
       categoria: ['', Validators.required],
@@ -29,7 +33,9 @@ export class RegistroIncidenciaComponent implements OnInit {
     });
   }
   
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log(this.dniUsuario);
+  }
 
   // Cuando el usuario selecciona una ubicación en el mapa
   onUbicacionSeleccionada(event: google.maps.MapMouseEvent): void {
