@@ -15,21 +15,28 @@ import { RegistroIncidentesService } from '../../../Service/registro-incidentes.
 })
 export class RegistroIncidenciaComponent implements OnInit {
   formulario: FormGroup;
-  ubicacionSeleccionada: string = '';
-  categorias: string[] = ['Restaurante', 'Tienda', 'Parque', 'Escuela', 'Hospital'];
+  //ubicacionSeleccionada: string = '';
+  categorias: string[] = ['Poste', 'Pista', 'Desague'];
   apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X'; 
+  center: google.maps.LatLngLiteral = { lat: -8.1116, lng: -79.0288 };
+  marker: google.maps.Marker | null = null;
+  zoom = 17;
   imagenPrevisualizacion: string | ArrayBuffer | null = null;
   archivoSeleccionado: File | null = null;
-  usuario: number=32542163;
+  usuario: number=70212217;
   constructor(private fb: FormBuilder,private imagenService: ImagenServiceService,private registroIncideten: RegistroIncidentesService,private http: HttpClient) {
     this.formulario = this.fb.group({
       categoria: ['', Validators.required],
+      ubicacion: ['', Validators.required],
       descripcion: ['', Validators.required],
       foto: ['']
     });
   }
   
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    //this.obtenerUbicacionActual(); 
+
+   }
 
   // Cuando el usuario selecciona una ubicación en el mapa
   onUbicacionSeleccionada(event: google.maps.MapMouseEvent): void {
@@ -39,14 +46,37 @@ export class RegistroIncidenciaComponent implements OnInit {
       this.obtenerDireccion(lat, lng);
     }
   }
-
+  //Funcion para extraer la ubicacion actual del usuario
+  /*
+  obtenerUbicacionActual(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        this.zoom = 17; 
+      }, (error) => {
+        console.error('Error al obtener la ubicación: ', error);
+      });
+    } else {
+      console.error('La geolocalización no es compatible con este navegador.');
+    }
+  }
+  */
   obtenerDireccion(lat: number, lng: number): void {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.apiKey}`;
 
     this.http.get(url).subscribe((data: any) => {
       if (data.status === 'OK' && data.results.length > 0) {
         const direccion = data.results[0].formatted_address;
-        this.ubicacionSeleccionada = direccion;
+        //this.ubicacionSeleccionada = direccion;
+        this.formulario.value.ubicacion=direccion
+        this.formulario.patchValue({
+          ubicacion: direccion
+        });
+  
+        console.error(this.formulario.value.ubicacion);
       } else {
         console.error('Error al obtener la dirección');
       }
@@ -78,7 +108,7 @@ export class RegistroIncidenciaComponent implements OnInit {
     // Opcional: enviar otros datos del formulario
     formIncidente.append('fecha_publicacion', fechaFormateada);
     formIncidente.append('descripcion', this.formulario.value.descripcion);
-    formIncidente.append('ubicacion', "mi_casa");
+    formIncidente.append('ubicacion', this.formulario.value.ubicacion);
     formIncidente.append('imagen',"https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/imagenes/"+this.archivoSeleccionado.name );
     formIncidente.append('total_votos',"0");
     formIncidente.append('id_estado',"3");
@@ -86,21 +116,24 @@ export class RegistroIncidenciaComponent implements OnInit {
     formIncidente.append('id_categoria', this.formulario.value.categoria.toString());
     console.log(fechaFormateada);
     console.log(this.formulario.value.descripcion);
+    console.log(this.formulario.value.ubicacion);
     console.log(this.archivoSeleccionado.name);
     console.log(this.usuario.toString());
     console.log(this.formulario.value.categoria.toString());
-    this.registroIncideten.saveIncidencia(formIncidente).subscribe(resp=>{
-      if(resp){
-        this.formulario.reset();
-        console.log('Incidente registrado correctamente');
-      }else{
-        console.error('Error al registrar un incidente');
-      }
-    });
+    
     this.imagenService.saveImagenIncidencia(formData).subscribe(resp=>{
       if(resp){
-        this.formulario.reset();
         console.log('Imagen subida exitosamente');
+        this.registroIncideten.saveIncidencia(formIncidente).subscribe(resp=>{
+          if(resp){
+            this.formulario.reset();
+            this.imagenPrevisualizacion=null
+            console.log('Incidente registrado correctamente');
+          }else{
+            console.error('Error al registrar un incidente');
+          }
+        });
+        
       }else{
         console.error('Error al subir la imagen');
       }
