@@ -25,7 +25,7 @@ export class RegistroIncidenciaComponent implements OnInit {
   imagenPrevisualizacion: string | ArrayBuffer | null = null;
   archivoSeleccionado: File | null = null;
 
-  usuario: number=32542163;
+  //usuario: number=32542163;
 
   @Input() dniUsuario: string | undefined;
 
@@ -116,13 +116,13 @@ export class RegistroIncidenciaComponent implements OnInit {
     formIncidente.append('imagen',"https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/imagenes/"+this.archivoSeleccionado.name );
     formIncidente.append('total_votos',"0");
     formIncidente.append('id_estado',"3");
-    formIncidente.append('DNI',this.usuario.toString());
+    formIncidente.append('DNI',this.dniUsuario ?? '');
     formIncidente.append('id_categoria', this.formulario.value.categoria.toString());
     console.log(fechaFormateada);
     console.log(this.formulario.value.descripcion);
     console.log(this.formulario.value.ubicacion);
     console.log(this.archivoSeleccionado.name);
-    console.log(this.usuario.toString());
+    console.log(this.dniUsuario);
     console.log(this.formulario.value.categoria.toString());
     
     this.imagenService.saveImagenIncidencia(formData).subscribe(resp=>{
