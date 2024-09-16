@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
+import { Usuario } from '../Model/Usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -11,5 +12,17 @@ export class RegistroUsuariosService {
 
   saveUsuario(request: any): Observable<any>{
     return this.httpClient.post<any>('http://localhost:8080/api/usuario/save', request).pipe(map(res => res));
+  }
+
+  login(correo: string, contrasenia: string): Observable<Usuario> {
+    return this.httpClient.post<any>('http://localhost:8080/api/usuario/login', { correo, contrasenia }).pipe(
+      map(response => {
+        return response;
+      }),
+      catchError(error => {
+        console.error('Error durante el inicio de sesión', error);
+        throw error;
+      })
+    );
   }
 }
