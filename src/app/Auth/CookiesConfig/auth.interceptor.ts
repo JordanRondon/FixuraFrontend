@@ -11,8 +11,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Obtener el token de la cookie
   const token = cookieService.get('token'); // 'token' es la clave que usa en authService para guardar el token
 
-  console.log('Token desde la cookie:', token); // Verifica el token
-
   // Si hay un token, se clonar la solicitud y configura el encabezado de autorización
   if (token) {
     const clonedRequest = req.clone({
