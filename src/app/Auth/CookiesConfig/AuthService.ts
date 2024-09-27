@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   // Obtener el correo del usuario desde el Token
-  getToken_correo(): number | null {
+  getToken_correo(): string | null {
     const token = this.getToken();
     if (token) {
       const decoded = this.decodeToken(token);
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   // Obtener el rol del usuario desde el Token
-  getToken_dni(): number | null {
+  getToken_dni(): string | null {
     const token = this.getToken();
     if (token) {
       const decoded = this.decodeToken(token);

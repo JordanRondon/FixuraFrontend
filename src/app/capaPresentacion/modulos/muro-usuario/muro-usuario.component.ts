@@ -4,8 +4,10 @@ import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-
 import { CommonModule } from '@angular/common';
 import { RegistroIncidenciaComponent } from '../../componentes/registro-incidencia/registro-incidencia.component';
 import { IncidenteService } from '../../../Service/getIncidente/obtener-incidentes.service';
+import { RegistroUsuariosService } from '../../../Service/registro-usuarios.service';
 import { Incidente } from '../../../Model/Incidente';
 import { Usuario } from '../../../Model/Usuario';
+import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 
 @Component({
   selector: 'app-muro-usuario',
@@ -21,12 +23,15 @@ export default class MuroUsuarioComponent implements OnInit {
   incidentes: Incidente[] = [];
   dataUsuario: Usuario | null  = null;
 
-  constructor(private incidenteService: IncidenteService) { }
+  constructor(
+    private registerUserService: RegistroUsuariosService,
+    private incidenteService: IncidenteService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-    this.dataUsuario = history.state.user;
-    console.log(this.dataUsuario)
-    this.getIncidentesPorUsuario(this.dataUsuario?.dni ?? '');
+    this.getDataUserProfile();
+    this.getIncidentesPorUsuario(this.authService.getToken_dni() ?? '');
   }
 
   abrirRegistroIncidencia() {
@@ -35,6 +40,20 @@ export default class MuroUsuarioComponent implements OnInit {
 
   cerrarFormulario() {
     this.mostrarFormulario = false;
+  }
+
+  getDataUserProfile(): void {
+    if(this.authService.isAuthenticated()) {
+      this.registerUserService.getUserProfile().subscribe({
+        next: (user: Usuario) => {
+          this.dataUsuario = user
+          console.log('Datos del usuario: ', this.dataUsuario)
+        },
+        error: (error) => {
+          console.error('Error al obtener el perfil de usuario', error);
+        }
+      });
+    }
   }
 
   getIncidentesPorUsuario(DNI_usuario: string): void {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule  } from '@angular/router';
+import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 
 @Component({
   selector: 'app-navbar-usuario',
@@ -13,7 +14,10 @@ import { Router, RouterModule  } from '@angular/router';
 export class NavbarUsuarioComponent {
   isDropdownVisible: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   toggleDropdown(): void {
     //habilita la visualizacion del menu desplegable
@@ -27,5 +31,9 @@ export class NavbarUsuarioComponent {
 
   navigateTo(path: string): void {
     this.router.navigate([path]);
+  }
+
+  logout():void {
+    this.authService.deleteToken();
   }
 }
