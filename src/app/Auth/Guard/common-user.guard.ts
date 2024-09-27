@@ -3,17 +3,21 @@ import { inject } from '@angular/core';
 import { AuthService } from '../CookiesConfig/AuthService';
 import { Router } from '@angular/router';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  
+export const commonUserGuard: CanActivateFn = (route, state) => {
+      
   const authService = inject(AuthService);
   const router = inject(Router)
+  
+  const COMMON_USER = 3;
 
-  if (authService.isAuthenticated()) {
+  const userId_rol = authService.getToken_Id_rol();
+
+  if (userId_rol === COMMON_USER) {
       return true;
   } else {
-    // Redirigir al login si no está autenticado
+    // Redirigir al login si no tiene los permisos de 3: usuario-commún
     router.navigate(['/login']);
-    console.log("Usuario NO AUTENTICADO")
+    console.log("Usuario SIN PERMISOS")
     return false;
   }
 
