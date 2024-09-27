@@ -31,20 +31,8 @@ export default class LoginComponent implements OnInit{
     this.registroUsuarioService.login(this.correo, this.contrasenia).subscribe({
       next: (response) => {
         this.authService.setToken(response.token);
-        
-        const token = this.authService.getToken();
-        alert("Bienvenido")
-        if (token) {
-          this.registroUsuarioService.getUserProfile().subscribe({
-            next: (user: Usuario) => {
-              
-              this.route.navigate(['/muro-usuario'], { state: { user } });
-            },
-            error: (error) => {
-              console.error('Error al obtener el perfil de usuario', error);
-            }
-          });
-        } else console.error('TOKEN es null');
+        this.route.navigate(['/muro-usuario']);
+        alert("Bienvenido")   
       },
       error: (error) => {
         console.error('Error durante el login', error);
