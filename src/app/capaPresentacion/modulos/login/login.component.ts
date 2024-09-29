@@ -31,8 +31,18 @@ export default class LoginComponent implements OnInit{
     this.registroUsuarioService.login(this.correo, this.contrasenia).subscribe({
       next: (response) => {
         this.authService.setToken(response.token);
-        this.route.navigate(['/muro-usuario']);
-        alert("Bienvenido")   
+        
+        const userRole = this.authService.getToken_Id_rol();
+        var url: string = ''
+
+        switch (userRole) {
+          case 1: 
+          case 2: url = 'muro-administrador'; break;
+          case 3: url = '/muro-usuario'; break;
+          default: url = '/login';
+        }
+
+        this.route.navigate([url]);
       },
       error: (error) => {
         console.error('Error durante el login', error);
