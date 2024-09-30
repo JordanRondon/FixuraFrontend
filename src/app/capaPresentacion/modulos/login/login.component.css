@@ -59,9 +59,8 @@ nav .logo a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 750px;
   height: 350px;
-  min-width: 100vh;
   overflow: hidden;
   background-color: #fff;
   border-radius: 10px;
@@ -79,6 +78,7 @@ nav .logo a:hover {
   left: 48%;
   transform: translateY(-50%);
 }
+
 
 /*Contenedor del formulario*/
 .container-form{
@@ -178,3 +178,27 @@ img{
 }
 
 
+@media screen and (max-width: 760px){
+  .container-image{
+    display: none;
+  }
+
+  .container::before{
+    content: none;
+  }
+
+  .container-input{
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 580px){
+  .container{
+    width: 90%;
+  }
+
+  .container-input{
+    width: 100%;
+  }
+}
