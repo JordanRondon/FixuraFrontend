@@ -15,9 +15,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export default class RegisterComponent implements OnInit{
 
-  listDepartamento: { idDepart: number, nameDepart: string }[] = [];
-  listProvincia: {idProv : number, nameProv: string, idDepart: number}[] = [];
-  listDistrito: {idDist: number, nameDist: string, idProv: number, idDepart: number}[] = [];
+  listDepartamento: { id_departamento: number, nombre: string }[] = [];
+  listProvincia: {id_provincia : number, nombre: string, id_departamento: number}[] = [];
+  listDistrito: {id_distrito: number, nombre: string, id_provincia: number}[] = [];
 
   selectedDepartamento: number | null = null;
   selectedProvincia: number | null = null;
@@ -33,19 +33,19 @@ export default class RegisterComponent implements OnInit{
   ngOnInit(): void {
     this.loadDepartamentos()
     this.formUsuario = new FormGroup({
-      nombre : new FormControl(''),
       dni: new FormControl(''),
+      nombre : new FormControl(''),
       correo: new FormControl(''),
       contrasenia : new FormControl(''),
       confirmarContrasenia: new FormControl(''),
       fotoPerfil: new FormControl(null),
       tiempo_ban: new FormControl(null),
       id_rol: new FormControl(3),
-      idDist: new FormControl(this.selectedDistrito),
+      id_distrito: new FormControl(this.selectedDistrito),
     })
   }
   
-  saveUsuario(){
+  registrarUsuario(){
     const { contrasenia, confirmarContrasenia } = this.formUsuario.value;
 
     // Verificar si las contraseñas coinciden
@@ -63,11 +63,16 @@ export default class RegisterComponent implements OnInit{
     this.formUsuario.controls['fotoPerfil'].setValue(null);
     this.formUsuario.controls['tiempo_ban'].setValue(null);
     this.formUsuario.controls['id_rol'].setValue(3);
-    this.formUsuario.controls['idDist'].setValue(this.selectedDistrito);
+    this.formUsuario.controls['id_distrito'].setValue(this.selectedDistrito);
 
-    this.registroUsuariosService.saveUsuario(this.formUsuario.value).subscribe(res =>{
+    this.registroUsuariosService.registrarUsuario(this.formUsuario.value).subscribe(res =>{
       if(res){
         this.formUsuario.reset();
+        this.selectedDepartamento = null;
+        this.selectedProvincia = null;
+        this.selectedDistrito = null;
+        this.listProvincia = [];
+        this.listDistrito = [];
       }
     })
   }
@@ -75,7 +80,6 @@ export default class RegisterComponent implements OnInit{
   // SE CARGA LOS DEPARTAMENTOS
   loadDepartamentos(){
     this.departamentoService.getDepartamento().subscribe(resp => {
-        console.log(resp);
         if(resp){
           this.listDepartamento = resp;
         }
@@ -85,11 +89,11 @@ export default class RegisterComponent implements OnInit{
   // SE ACTUALIZA LAS PROVINCIAS EN CASO QUE SE ELIJE UN DEPARTAMENTO
   onDepartamentoChange(event: Event): void {
     const target = event.target as HTMLSelectElement
-    const idDepart = Number(target.value)
-    if (!isNaN(idDepart)) {
-      this.selectedDepartamento = idDepart;
+    const id_departamento = Number(target.value)
+    if (!isNaN(id_departamento)) {
+      this.selectedDepartamento = id_departamento;
       if (this.selectedDepartamento !== null) {
-        this.loadProvincias(idDepart);
+        this.loadProvincias(id_departamento);
         this.listDistrito = [];
         this.selectedProvincia = null;
       }
@@ -97,8 +101,8 @@ export default class RegisterComponent implements OnInit{
   }
 
   // SE CARGA LAS PROVINCIAS
-  loadProvincias(idDepart: number): void {
-    this.departamentoService.getProvincia(idDepart).subscribe(resp => {
+  loadProvincias(id_departamento: number): void {
+    this.departamentoService.getProvincia(id_departamento).subscribe(resp => {
       if (resp) {
         this.listProvincia = resp;
       }
@@ -107,18 +111,18 @@ export default class RegisterComponent implements OnInit{
 
   onProvinciaChange(event : Event): void {
     const target = event.target as HTMLSelectElement;
-    const idProv = Number(target.value);
-    if (!isNaN(idProv)) {
-      this.selectedProvincia = idProv;
+    const id_provincia = Number(target.value);
+    if (!isNaN(id_provincia)) {
+      this.selectedProvincia = id_provincia;
       if (this.selectedDepartamento !== null) {
-        this.loadDistritos(this.selectedDepartamento, idProv);
+        this.loadDistritos(this.selectedDepartamento, id_provincia);
       }
     }
   }
 
   // SE CARGA LOS DISTRITOS
-  loadDistritos(idDepart: number, idProv: number): void {
-    this.departamentoService.getDistrito(idDepart, idProv).subscribe(resp => {
+  loadDistritos(id_departamento: number, id_provincia: number): void {
+    this.departamentoService.getDistrito(id_departamento, id_provincia).subscribe(resp => {
       if (resp) {
         this.listDistrito = resp;
       }
@@ -127,9 +131,9 @@ export default class RegisterComponent implements OnInit{
 
   onDistritoChange(event : Event): void{
     const target = event.target as HTMLSelectElement;
-    const idDist = Number(target.value);
-    if(!isNaN(idDist)){
-      this.selectedDistrito = idDist;
+    const id_distrito = Number(target.value);
+    if(!isNaN(id_distrito)){
+      this.selectedDistrito = id_distrito;
     }
   }
 
