@@ -29,7 +29,7 @@ export class IncidenciaLikeService {
   }
 
   thaLike(incidenciaLike: IncidenciaLike): Observable<any> {
-    return this.http.post<any>(this.apiUrl+'/deleteLike', incidenciaLike).pipe(
+    return this.http.post<any>(this.apiUrl+'/thaLike', incidenciaLike).pipe(
       map(response => response)
     );
   }
