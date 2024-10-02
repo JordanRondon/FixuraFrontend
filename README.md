@@ -1,1 +1,1 @@
-hola, adios
+Le digo hola, y ella me dice good bye
