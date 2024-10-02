@@ -5,6 +5,7 @@ import { Incidente } from '../../../Model/Incidente';
 import { es } from 'date-fns/locale';
 import { IncidenciaLikeService } from '../../../Service/IncidenciaLike/incidencia-like.service';
 import { IncidenciaLike } from '../../../Model/IncidenciaLike';
+import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 
 @Component({
@@ -28,6 +29,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
 
   constructor(
     private incidenciaLikeService: IncidenciaLikeService,
+    private incidenciaService: IncidenciaService,
     private authService: AuthService
   ) {}
 
@@ -39,6 +41,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
         hour_liked: new Date()
       };
       this.isLike(this.incidenciaLike);
+      this.getVotos(this.incidente.id_incidente);
     }
   }
 
@@ -63,6 +66,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     this.incidenciaLikeService.insertLike(incidenciaLike).subscribe(
       (respuesta) => {
         console.log('Like REGISTRADO correctamente:', respuesta);
+        if (this.incidente)
+          this.getVotos(this.incidente.id_incidente);
       },
       (error) => {
         console.error('ERROR al REGISTRAR el Like:', error);
@@ -75,6 +80,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     this.incidenciaLikeService.deleteLike(incidenciaLike).subscribe(
       (respuesta) => {
         console.log('Like ELIMINADO correctamente:', respuesta);
+        if (this.incidente)
+          this.getVotos(this.incidente.id_incidente);
       },
       (error) => {
         console.error('ERROR al ELIMINAR el Like:', error);
@@ -90,6 +97,19 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
       },
       (error) => {
         console.error('ERROR al VERIFICAR el Like:', error);
+      }
+    );
+  }
+
+  getVotos(id_incidencia: number): void {
+    this.incidenciaService.getTotalVotos(id_incidencia).subscribe(
+      (totalVotos: number) => {
+        if (this.incidente) {
+          this.incidente.total_votos = totalVotos;
+        }
+      },
+      (error) => {
+        console.error('ERROR al OBTENER total de votos:', error);
       }
     );
   }
