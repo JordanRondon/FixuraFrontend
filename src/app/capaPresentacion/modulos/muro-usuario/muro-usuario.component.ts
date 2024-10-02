@@ -3,8 +3,8 @@ import { NavbarUsuarioComponent } from '../../componentes/navbar-usuario/navbar-
 import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-incidencia.component';
 import { CommonModule } from '@angular/common';
 import { RegistroIncidenciaComponent } from '../../componentes/registro-incidencia/registro-incidencia.component';
-import { IncidenteService } from '../../../Service/getIncidente/obtener-incidentes.service';
-import { RegistroUsuariosService } from '../../../Service/registro-usuarios.service';
+import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
+import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { Incidente } from '../../../Model/Incidente';
 import { Usuario } from '../../../Model/Usuario';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
@@ -24,8 +24,8 @@ export default class MuroUsuarioComponent implements OnInit {
   dataUsuario: Usuario | null  = null;
 
   constructor(
-    private registerUserService: RegistroUsuariosService,
-    private incidenteService: IncidenteService,
+    private registerUserService: UsuariosService,
+    private incidenteService: IncidenciaService,
     private authService: AuthService
   ) { }
 

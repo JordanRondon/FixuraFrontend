@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { RegistroUsuariosService } from '../../../Service/registro-usuarios.service';
-import { Usuario } from '../../../Model/Usuario';
+import {UsuariosService}  from '../../../Service/Usuarios/usuarios.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 
 @Component({
@@ -18,7 +17,7 @@ export default class LoginComponent implements OnInit{
   contrasenia: string = '';
 
   constructor(
-    private registroUsuarioService: RegistroUsuariosService, 
+    private registroUsuarioService: UsuariosService, 
     private route: Router,
     private authService: AuthService
   ){}

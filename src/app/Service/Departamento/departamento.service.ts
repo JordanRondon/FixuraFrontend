@@ -5,12 +5,11 @@ import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DepartamentoServiceService {
+export class DepartamentoService {
 
   private baseUrl = 'http://localhost:8080/api/v1/departamento';
 
   constructor(private httpClient: HttpClient) {
-
   }
 
   getDepartamento(): Observable<any>{
