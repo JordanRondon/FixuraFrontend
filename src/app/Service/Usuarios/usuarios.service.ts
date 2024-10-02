@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Usuario } from '../Model/Usuario';
+import { Usuario } from '../../Model/Usuario';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegistroUsuariosService {
+export class UsuariosService {
 
   private apiUrl = 'http://localhost:8080/api/usuario';
 

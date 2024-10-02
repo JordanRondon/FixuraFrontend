@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { parseISO } from 'date-fns';
 import { Incidente } from '../../Model/Incidente';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class IncidenteService {
+export class IncidenciaService {
 
   private apiUrl = 'http://localhost:8080/api/incidente';
 
   constructor(private http: HttpClient) { }
+
+
+  saveIncidencia(request: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/save`,request).pipe(map(res =>res));
+  }
 
   getListaIncidencia(DNI_usuario: string): Observable<Incidente[]> {
     return this.http.get<Incidente[]>(`${this.apiUrl}/list/usuario/${DNI_usuario}`). pipe(

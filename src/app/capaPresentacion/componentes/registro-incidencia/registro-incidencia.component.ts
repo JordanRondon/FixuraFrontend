@@ -4,8 +4,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
 
 import { HttpClient } from '@angular/common/http';
-import { ImagenServiceService } from '../../../Service/imagen-service.service';
-import { RegistroIncidentesService } from '../../../Service/registro-incidentes.service';
+import { ImagenService } from '../../../Service/Imagen/imagen.service';
+import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
 import { Incidente } from '../../../Model/Incidente';
 @Component({
   selector: 'app-registro-incidencia',
@@ -29,7 +29,7 @@ export class RegistroIncidenciaComponent implements OnInit {
 
   @Input() dniUsuario: string | undefined;
 
-  constructor(private fb: FormBuilder,private imagenService: ImagenServiceService,private registroIncideten: RegistroIncidentesService,private http: HttpClient) {
+  constructor(private fb: FormBuilder,private imagenService: ImagenService,private registroIncideten: IncidenciaService,private http: HttpClient) {
     this.formulario = this.fb.group({
       categoria: ['', Validators.required],
       ubicacion: ['', Validators.required],

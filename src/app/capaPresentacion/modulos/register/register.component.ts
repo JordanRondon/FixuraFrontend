@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DepartamentoServiceService} from '../../../Service/departamento-service.service';
-import { RegistroUsuariosService } from '../../../Service/registro-usuarios.service';
+import { DepartamentoService} from '../../../Service/Departamento/departamento.service';
+import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -26,8 +26,8 @@ export default class RegisterComponent implements OnInit{
   formUsuario: FormGroup = new FormGroup({})
 
   constructor(
-    private departamentoService : DepartamentoServiceService,
-    private registroUsuariosService : RegistroUsuariosService
+    private departamentoService : DepartamentoService,
+    private registroUsuariosService : UsuariosService
   ){}
 
   ngOnInit(): void {
