@@ -8,7 +8,7 @@
 <!--REGISTER-->
 <div class="container">
 		<div class="container-form">
-			<form [formGroup]="formUsuario" action="" class="form" (submit)="saveUsuario()">
+			<form [formGroup]="formUsuario" action="" class="form">
 				<h2 class="title">Registrarse</h2>
         <div class="container-input">
 					<span class="material-icons">person</span>
@@ -34,24 +34,24 @@
           <span class="material-icons">map</span>
 					<select id="select-departamento" (change)="onDepartamentoChange($event)">
             <option disabled selected>Departamento</option>
-						<option *ngFor = "let departamento of listDepartamento" [value] = "departamento.idDepart">{{departamento.nameDepart}}</option>
+						<option *ngFor = "let departamento of listDepartamento" [value] = "departamento.id_departamento">{{departamento.nombre}}</option>
           </select>
 				</div>
         <div class="container-input" *ngIf="selectedDepartamento">
           <span class="material-icons">explore</span>
 					<select id="select-provincia" (change)="onProvinciaChange($event)">
             <option disabled selected>Provincia</option>
-						<option *ngFor="let provincia of listProvincia" [value] = "provincia.idProv">{{provincia.nameProv}}</option>
+						<option *ngFor="let provincia of listProvincia" [value] = "provincia.id_provincia">{{provincia.nombre}}</option>
           </select>
 				</div>
         <div class="container-input" *ngIf="selectedProvincia && selectedDepartamento">
           <span class="material-icons">location_on</span>
 					<select id="select-distrito" (change)="onDistritoChange($event)">
             <option disabled selected>Distrito</option>
-						<option *ngFor="let distrito of listDistrito" [value] = "distrito.idDist">{{distrito.nameDist}}</option>
+						<option *ngFor="let distrito of listDistrito" [value] = "distrito.id_distrito">{{distrito.nombre}}</option>
           </select>
 				</div>
-				<button type="submit" class="btn" (click)="saveUsuario()">Registrarse</button>
+				<button type="submit" class="btn" (click)="registrarUsuario()">Registrarse</button>
 				<p class="switch-animation">¿Tienes un cuenta? <a [routerLink]="['/login']"><b>Inicia Sesion</b></a></p>
 			</form>
 		</div>

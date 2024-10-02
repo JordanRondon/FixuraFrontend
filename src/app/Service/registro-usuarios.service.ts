@@ -12,8 +12,14 @@ export class RegistroUsuariosService {
 
   constructor(private httpClient: HttpClient) { }
 
-  saveUsuario(request: any): Observable<any>{
-    return this.httpClient.post<any>('http://localhost:8080/api/usuario/save', request).pipe(map(res => res));
+  registrarUsuario(usuario: any): Observable<any>{
+    return this.httpClient.post<any>(`${this.apiUrl}/register`, usuario).pipe(
+      map(res => res),
+      catchError(error => {
+        console.error('Error durante el registro', error);
+        return throwError(() => new Error('Error durante el registro'));
+      })
+    );
   }
 
   login(correo: string, contrasenia: string): Observable<any> {
