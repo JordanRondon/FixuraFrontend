@@ -19,7 +19,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
 
   @Input() incidente: Incidente | undefined;
   @Input() nombreUsuario: string | undefined;
-  isActive = false;
+  isActive: boolean = false;
   incidenciaLike: IncidenciaLike = { 
     dni: '',
     id_incidencia: -1,
