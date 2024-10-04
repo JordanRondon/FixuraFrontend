@@ -204,7 +204,7 @@
     margin: auto;
     border: 0;
 }
-  
+
 .comment-react span {
     height: 35px;
     display: flex;
@@ -215,7 +215,7 @@
     font-weight: 600;
     color: #707277;
 }
-  
+
 @keyframes ripple {
     0% {
         transform: scale(0);
@@ -226,6 +226,50 @@
         transform: scale(1);
         opacity: 0;
     }
+}
+
+/*--------------------Boton Edit---------------------*/
+.comment-react .btn-edit {
+    background-color: #24b4fb;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-react .btn-edit:after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: -2.5px;
+    top: -2.5px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    z-index: 0;
+    transform: scale(0);
+}
+
+.comment-react .btn-edit .svg-edit .path-edit {
+    fill: #ffffff;
+}
+
+.comment-react button:hover .svg-edit {
+    fill: #ffffff;
+}
+  
+.comment-react button:hover .svg-edit .path-edit {
+    stroke: #ffffff;
+    fill: #ffffff;
+}
+
+.comment-react button.active .svg-edit {
+    fill: #ffffff;
+}
+  
+.comment-react button.active .svg-edit .path-edit {
+    stroke: #ffffff;
+    fill: #ffffff;
 }
 /*--------------------------------*/
 .post-img-content {
@@ -245,4 +289,21 @@
     width: 14rem;
     object-fit: cover; /* Recorta la imagen y asegura que mantenga la proporción */
     object-position: center; /* Centra la imagen en el contenedor */
+}
+
+
+
+
+.container-edit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
 }

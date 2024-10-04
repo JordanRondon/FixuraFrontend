@@ -1,0 +1,54 @@
+<form class="card-edit">
+    <div class="card-edit__item">
+        <span>Estado</span>
+        <div class="comboBox" (click)="toggleOptionsState()">
+            <div class="comboBox__selected">{{ selectedOptionState }}</div>
+            <ul class="comboBox__options" *ngIf="isOpenState">
+              <li class="comboBox__option" *ngFor="let option of optionsState" (click)="selectOptionState(option); $event.stopPropagation()">
+                {{ option.label }}
+              </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card-edit__item">
+        <span>Categoría</span>
+        <div class="comboBox" (click)="toggleOptionsCategory()">
+            <div class="comboBox__selected">{{ selectedOptionCategory }}</div>
+            <ul class="comboBox__options" *ngIf="isOpenCategory">
+              <li class="comboBox__option" *ngFor="let option of optionsCategory" (click)="selectOptionCategory(option); $event.stopPropagation()">
+                {{ option.label }}
+              </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card-edit__ubication">
+        <span>Ubicación</span>
+        <div class="mapa">
+            <google-map
+                height="300px"
+                width="94%"
+                [center]="center" 
+                [zoom]="zoom"
+                (mapClick)="onUbicacionSeleccionada($event)">
+            </google-map>
+        </div>
+
+        <div class="input-container">
+            <input placeholder="Dirección" class="input-field" type="text">
+            <label for="input-field" class="input-label">Dirección</label>
+            <span class="input-highlight"></span>
+        </div>
+    </div>
+
+    <button type="button" class="reportes__button" (click)="closeForm()">
+      <span>
+        <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+        </svg>
+        Guardar
+      </span>
+  </button>
+</form>

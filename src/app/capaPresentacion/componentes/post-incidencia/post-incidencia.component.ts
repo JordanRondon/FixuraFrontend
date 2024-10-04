@@ -7,17 +7,25 @@ import { IncidenciaLikeService } from '../../../Service/IncidenciaLike/incidenci
 import { IncidenciaLike } from '../../../Model/IncidenciaLike';
 import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import { AdminModeratorDirective } from '../../../Auth/Directive/admin-moderator.directive';
+import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/edit-incidencia.component';
 
 @Component({
   selector: 'app-post-incidencia',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    EditIncidenciaComponent,
+    AdminModeratorDirective
+  ],
   templateUrl: './post-incidencia.component.html',
   styleUrls: ['./post-incidencia.component.css']
 })
 
 export class PostIncidenciaComponent implements OnInit, OnChanges {
-
+  
+  showFormEdit: boolean = false;
+  
   @Input() incidente: Incidente | undefined;
   @Input() nombreUsuario: string | undefined;
   isActive: boolean = false;
@@ -47,6 +55,18 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) { }
     
+
+  toggleActiveFormEdit() {
+    this.showFormEdit = !this.showFormEdit;
+  }
+
+  closeFormEdit(event: MouseEvent) {
+    // Verificar si el clic fue dentro de 'app-edit-incidencia'
+    const target = event.target as HTMLElement;
+    if (target.closest('app-edit-incidencia') === null) {
+      this.showFormEdit = false; // Cierra el formulario si se hace clic fuera
+    }
+  }
 
   toggleActive() {
     if (this.isActive) this.setDeleteLike(this.incidenciaLike);
