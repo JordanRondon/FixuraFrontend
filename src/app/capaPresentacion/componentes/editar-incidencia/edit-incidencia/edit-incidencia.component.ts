@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClient } from '@angular/common/http';
@@ -23,6 +23,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
   @Output() formEditClosed = new EventEmitter<boolean>();
   @Input() incidenteEdit: Incidente | undefined;
 
+  incidenteEditCache: Incidente | undefined;
+
   isOpenState = false; // Para controlar si las opciones están abiertas o no
   selectedOptionState: String = 'Seleccione una Opción'; // Opción seleccionada
   optionsState: Estado[] = [];
@@ -40,11 +42,13 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     private http: HttpClient,
     private estadoService: EstadoService,
     private categoriaService: CategoriaService,
-    private incidenciaService: IncidenciaService
+    private incidenciaService: IncidenciaService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     if(this.incidenteEdit) {
+      this.incidenteEditCache = JSON.parse(JSON.stringify(this.incidenteEdit)); 
       this.getNameState(this.incidenteEdit.id_estado);
       this.getNameCategory(this.incidenteEdit.id_categoria);
     }
@@ -170,5 +174,12 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
         console.log('Incidente actualizado correctamente:', response);
       }
     );
+  }
+
+  resetChanges(): void {
+    this.incidenteEdit = JSON.parse(JSON.stringify(this.incidenteEditCache));
+    this.getNameState(this.incidenteEdit?.id_estado ?? -1);
+    this.getNameCategory(this.incidenteEdit?.id_categoria ?? -1);
+    this.changeDetector.markForCheck(); // Forzar actualización de la vista
   }
 }
