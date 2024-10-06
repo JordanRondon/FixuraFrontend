@@ -8,6 +8,7 @@ import { IncidenciaLike } from '../../../Model/IncidenciaLike';
 import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import { AdminModeratorDirective } from '../../../Auth/Directive/admin-moderator.directive';
+import { CommonUserDirective } from '../../../Auth/Directive/common-user.directive';
 import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/edit-incidencia.component';
 
 @Component({
@@ -16,7 +17,8 @@ import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/ed
   imports: [
     CommonModule,
     EditIncidenciaComponent,
-    AdminModeratorDirective
+    AdminModeratorDirective,
+    CommonUserDirective
   ],
   templateUrl: './post-incidencia.component.html',
   styleUrls: ['./post-incidencia.component.css']
