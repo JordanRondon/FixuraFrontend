@@ -36,7 +36,10 @@
         </div>
 
         <div class="input-container">
-            <input placeholder="Dirección" class="input-field" type="text">
+            <input placeholder="Dirección" class="input-field" type="text"
+            [ngModel]="incidenteEdit?.ubicacion"
+            (ngModelChange)="incidenteEdit && (incidenteEdit.ubicacion = $event)"
+            [ngModelOptions]="{standalone: true}">
             <label for="input-field" class="input-label">Dirección</label>
             <span class="input-highlight"></span>
         </div>

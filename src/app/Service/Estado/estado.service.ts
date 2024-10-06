@@ -22,4 +22,10 @@ export class EstadoService {
       )))
     );
   }
+
+  getNameState(id_state: number): Observable<Estado> {
+    return this.http.get<Estado>(this.apiUrl + '/name/' + id_state).pipe(
+      map((data: Estado) => data)
+    );
+  }
 }

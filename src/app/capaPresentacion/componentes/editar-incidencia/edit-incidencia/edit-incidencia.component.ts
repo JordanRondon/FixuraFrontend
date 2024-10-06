@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnChanges, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClient } from '@angular/common/http';
@@ -6,25 +6,28 @@ import { EstadoService } from '../../../../Service/Estado/estado.service';
 import { Estado } from '../../../../Model/Estado';
 import { CategoriaService } from '../../../../Service/Categoria/categoria.service';
 import { Categoria } from '../../../../Model/Categoria';
+import { Incidente } from '../../../../Model/Incidente';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-edit-incidencia',
   standalone: true,
-  imports: [ CommonModule, GoogleMapsModule ],
+  imports: [ CommonModule, GoogleMapsModule, FormsModule ],
   templateUrl: './edit-incidencia.component.html',
   styleUrl: './edit-incidencia.component.css'
 })
 export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit{
 
   @Output() formEditClosed = new EventEmitter<boolean>();
+  @Input() incidenteEdit: Incidente | undefined;
 
   isOpenState = false; // Para controlar si las opciones están abiertas o no
-  selectedOptionState: string = 'Selecciona una opción'; // Opción seleccionada
+  selectedOptionState: String = 'Seleccione una Opción'; // Opción seleccionada
   optionsState: Estado[] = [];
 
   isOpenCategory = false; // Para controlar si las opciones están abiertas o no
-  selectedOptionCategory: string = 'Selecciona una opción'; // Opción seleccionada
+  selectedOptionCategory: String = 'Seleccione una Opción'; // Opción seleccionada
   optionsCategory: Categoria[] = [];
 
   apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X'; 
@@ -39,6 +42,10 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
   ) {}
 
   ngOnInit() {
+    if(this.incidenteEdit) {
+      this.getNameState(this.incidenteEdit.id_estado);
+      this.getNameCategory(this.incidenteEdit.id_categoria);
+    }
     this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
     this.zoom = 17; // Reestablece el nivel de zoom
     console.log('Centro:', this.center);
@@ -66,8 +73,10 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     this.isOpenState = !this.isOpenState;
   }
 
-  selectOptionState(option: any) {
+  selectOptionState(option: Estado) {
     this.selectedOptionState = option.nombre;
+    if (this.incidenteEdit)
+      this.incidenteEdit.id_estado = option.id_estado;
     this.isOpenState = false;
   }
 
@@ -75,8 +84,10 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     this.isOpenCategory = !this.isOpenCategory;
   }
 
-  selectOptionCategory(option: any) {
+  selectOptionCategory(option: Categoria) {
     this.selectedOptionCategory = option.nombre;
+    if (this.incidenteEdit)
+      this.incidenteEdit.id_categoria = option.id_categoria;
     this.isOpenCategory = false;
   }
 
@@ -131,5 +142,17 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
         console.error('ERROR al obtener lista de Categorias:', error);
       }
     );
+  }
+
+  getNameState(id_state: number): void {
+    this.estadoService.getNameState(id_state).subscribe(nameState => {
+      this.selectedOptionState = nameState.nombre;
+    });
+  }
+
+  getNameCategory(id_category: number): void {
+    this.categoriaService.getNameCategory(id_category).subscribe(nameCategory => {
+      this.selectedOptionCategory = nameCategory.nombre;
+    });
   }
 }

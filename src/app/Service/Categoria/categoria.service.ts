@@ -22,4 +22,10 @@ export class CategoriaService {
       )))
     );
   }
+
+  getNameCategory(id_category: number): Observable<Categoria> {
+    return this.http.get<Categoria>(this.apiUrl + '/name/' + id_category).pipe(
+      map((data: Categoria) => data)
+    );
+  }
 }
