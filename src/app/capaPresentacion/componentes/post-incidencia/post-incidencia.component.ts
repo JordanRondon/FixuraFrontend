@@ -138,4 +138,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     );
   }
 
+  deleteIncidencia(): void {
+    return
+  }
 }

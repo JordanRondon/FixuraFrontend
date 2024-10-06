@@ -228,6 +228,51 @@
     }
 }
 
+/*--------------------Boton delete---------------------*/
+.comment-react .btn-delete {
+    background-color: #d30707;;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-react .btn-delete:after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: -2.5px;
+    top: -2.5px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    z-index: 0;
+    transform: scale(0);
+}
+
+.comment-react .btn-delete .svg-delete .path-delete {
+    fill: #ffffff;
+}
+
+.comment-react button:hover .svg-edit {
+    fill: #ffffff;
+}
+  
+.comment-react button:hover .svg-delete .path-delete {
+    stroke: #ffffff;
+    fill: #ffffff;
+}
+
+.comment-react button.active .svg-delete {
+    fill: #ffffff;
+}
+  
+.comment-react button.active .svg-delete .path-delete {
+    stroke: #ffffff;
+    fill: #ffffff;
+}
+/*--------------------------------*/
+
 /*--------------------Boton Edit---------------------*/
 .comment-react .btn-edit {
     background-color: #24b4fb;
