@@ -63,4 +63,7 @@ export class IncidenciaService {
     return this.http.put<any>('http://localhost:8080/api/incidente/updateIncidencia', incidente).pipe();
   }
 
+  deleteIncidencia(id_incidencia: number): Observable<any> {
+    return this.http.put<any>(this.apiUrl + '/delete/' + id_incidencia, null).pipe();
+  }
 }

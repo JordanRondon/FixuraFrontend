@@ -141,6 +141,15 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   }
 
   deleteIncidencia(): void {
-    return
+    if(this.incidente) {
+      const confirmacion = window.confirm('¿Estás seguro que quieres eliminar esta incidencia?');
+      if(confirmacion) {
+        this.incidenciaService.deleteIncidencia(this.incidente.id_incidencia).subscribe(
+          response => {
+            console.log('Incidente eliminado correctamente:', response);
+          }
+        );
+      }
+    }
   }
 }
