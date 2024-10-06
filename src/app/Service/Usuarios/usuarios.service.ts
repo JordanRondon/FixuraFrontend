@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError, switchMap } from 'rxjs';
 import { Usuario } from '../../Model/Usuario';
 
 @Injectable({
@@ -13,11 +13,28 @@ export class UsuariosService {
   constructor(private httpClient: HttpClient) { }
 
   registrarUsuario(usuario: any): Observable<any>{
-    return this.httpClient.post<any>(`${this.apiUrl}/register`, usuario).pipe(
-      map(res => res),
-      catchError(error => {
-        console.error('Error durante el registro', error);
-        return throwError(() => new Error('Error durante el registro'));
+    if(!this.validateEmail(usuario.correo)){
+      alert('Correo no valido');
+      return throwError(() => new Error('Correo no válido'));
+    }
+    
+    return this.checkExistEmail(usuario.correo).pipe(
+      switchMap(exists => {
+          if (exists) {
+              alert('El correo ingresado ya existe');
+              return throwError(() => new Error('El correo ya existe'));
+          }
+          
+          // Si el correo no existe, procede a registrar
+          return this.httpClient.post<any>(`${this.apiUrl}/register`, usuario).pipe(
+              map(res => res),
+              catchError(() => {
+                  return throwError(() => new Error('Error durante el registro'));
+              })
+          );
+      }),
+      catchError(() => {
+          return throwError(() => new Error('Error al verificar existencia de email'));
       })
     );
   }
@@ -52,4 +69,19 @@ export class UsuariosService {
       })
     );
   }
+
+  checkExistEmail(correo: string): Observable<boolean>{
+    return this.httpClient.post<boolean>(`${this.apiUrl}/existEmail`, correo).pipe(
+      catchError(error => {
+          console.error('Error al verificar existencia de email', error);
+          return throwError(() => new Error('Error al verificar existencia de email'));
+      })
+    );
+  }
+
+  private validateEmail(email: string) {
+    const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@(gmail|outlook|hotmail)\.(com|es|net)$/;
+    return emailRegex.test(email);
+  }
+  
 }

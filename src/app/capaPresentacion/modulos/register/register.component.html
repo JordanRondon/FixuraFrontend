@@ -16,7 +16,7 @@
 				</div>
         <div class="container-input">
 					<span class="material-icons">badge</span>
-					<input type="text" placeholder="DNI" formControlName="dni">
+					<input type="text" inputmode="numeric" placeholder="DNI" formControlName="dni" (input)="onDniInput($event)">
 				</div>
 				<div class="container-input">
 					<span class="material-icons">mail</span>

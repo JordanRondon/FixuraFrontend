@@ -55,7 +55,17 @@ export default class RegisterComponent implements OnInit{
     }
 
     // Verificar si el formulario es válido
-    if (this.formUsuario.invalid) {
+    const formValues = this.formUsuario.value;
+    if (
+      !formValues.dni ||
+      !formValues.nombre ||
+      !formValues.correo ||
+      !formValues.contrasenia ||
+      !formValues.confirmarContrasenia ||
+      this.selectedDepartamento === null ||
+      this.selectedProvincia === null ||
+      this.selectedDistrito === null
+    ) {
       alert('Por favor, complete todos los campos correctamente');
       return;
     }
@@ -137,4 +147,9 @@ export default class RegisterComponent implements OnInit{
     }
   }
 
+  //FUNCION QUE PERMITE DIGITAR SOLO NUMEROS
+  onDniInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    target.value = target.value.replace(/[^0-9]/g, '');
+  }
 }
