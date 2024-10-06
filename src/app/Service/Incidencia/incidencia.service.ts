@@ -54,4 +54,8 @@ export class IncidenciaService {
   getTotalVotos(id_incidencia: number): Observable<number> {
     return this.http.get<number>(this.apiUrl + '/totalVotos/' + id_incidencia);
   }
+
+  getNameUserIncidencia(id_incidencia: number): Observable<String> {
+    return this.http.get<String>(this.apiUrl + '/name/usuario/' + id_incidencia, { responseType: 'text' as 'json' })
+  }
 }

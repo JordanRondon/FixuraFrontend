@@ -19,7 +19,8 @@ export default class MuroAdministradorComponent implements OnInit{
   
   mostrarHerramientas: boolean = true;
   incidentes: Incidente[] = [];
-  dataUsuario: Usuario | null  = null;
+  User: { [dni: string]: String } = {};
+  dataUsuario: Usuario | undefined;
 
   constructor(
     private registerUserService: UsuariosService,
@@ -57,10 +58,19 @@ export default class MuroAdministradorComponent implements OnInit{
       (data: Incidente[]) => {
         this.incidentes = data;
         console.log(this.incidentes);
+        this.getNameUserIncidencia(this.incidentes);
       },
       (error) => {
         console.error('Error al obtener los incidentes:', error);
       }
     );
+  }
+
+  getNameUserIncidencia(listIncidencia: Incidente[]): void {
+    for(let incidencia of listIncidencia) {
+      this.incidenteService.getNameUserIncidencia(incidencia.id_incidente).subscribe(nameUser => {
+        this.User[incidencia.DNI_usuario] = nameUser;
+      });
+    }
   }
 }

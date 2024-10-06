@@ -27,7 +27,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   showFormEdit: boolean = false;
   
   @Input() incidente: Incidente | undefined;
-  @Input() nombreUsuario: string | undefined;
+  @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
   incidenciaLike: IncidenciaLike = { 
     dni: '',

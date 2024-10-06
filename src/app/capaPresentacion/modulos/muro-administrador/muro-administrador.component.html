@@ -26,7 +26,10 @@
             </div>
         </aside>
         <section class="muro__col-mid" *ngIf="incidentes.length > 0; else noData">
-            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente" [nombreUsuario]="dataUsuario?.nombre"></app-post-incidencia>
+            <app-post-incidencia 
+            *ngFor="let incidente of incidentes"
+            [incidente]="incidente"
+            [nombreUsuario]="User[incidente.DNI_usuario]"></app-post-incidencia>
         </section>
         <ng-template #noData>
             <p>No hay incidentes para mostrar.</p>
