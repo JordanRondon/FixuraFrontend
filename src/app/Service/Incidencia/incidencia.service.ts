@@ -35,6 +35,22 @@ export class IncidenciaService {
     );
   }
 
+  getListaIncidenciaMunicipalidad(id_distrito: number): Observable<Incidente[]> {
+    return this.http.get<Incidente[]>(`${this.apiUrl}/list/municipalidad/${id_distrito}`). pipe(
+      map((data: any[]) => data.map(item => new Incidente(
+        item.id_incidencia,
+        parseISO(item.fecha_publicacion),
+        item.descripcion,
+        item.ubicacion,
+        item.imagen,
+        item.total_votos,
+        item.id_estado,
+        item.dni,
+        item.id_categoria
+      )))
+    );
+  }
+
   getTotalVotos(id_incidencia: number): Observable<number> {
     return this.http.get<number>(this.apiUrl + '/totalVotos/' + id_incidencia);
   }

@@ -48,7 +48,11 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
         id_incidencia: this.incidente.id_incidente ?? -1,
         hour_liked: new Date()
       };
-      this.isLike(this.incidenciaLike);
+      if (this.authService.getToken_Id_rol != null && this.authService.getToken_Id_rol() === 3) {
+        // si el rol es usuario entonces verificar que se dio like a la incidencia
+        this.isLike(this.incidenciaLike);
+      }
+        
       this.getVotos(this.incidente.id_incidente);
     }
   }

@@ -5,7 +5,7 @@
             <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
         </div>
         <div class = "portada-perfil-inferior">
-            <h2 class="reportes__title">Municipalidad Provincial de Trujillo</h2>
+            <h2 class="reportes__title">{{dataUsuario?.nombre}}</h2>
             <button type="button" class="btn btn-primary reportes__button">
                 <i class="material-icons">edit</i>
                 Editar Perfil
@@ -25,12 +25,12 @@
                 </div>
             </div>
         </aside>
-        <section class="muro__col-mid">
-            <app-post-incidencia></app-post-incidencia>
-            <app-post-incidencia></app-post-incidencia>
-            <app-post-incidencia></app-post-incidencia>
-            <app-post-incidencia></app-post-incidencia>
+        <section class="muro__col-mid" *ngIf="incidentes.length > 0; else noData">
+            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente" [nombreUsuario]="dataUsuario?.nombre"></app-post-incidencia>
         </section>
+        <ng-template #noData>
+            <p>No hay incidentes para mostrar.</p>
+        </ng-template>
         <aside class="muro__col-der">
             <div class = "panel-noticias">
                 <h3>Panel Extra</h3>
