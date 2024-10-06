@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 import { parseISO } from 'date-fns';
 import { Incidente } from '../../Model/Incidente';
 
@@ -58,4 +58,9 @@ export class IncidenciaService {
   getNameUserIncidencia(id_incidencia: number): Observable<String> {
     return this.http.get<String>(this.apiUrl + '/name/usuario/' + id_incidencia, { responseType: 'text' as 'json' })
   }
+
+  updateIncidencia(incidente: Incidente): Observable<any> {
+    return this.http.put<any>('http://localhost:8080/api/incidente/updateIncidencia', incidente).pipe();
+  }
+
 }

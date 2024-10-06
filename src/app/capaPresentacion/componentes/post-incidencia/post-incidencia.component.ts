@@ -45,7 +45,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     if (this.incidente) {
       this.incidenciaLike = {
         dni: this.authService.getToken_dni() ?? '',
-        id_incidencia: this.incidente.id_incidente ?? -1,
+        id_incidencia: this.incidente.id_incidencia ?? -1,
         hour_liked: new Date()
       };
       if (this.authService.getToken_Id_rol != null && this.authService.getToken_Id_rol() === 3) {
@@ -53,7 +53,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
         this.isLike(this.incidenciaLike);
       }
         
-      this.getVotos(this.incidente.id_incidente);
+      this.getVotos(this.incidente.id_incidencia);
     }
   }
 
@@ -91,7 +91,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
       (respuesta) => {
         console.log('Like REGISTRADO correctamente:', respuesta);
         if (this.incidente)
-          this.getVotos(this.incidente.id_incidente);
+          this.getVotos(this.incidente.id_incidencia);
       },
       (error) => {
         console.error('ERROR al REGISTRAR el Like:', error);
@@ -105,7 +105,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
       (respuesta) => {
         console.log('Like ELIMINADO correctamente:', respuesta);
         if (this.incidente)
-          this.getVotos(this.incidente.id_incidente);
+          this.getVotos(this.incidente.id_incidencia);
       },
       (error) => {
         console.error('ERROR al ELIMINAR el Like:', error);

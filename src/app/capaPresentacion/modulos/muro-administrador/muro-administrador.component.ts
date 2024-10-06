@@ -68,8 +68,8 @@ export default class MuroAdministradorComponent implements OnInit{
 
   getNameUserIncidencia(listIncidencia: Incidente[]): void {
     for(let incidencia of listIncidencia) {
-      this.incidenteService.getNameUserIncidencia(incidencia.id_incidente).subscribe(nameUser => {
-        this.User[incidencia.DNI_usuario] = nameUser;
+      this.incidenteService.getNameUserIncidencia(incidencia.id_incidencia).subscribe(nameUser => {
+        this.User[incidencia.dni] = nameUser;
       });
     }
   }

@@ -29,7 +29,7 @@
             <app-post-incidencia 
             *ngFor="let incidente of incidentes"
             [incidente]="incidente"
-            [nombreUsuario]="User[incidente.DNI_usuario]"></app-post-incidencia>
+            [nombreUsuario]="User[incidente.dni]"></app-post-incidencia>
         </section>
         <ng-template #noData>
             <p>No hay incidentes para mostrar.</p>

@@ -8,6 +8,7 @@ import { CategoriaService } from '../../../../Service/Categoria/categoria.servic
 import { Categoria } from '../../../../Model/Categoria';
 import { Incidente } from '../../../../Model/Incidente';
 import { FormsModule } from '@angular/forms';
+import { IncidenciaService } from '../../../../Service/Incidencia/incidencia.service';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
   constructor(
     private http: HttpClient,
     private estadoService: EstadoService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private incidenciaService: IncidenciaService
   ) {}
 
   ngOnInit() {
@@ -154,5 +156,19 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     this.categoriaService.getNameCategory(id_category).subscribe(nameCategory => {
       this.selectedOptionCategory = nameCategory.nombre;
     });
+  }
+
+  setIncidencia(): void {
+
+    if (!this.incidenteEdit) {
+      console.error('Incidente no está definido');
+      return;
+    }
+    
+    this.incidenciaService.updateIncidencia(this.incidenteEdit).subscribe(
+      response => {
+        console.log('Incidente actualizado correctamente:', response);
+      }
+    );
   }
 }

@@ -45,13 +45,24 @@
         </div>
     </div>
 
-    <button type="button" class="reportes__button" (click)="closeForm()">
-      <span>
-        <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
-        </svg>
-        Guardar
-      </span>
-  </button>
+    <div class="button-container">
+      <button type="button" class="clear__button " >
+        <span>
+          <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+          </svg>
+          Limpiar
+        </span>
+      </button>
+      <button type="button" class="reportes__button" (click)="setIncidencia(); closeForm()">
+        <span>
+          <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+          </svg>
+          Guardar
+        </span>
+      </button>
+    </div>
 </form>
