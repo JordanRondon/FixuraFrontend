@@ -2,6 +2,8 @@ import { AfterViewInit, Component, EventEmitter, OnChanges, OnInit, Output } fro
 import { CommonModule } from '@angular/common';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClient } from '@angular/common/http';
+import { EstadoService } from '../../../../Service/Estado/estado.service';
+import { Estado } from '../../../../Model/Estado';
 
 
 @Component({
@@ -17,11 +19,7 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
 
   isOpenState = false; // Para controlar si las opciones están abiertas o no
   selectedOptionState: string = 'Selecciona una opción'; // Opción seleccionada
-  optionsState = [
-    { label: 'Estado 1', value: 1 },
-    { label: 'Estado 2', value: 2 },
-    { label: 'Estado 3', value: 3 }
-  ];
+  optionsState: Estado[] = [];
 
   isOpenCategory = false; // Para controlar si las opciones están abiertas o no
   selectedOptionCategory: string = 'Selecciona una opción'; // Opción seleccionada
@@ -37,7 +35,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
   zoom = 17;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private estadoService: EstadoService
   ) {}
 
   ngOnInit() {
@@ -46,6 +45,7 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     console.log('Centro:', this.center);
     console.log('Zoom:', this.zoom);
     document.addEventListener('click', this.closeOptions.bind(this));
+    this.getListEstate()
   }
 
   ngOnChanges() {
@@ -67,7 +67,7 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   selectOptionState(option: any) {
-    this.selectedOptionState = option.label;
+    this.selectedOptionState = option.nombre;
     this.isOpenState = false;
   }
 
@@ -109,5 +109,16 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
         console.error('Error al obtener la dirección');
       }
     });
+  }
+
+  getListEstate(): void {
+    this.estadoService.getListEstate().subscribe(
+      (respuesta) => {
+        this.optionsState = respuesta;
+      },
+      (error) => {
+        console.error('ERROR al obtener listaa de Estados:', error);
+      }
+    );
   }
 }

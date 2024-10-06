@@ -5,7 +5,7 @@
             <div class="comboBox__selected">{{ selectedOptionState }}</div>
             <ul class="comboBox__options" *ngIf="isOpenState">
               <li class="comboBox__option" *ngFor="let option of optionsState" (click)="selectOptionState(option); $event.stopPropagation()">
-                {{ option.label }}
+                {{ option.nombre }}
               </li>
             </ul>
         </div>
