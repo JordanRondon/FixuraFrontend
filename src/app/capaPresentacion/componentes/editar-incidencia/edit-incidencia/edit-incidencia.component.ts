@@ -4,6 +4,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClient } from '@angular/common/http';
 import { EstadoService } from '../../../../Service/Estado/estado.service';
 import { Estado } from '../../../../Model/Estado';
+import { CategoriaService } from '../../../../Service/Categoria/categoria.service';
+import { Categoria } from '../../../../Model/Categoria';
 
 
 @Component({
@@ -23,11 +25,7 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
 
   isOpenCategory = false; // Para controlar si las opciones están abiertas o no
   selectedOptionCategory: string = 'Selecciona una opción'; // Opción seleccionada
-  optionsCategory = [
-    { label: 'Categoría 1', value: 1 },
-    { label: 'Categoría 2', value: 2 },
-    { label: 'Categoría 3', value: 3 }
-  ];
+  optionsCategory: Categoria[] = [];
 
   apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X'; 
   center: google.maps.LatLngLiteral = { lat: -8.1116, lng: -79.0288 };
@@ -36,7 +34,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
 
   constructor(
     private http: HttpClient,
-    private estadoService: EstadoService
+    private estadoService: EstadoService,
+    private categoriaService: CategoriaService
   ) {}
 
   ngOnInit() {
@@ -45,7 +44,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     console.log('Centro:', this.center);
     console.log('Zoom:', this.zoom);
     document.addEventListener('click', this.closeOptions.bind(this));
-    this.getListEstate()
+    this.getListEstate();
+    this.getListCategoria();
   }
 
   ngOnChanges() {
@@ -76,7 +76,7 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   selectOptionCategory(option: any) {
-    this.selectedOptionCategory = option.label;
+    this.selectedOptionCategory = option.nombre;
     this.isOpenCategory = false;
   }
 
@@ -112,12 +112,23 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   getListEstate(): void {
-    this.estadoService.getListEstate().subscribe(
+    this.estadoService.getListState().subscribe(
       (respuesta) => {
         this.optionsState = respuesta;
       },
       (error) => {
-        console.error('ERROR al obtener listaa de Estados:', error);
+        console.error('ERROR al obtener lista de Estados:', error);
+      }
+    );
+  }
+
+  getListCategoria(): void {
+    this.categoriaService.getListCategory().subscribe(
+      (respuesta) => {
+        this.optionsCategory = respuesta;
+      },
+      (error) => {
+        console.error('ERROR al obtener lista de Categorias:', error);
       }
     );
   }

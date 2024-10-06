@@ -17,7 +17,7 @@
             <div class="comboBox__selected">{{ selectedOptionCategory }}</div>
             <ul class="comboBox__options" *ngIf="isOpenCategory">
               <li class="comboBox__option" *ngFor="let option of optionsCategory" (click)="selectOptionCategory(option); $event.stopPropagation()">
-                {{ option.label }}
+                {{ option.nombre }}
               </li>
             </ul>
         </div>
