@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 import { parseISO } from 'date-fns';
 import { Incidente } from '../../Model/Incidente';
 
@@ -35,7 +35,35 @@ export class IncidenciaService {
     );
   }
 
+  getListaIncidenciaMunicipalidad(id_distrito: number): Observable<Incidente[]> {
+    return this.http.get<Incidente[]>(`${this.apiUrl}/list/municipalidad/${id_distrito}`). pipe(
+      map((data: any[]) => data.map(item => new Incidente(
+        item.id_incidencia,
+        parseISO(item.fecha_publicacion),
+        item.descripcion,
+        item.ubicacion,
+        item.imagen,
+        item.total_votos,
+        item.id_estado,
+        item.dni,
+        item.id_categoria
+      )))
+    );
+  }
+
   getTotalVotos(id_incidencia: number): Observable<number> {
     return this.http.get<number>(this.apiUrl + '/totalVotos/' + id_incidencia);
+  }
+
+  getNameUserIncidencia(id_incidencia: number): Observable<String> {
+    return this.http.get<String>(this.apiUrl + '/name/usuario/' + id_incidencia, { responseType: 'text' as 'json' })
+  }
+
+  updateIncidencia(incidente: Incidente): Observable<any> {
+    return this.http.put<any>('http://localhost:8080/api/incidente/updateIncidencia', incidente).pipe();
+  }
+
+  deleteIncidencia(id_incidencia: number): Observable<any> {
+    return this.http.put<any>(this.apiUrl + '/delete/' + id_incidencia, null).pipe();
   }
 }

@@ -7,19 +7,29 @@ import { IncidenciaLikeService } from '../../../Service/IncidenciaLike/incidenci
 import { IncidenciaLike } from '../../../Model/IncidenciaLike';
 import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import { AdminModeratorDirective } from '../../../Auth/Directive/admin-moderator.directive';
+import { CommonUserDirective } from '../../../Auth/Directive/common-user.directive';
+import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/edit-incidencia.component';
 
 @Component({
   selector: 'app-post-incidencia',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    EditIncidenciaComponent,
+    AdminModeratorDirective,
+    CommonUserDirective
+  ],
   templateUrl: './post-incidencia.component.html',
   styleUrls: ['./post-incidencia.component.css']
 })
 
 export class PostIncidenciaComponent implements OnInit, OnChanges {
-
+  
+  showFormEdit: boolean = false;
+  
   @Input() incidente: Incidente | undefined;
-  @Input() nombreUsuario: string | undefined;
+  @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
   incidenciaLike: IncidenciaLike = { 
     dni: '',
@@ -37,16 +47,32 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     if (this.incidente) {
       this.incidenciaLike = {
         dni: this.authService.getToken_dni() ?? '',
-        id_incidencia: this.incidente.id_incidente ?? -1,
+        id_incidencia: this.incidente.id_incidencia ?? -1,
         hour_liked: new Date()
       };
-      this.isLike(this.incidenciaLike);
-      this.getVotos(this.incidente.id_incidente);
+      if (this.authService.getToken_Id_rol != null && this.authService.getToken_Id_rol() === 3) {
+        // si el rol es usuario entonces verificar que se dio like a la incidencia
+        this.isLike(this.incidenciaLike);
+      }
+        
+      this.getVotos(this.incidente.id_incidencia);
     }
   }
 
   ngOnChanges(changes: SimpleChanges) { }
     
+
+  toggleActiveFormEdit() {
+    this.showFormEdit = !this.showFormEdit;
+  }
+
+  closeFormEdit(event: MouseEvent) {
+    // Verificar si el clic fue dentro de 'app-edit-incidencia'
+    const target = event.target as HTMLElement;
+    if (target.closest('app-edit-incidencia') === null) {
+      this.showFormEdit = false; // Cierra el formulario si se hace clic fuera
+    }
+  }
 
   toggleActive() {
     if (this.isActive) this.setDeleteLike(this.incidenciaLike);
@@ -67,7 +93,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
       (respuesta) => {
         console.log('Like REGISTRADO correctamente:', respuesta);
         if (this.incidente)
-          this.getVotos(this.incidente.id_incidente);
+          this.getVotos(this.incidente.id_incidencia);
       },
       (error) => {
         console.error('ERROR al REGISTRAR el Like:', error);
@@ -81,7 +107,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
       (respuesta) => {
         console.log('Like ELIMINADO correctamente:', respuesta);
         if (this.incidente)
-          this.getVotos(this.incidente.id_incidente);
+          this.getVotos(this.incidente.id_incidencia);
       },
       (error) => {
         console.error('ERROR al ELIMINAR el Like:', error);
@@ -114,4 +140,16 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     );
   }
 
+  deleteIncidencia(): void {
+    if(this.incidente) {
+      const confirmacion = window.confirm('¿Estás seguro que quieres eliminar esta incidencia?');
+      if(confirmacion) {
+        this.incidenciaService.deleteIncidencia(this.incidente.id_incidencia).subscribe(
+          response => {
+            console.log('Incidente eliminado correctamente:', response);
+          }
+        );
+      }
+    }
+  }
 }
