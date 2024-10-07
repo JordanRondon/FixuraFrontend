@@ -58,6 +58,16 @@ nav {
   justify-content: space-between;
 }
 
+nav .logo {
+  display: flex;
+  align-items: center;
+}
+
+nav .logo img {
+  width: 100px;
+  margin-right: 10px;
+}
+
 nav .logo a {
   font-size: 1.5rem;
   font-weight: 600;
