@@ -10,6 +10,8 @@ import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import { AdminModeratorDirective } from '../../../Auth/Directive/admin-moderator.directive';
 import { CommonUserDirective } from '../../../Auth/Directive/common-user.directive';
 import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/edit-incidencia.component';
+import { CategoriaService } from '../../../Service/Categoria/categoria.service';
+import { Categoria } from '../../../Model/Categoria';
 
 @Component({
   selector: 'app-post-incidencia',
@@ -36,11 +38,13 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     id_incidencia: -1,
     hour_liked: new Date()
   };
+  categoryName: string='';
 
   constructor(
     private incidenciaLikeService: IncidenciaLikeService,
     private incidenciaService: IncidenciaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private categoriaService: CategoriaService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +58,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
         // si el rol es usuario entonces verificar que se dio like a la incidencia
         this.isLike(this.incidenciaLike);
       }
-        
+
+      this.getNameCategory(this.incidente.id_categoria);
       this.getVotos(this.incidente.id_incidencia);
     }
   }
@@ -151,5 +156,16 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
         );
       }
     }
+  }
+
+  getNameCategory(id_category: number): void{
+    this.categoriaService.getNameCategory(id_category).subscribe(
+      (category: Categoria) => {
+        this.categoryName = category.nombre;
+      },
+      (error) => {
+        console.error('ERROR al OBTENER nombre de Categoria:', error);
+      }
+    );
   }
 }
