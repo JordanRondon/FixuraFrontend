@@ -26,5 +26,9 @@ export const routes: Routes = [
         path: 'muro-usuario',
         loadComponent: () => import('./capaPresentacion/modulos/muro-usuario/muro-usuario.component'),
         canActivate: [authGuard, commonUserGuard],
+    },
+    {
+        path: 'verify-email',
+        loadComponent: () => import('./capaPresentacion/componentes/email-verification/email-verification.component'),
     }
 ];

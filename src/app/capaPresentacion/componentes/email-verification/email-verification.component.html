@@ -1,0 +1,13 @@
+<nav>
+  <div class="nav__content">
+    <div class="logo"><a href="#">Fixura</a></div>
+  </div>
+</nav>
+
+<div class="verification-container">
+  <h2>{{message}}</h2>
+  
+  <div *ngIf="success">
+    <button class="btn" (click)="redirectToLogin()">Ir al Login</button>
+  </div>
+</div>
