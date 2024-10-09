@@ -1,5 +1,5 @@
 .card-edit {
-    height: 40rem;
+    height: auto;
     width: 25rem;
     padding: 1rem;
     background-color: white;
@@ -9,11 +9,14 @@
     flex-direction: column;
 }
 
+.card-edit > * {
+    margin-bottom: 1rem; /* Espacio inferior entre cada elemento */
+}
+
 /*-----------------ComboBox--------------*/
 .comboBox {
     position: relative;
-    width: 200px;
-    font-family: Arial, sans-serif;
+    width: 100%;
 }
 
 .comboBox__selected {
@@ -22,6 +25,8 @@
     padding: 10px;
     cursor: pointer;
     border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .comboBox__options {
@@ -48,18 +53,27 @@
     background-color: #007bff;
     color: white;
 }
+
+.rotate-arrow {
+    transform: rotate(180deg); /* Rota la flecha 180 grados */
+    transition: transform 0.3s ease; /* Agrega una transición suave */
+}
+
+.comboBox__selected svg {
+    transition: transform 0.3s ease;
+}
 /*----------------------------------------*/
 
 .card-edit__ubication {
     width: 100%; 
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .mapa {
     display: flex;
     justify-content: center;
     height: 300px;
-    width: 94%;
+    width: 100%;
 }
 
 .mapa google-map {
@@ -115,7 +129,6 @@
   /* Input field:focus styles */
 .input-field:focus + .input-label {
     top: -20px;
-    font-size: 12px;
     color: #24b4fb;
 }
   
@@ -186,4 +199,8 @@
     background-color: #a50000;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
     transform: translateY(2px);
+}
+
+.clear__button svg,  .reportes__button svg{
+    margin-right: 10px;
 }

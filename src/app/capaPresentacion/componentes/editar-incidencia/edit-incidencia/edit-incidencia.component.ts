@@ -77,6 +77,7 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
 
   toggleOptionsState() {
     this.isOpenState = !this.isOpenState;
+    this.isOpenCategory = false;
   }
 
   selectOptionState(option: Estado) {
