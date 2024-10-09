@@ -31,6 +31,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   showFormEdit: boolean = false;
   
   @Input() incidente: Incidente | undefined;
+  incidenteCopy: Incidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
   incidenciaLike: IncidenciaLike = { 
@@ -49,6 +50,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     if (this.incidente) {
+      this.incidenteCopy = JSON.parse(JSON.stringify(this.incidente)); 
       this.incidenciaLike = {
         dni: this.authService.getToken_dni() ?? '',
         id_incidencia: this.incidente.id_incidencia ?? -1,
