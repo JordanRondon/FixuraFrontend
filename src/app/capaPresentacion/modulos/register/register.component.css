@@ -59,12 +59,13 @@ nav .logo a:hover {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 800px;
-  height: 600px;
+  height: auto;
   max-width: 780px;
   overflow: hidden;
-  padding: 20px;
+  padding: 30px 20px;
   background-color: #fff;
   border-radius: 10px;
+  align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -85,13 +86,18 @@ nav .logo a:hover {
   width: 600px;
   height: 100%;
   margin: 7px 30px;
+  font-size: 25px;
+  color: #000;
 }
 
 /*Boton del formulario*/
-.container-form h2{
+.title{
+  width: auto;
+  height: auto;
   font-size: 25px;
   font-weight: 700;
   color: #000;
+  margin-bottom: 10px;
 }
 
 .container-form form{
@@ -159,7 +165,7 @@ p{
 /*Boton del formulario*/
 .btn{
   width: 150px;
-  height: 80%;
+  height: 50px;
   border: none;
   outline: none;
   border-radius: 50px;

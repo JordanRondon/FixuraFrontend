@@ -11,10 +11,6 @@
 			<form [formGroup]="formUsuario" action="" class="form">
 				<h2 class="title">Registrarse</h2>
         <div class="container-input">
-					<span class="material-icons">person</span>
-					<input type="text" placeholder="Nombre" formControlName="nombre">
-				</div>
-        <div class="container-input">
 					<span class="material-icons">badge</span>
 					<input type="text" inputmode="numeric" placeholder="DNI" formControlName="dni" (input)="onDniInput($event)" maxlength="8">
 				</div>
