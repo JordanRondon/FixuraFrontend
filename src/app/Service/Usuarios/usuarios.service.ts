@@ -12,29 +12,30 @@ export class UsuariosService {
 
   constructor(private httpClient: HttpClient) { }
 
-  registrarUsuario(usuario: any): Observable<any>{
-    if(!this.validateEmail(usuario.correo)){
-      alert('Correo no valido');
+  registrarUsuario(usuario: any): Observable<any> {
+    if (!this.validateEmail(usuario.correo)) {
+      alert('Correo no válido');
       return throwError(() => new Error('Correo no válido'));
     }
-    
+  
     return this.checkExistEmail(usuario.correo).pipe(
-      switchMap(exists => {
-          if (exists) {
-              alert('El correo ingresado ya existe');
-              return throwError(() => new Error('El correo ya existe'));
-          }
-          
-          // Si el correo no existe, procede a registrar
-          return this.httpClient.post<any>(`${this.apiUrl}/register`, usuario).pipe(
-              map(res => res),
-              catchError(() => {
-                  return throwError(() => new Error('Error durante el registro'));
-              })
-          );
-      }),
-      catchError(() => {
-          return throwError(() => new Error('Error al verificar existencia de email'));
+      switchMap((emailResponse: any) => {
+        if (emailResponse.success) {
+          alert(emailResponse.menssage); // Muestra el mensaje del correo
+          return throwError(() => new Error('Correo ya existe'));
+        }
+  
+        return this.verifyDni(usuario.dni).pipe(
+          switchMap((dniResponse: any) => {
+            if (!dniResponse.success) {
+              alert(dniResponse.menssage); // Muestra el mensaje del DNI
+              return throwError(() => new Error('DNI no válido'));
+            }
+  
+            // Aquí procedes con el registro si todo es válido
+            return this.httpClient.post<any>(`${this.apiUrl}/register`, usuario);
+          })
+        );
       })
     );
   }
@@ -70,13 +71,12 @@ export class UsuariosService {
     );
   }
 
-  checkExistEmail(correo: string): Observable<boolean>{
-    return this.httpClient.post<boolean>(`${this.apiUrl}/existEmail`, correo).pipe(
-      catchError(error => {
-          console.error('Error al verificar existencia de email', error);
-          return throwError(() => new Error('Error al verificar existencia de email'));
-      })
-    );
+  checkExistEmail(correo: string): Observable<any>{
+    return this.httpClient.post<String>(`${this.apiUrl}/existEmail`, correo).pipe();
+  }
+
+  verifyDni(dni: string): Observable<any>{
+    return this.httpClient.post<String>(`${this.apiUrl}/verifyDni`, dni).pipe();
   }
 
   private validateEmail(email: string) {

@@ -34,7 +34,6 @@ export default class RegisterComponent implements OnInit{
     this.loadDepartamentos()
     this.formUsuario = new FormGroup({
       dni: new FormControl(''),
-      nombre : new FormControl(''),
       correo: new FormControl(''),
       contrasenia : new FormControl(''),
       confirmarContrasenia: new FormControl(''),
@@ -58,7 +57,6 @@ export default class RegisterComponent implements OnInit{
     const formValues = this.formUsuario.value;
     if (
       !formValues.dni ||
-      !formValues.nombre ||
       !formValues.correo ||
       !formValues.contrasenia ||
       !formValues.confirmarContrasenia ||
@@ -69,14 +67,15 @@ export default class RegisterComponent implements OnInit{
       alert('Por favor, complete todos los campos correctamente');
       return;
     }
-
+    
     this.formUsuario.controls['fotoPerfil'].setValue(null);
     this.formUsuario.controls['tiempo_ban'].setValue(null);
     this.formUsuario.controls['id_rol'].setValue(3);
     this.formUsuario.controls['id_distrito'].setValue(this.selectedDistrito);
 
-    this.registroUsuariosService.registrarUsuario(this.formUsuario.value).subscribe(res =>{
-      if(res){
+    this.registroUsuariosService.registrarUsuario(this.formUsuario.value).subscribe({
+      next: () => {
+        alert('Usuario registrado exitosamente!');
         this.formUsuario.reset();
         this.selectedDepartamento = null;
         this.selectedProvincia = null;
@@ -84,7 +83,7 @@ export default class RegisterComponent implements OnInit{
         this.listProvincia = [];
         this.listDistrito = [];
       }
-    })
+    });
   }
 
   // SE CARGA LOS DEPARTAMENTOS
