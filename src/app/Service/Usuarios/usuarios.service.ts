@@ -21,18 +21,17 @@ export class UsuariosService {
     return this.checkExistEmail(usuario.correo).pipe(
       switchMap((emailResponse: any) => {
         if (emailResponse.success) {
-          alert(emailResponse.menssage); // Muestra el mensaje del correo
+          alert(emailResponse.menssage);
           return throwError(() => new Error('Correo ya existe'));
         }
   
         return this.verifyDni(usuario.dni).pipe(
           switchMap((dniResponse: any) => {
             if (!dniResponse.success) {
-              alert(dniResponse.menssage); // Muestra el mensaje del DNI
+              alert(dniResponse.menssage);
               return throwError(() => new Error('DNI no válido'));
             }
   
-            // Aquí procedes con el registro si todo es válido
             return this.httpClient.post<any>(`${this.apiUrl}/register`, usuario);
           })
         );

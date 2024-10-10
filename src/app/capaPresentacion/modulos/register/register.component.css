@@ -195,6 +195,23 @@ p{
   width: 100%;
 }
 
+.invalid {
+  border: 2px solid red;
+}
+
+.container-message{
+  display: flex;
+  width: 100%;
+}
+
+.error-message {
+  width: auto;
+  height: auto;
+  color: red;
+  font-size: 13px;
+  margin-left: 20px;
+}
+
 @media screen and (max-width: 750px){
   .container-image{
     display: none;
