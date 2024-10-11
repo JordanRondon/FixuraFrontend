@@ -30,5 +30,13 @@ export const routes: Routes = [
     {
         path: 'verify-email',
         loadComponent: () => import('./capaPresentacion/componentes/email-verification/email-verification.component'),
+    },
+    {
+        path: 'password-reset',
+        loadComponent: () => import('./capaPresentacion/componentes/password-reset/password-reset.component'),
+    },
+    {
+        path: 'reset-password',
+        loadComponent: () => import('./capaPresentacion/componentes/reset-password/reset-password.component'),
     }
 ];

@@ -142,6 +142,7 @@ form{
 
 p{
   font-size: 13px;
+  margin-top: 5px;
 }
 
 /*Boton del formulario*/
@@ -153,7 +154,7 @@ p{
   border-radius: 50px;
   background-color: #5995fd;
   color: #fff;
-  margin: 10px 0;
+  margin: 10px 0px 5px 0px;
   transform: .5s;
   font-size: 13px;
   font-weight: 600;
@@ -176,7 +177,6 @@ p{
 img{
   width: 80%;
 }
-
 
 @media screen and (max-width: 760px){
   .container-image{
