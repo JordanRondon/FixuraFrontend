@@ -13,7 +13,7 @@ export class DepartamentoService {
   }
 
   getDepartamento(): Observable<any>{
-    return this.httpClient.get<any>('http://localhost:8080/api/v1/departamento/list');
+    return this.httpClient.get<any>(`${this.baseUrl}/list`);
   }
 
   getProvincia(id_depart: number): Observable<any>{

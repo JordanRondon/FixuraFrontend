@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { DepartamentoService} from '../../../Service/Departamento/departamento.service';
 import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-register',
@@ -35,24 +36,25 @@ export default class RegisterComponent implements OnInit{
     this.formUsuario = new FormGroup({
       dni: new FormControl(''),
       correo: new FormControl(''),
-      contrasenia : new FormControl(''),
-      confirmarContrasenia: new FormControl(''),
+      contrasenia : new FormControl('', Validators.required),
+      confirmarContrasenia: new FormControl('', [Validators.required, this.matchPasswordValidator()]),
       fotoPerfil: new FormControl(null),
       tiempo_ban: new FormControl(null),
       id_rol: new FormControl(3),
       id_distrito: new FormControl(this.selectedDistrito),
     })
+
+    //Actualiza en tiempo real los cambios de los campos de contraseña y confirmar contraseña
+    this.formUsuario.get('contrasenia')?.valueChanges.subscribe(() => {
+      this.formUsuario.get('confirmarContrasenia')?.updateValueAndValidity();
+    });
+    this.formUsuario.get('confirmarContrasenia')?.valueChanges.subscribe(() => {
+      this.formUsuario.get('contrasenia')?.updateValueAndValidity();
+    });
   }
   
   registrarUsuario(){
-    const { contrasenia, confirmarContrasenia } = this.formUsuario.value;
-
-    // Verificar si las contraseñas coinciden
-    if (contrasenia !== confirmarContrasenia) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-
+    
     // Verificar si el formulario es válido
     const formValues = this.formUsuario.value;
     if (
@@ -150,5 +152,14 @@ export default class RegisterComponent implements OnInit{
   onDniInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     target.value = target.value.replace(/[^0-9]/g, '');
+  }
+
+  //Validador personalizado para verificar si las contraseñas coinciden
+  matchPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null =>{
+      const password = this.formUsuario.get('contrasenia')?.value;
+      const confirmPassword = control.value;
+      return password === confirmPassword ? null : {mismatch: true};
+    }
   }
 }
