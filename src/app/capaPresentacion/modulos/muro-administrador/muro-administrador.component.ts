@@ -7,11 +7,12 @@ import { Usuario } from '../../../Model/Usuario';
 import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import { MapaIncidenciasComponent } from '../../componentes/mapa-incidencias/mapa-incidencias.component';
 
 @Component({
   selector: 'app-muro-administrador',
   standalone: true,
-  imports: [CommonModule,NavbarUsuarioComponent,PostIncidenciaComponent],
+  imports: [CommonModule,NavbarUsuarioComponent,PostIncidenciaComponent,MapaIncidenciasComponent],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css'
 })
@@ -20,6 +21,7 @@ export default class MuroAdministradorComponent implements OnInit{
   mostrarHerramientas: boolean = true;
   incidentes: Incidente[] = [];
   User: { [dni: string]: String } = {};
+  mostrarMapaIncidencias = false;
   dataUsuario: Usuario | undefined;
 
   constructor(
@@ -30,8 +32,11 @@ export default class MuroAdministradorComponent implements OnInit{
 
   ngOnInit(): void {
     this.getDataUserProfile();
+    
   }
-
+  mostrarMapa() {
+    this.mostrarMapaIncidencias = true;
+  }
 
   toggleHerramientas(){
     console.log('Desplegando herramientas');
