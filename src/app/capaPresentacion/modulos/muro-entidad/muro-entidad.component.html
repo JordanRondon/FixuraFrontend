@@ -1,0 +1,56 @@
+<app-navbar-usuario></app-navbar-usuario>
+<main class="muro">
+  <aside class="muro__col-izq"></aside>
+  <section class="muro__col-mid">
+        <div class="muro__header-perfil">
+            <div class="muro__perfil-info">
+                <div class="muro__perfil-img-container">
+                    <img class="muro__perfil-img" src="https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/perfil/perfil_default.png" alt="Foto de perfil">
+                </div>
+                
+                <div class="muro__perfil-details">
+                    <span>{{dataUsuario?.nombre}}</span>
+                    <p>{{dataUsuario?.correo}}</p>
+                </div>
+            </div>
+        </div>
+        
+        <button class="reportes__button" (click)="abrirRegistroIncidencia()">
+            <span>
+                <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+                </svg>
+                Nuevo Reporte
+            </span>
+        </button>
+        
+        <div class="muro__post-container" *ngIf="incidentes.length > 0; else noData">
+            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente" [nombreUsuario]="User[incidente.dni]">
+            </app-post-incidencia>
+        </div>
+        <ng-template #noData>
+          <p>No hay incidentes para mostrar.</p>
+        </ng-template>
+    </section>
+    <aside class="muro__col-der"></aside>
+</main>
+<!-- Contenedor del formulario-->
+<div class="overlay" *ngIf="mostrarFormulario" (click)="cerrarFormulario()">
+  <div class="formulario-contenedor" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="cerrarFormulario()">
+      <svg class="close-icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_429_11083)">
+        <path class="icon-path" d="M7 7.00006L17 17.0001M7 17.0001L17 7.00006" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_429_11083">
+        <rect width="24" height="24" fill="white"/>
+        </clipPath>
+        </defs>
+      </svg>
+      
+    </button>
+    <app-registro-incidencia [dniUsuario]="dataUsuario?.dni"></app-registro-incidencia>
+  </div>
+</div>
