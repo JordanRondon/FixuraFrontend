@@ -12,18 +12,20 @@
           width="94%"
           [center]="center" 
           [zoom]="zoom"
+          
           (mapClick)="onUbicacionSeleccionada($event)">
+          <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
       </google-map>
     </div>
     <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <label for="ubicacion">Ubicación seleccionada:</label>
-      <input formControlName="ubicacion" type="text">
+      <input formControlName="ubicacion" type="text" readonly>
       <!--<p id="ubicacion">{{ ubicacionSeleccionada }}</p>-->
   
       <label for="categoria">Categoría:</label>
       <select formControlName="categoria" id="categoria">
         <option value="" disabled selected>Selecciona una categoría</option>
-        <option *ngFor="let categoria of categorias; let i = index" [value]="i + 1">{{ categoria }}</option>
+        <option *ngFor="let option of optionsCategory; let i = index" [value]="i + 1">{{ option.nombre }}</option>
       </select>
   
       <label for="descripcion">Descripción:</label>

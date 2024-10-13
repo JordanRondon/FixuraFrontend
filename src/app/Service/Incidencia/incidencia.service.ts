@@ -4,7 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { parseISO } from 'date-fns';
 import { Incidente } from '../../Model/Incidente';
-
+import { IncidenteCoordenada } from '../../Model/IncidenteCoordenada';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,7 +30,9 @@ export class IncidenciaService {
         item.total_votos,
         item.id_estado,
         item.dni,
-        item.id_categoria
+        item.id_categoria,
+        item.latitud,
+        item.longitud
       )))
     );
   }
@@ -46,11 +48,30 @@ export class IncidenciaService {
         item.total_votos,
         item.id_estado,
         item.dni,
-        item.id_categoria
+        item.id_categoria,
+        item.latitud,
+        item.longitud
       )))
     );
   }
-
+  getListaCoordenadasIncidentes(id_distrito: number): Observable<IncidenteCoordenada[]> {
+    return this.http.get<IncidenteCoordenada[]>(`${this.apiUrl}/list/coordenadas/${id_distrito}`). pipe(
+      map((data: any[]) => data.map(item => new IncidenteCoordenada(
+        item.id_incidencia,
+        item.latitud,
+        item.longitud
+      )))
+    );
+  }
+  getCoordenadaIncidente(id_incidencia: number): Observable<IncidenteCoordenada> {
+    return this.http.get<IncidenteCoordenada>(`${this.apiUrl}/list/coordenada/${id_incidencia}`).pipe(
+      map((data: any) => new IncidenteCoordenada(
+        data.id_incidencia,
+        data.latitud,
+        data.longitud
+      ))
+    );
+  }  
   getTotalVotos(id_incidencia: number): Observable<number> {
     return this.http.get<number>(this.apiUrl + '/totalVotos/' + id_incidencia);
   }

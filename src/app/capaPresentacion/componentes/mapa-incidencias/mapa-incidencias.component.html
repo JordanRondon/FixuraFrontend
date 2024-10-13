@@ -1,0 +1,11 @@
+<div id="map" class="mapa">
+    <google-map 
+        height="100%"
+        width="100%"
+        [center]="center" 
+        [zoom]="zoom">
+        <map-marker *ngFor="let incidente of IncidenteCoordenada"
+            [position]="{lat: incidente.latitud, lng: incidente.longitud}">
+        </map-marker>
+    </google-map>
+</div>

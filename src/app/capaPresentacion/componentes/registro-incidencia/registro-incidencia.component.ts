@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { ImagenService } from '../../../Service/Imagen/imagen.service';
 import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
 import { Incidente } from '../../../Model/Incidente';
+import { CategoriaService } from '../../../Service/Categoria/categoria.service';
+import { Categoria } from '../../../Model/Categoria';
 @Component({
   selector: 'app-registro-incidencia',
   standalone: true,
@@ -18,18 +20,21 @@ export class RegistroIncidenciaComponent implements OnInit {
   formulario: FormGroup;
   //ubicacionSeleccionada: string = '';
   categorias: string[] = ['Poste', 'Pista', 'Desague'];
-  apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X'; 
+  apiKey: string = 'XAIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X'; 
   center: google.maps.LatLngLiteral = { lat: -8.1116, lng: -79.0288 };
-  marker: google.maps.Marker | null = null;
+  markerPosition: google.maps.LatLngLiteral | null = this.center; 
+  markerOptions: google.maps.MarkerOptions = { position: this.center };
   zoom = 17;
+  latitud_incidencia:number| null=null;
+  longitud_incidencia:number | null=null;
   imagenPrevisualizacion: string | ArrayBuffer | null = null;
   archivoSeleccionado: File | null = null;
-
+  optionsCategory: Categoria[] = [];
   //usuario: number=32542163;
 
   @Input() dniUsuario: string | undefined;
 
-  constructor(private fb: FormBuilder,private imagenService: ImagenService,private registroIncideten: IncidenciaService,private http: HttpClient) {
+  constructor(private fb: FormBuilder,private imagenService: ImagenService,private categoriaService: CategoriaService,private registroIncideten: IncidenciaService,private http: HttpClient) {
     this.formulario = this.fb.group({
       categoria: ['', Validators.required],
       ubicacion: ['', Validators.required],
@@ -41,6 +46,7 @@ export class RegistroIncidenciaComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.dniUsuario);
     this.obtenerUbicacionActual();
+    this.getListCategoria();
   }
 
   // Cuando el usuario selecciona una ubicación en el mapa
@@ -48,6 +54,9 @@ export class RegistroIncidenciaComponent implements OnInit {
     if (event.latLng) {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
+      this.latitud_incidencia=lat;
+      this.longitud_incidencia=lng;
+      this.markerPosition = { lat, lng };
       this.obtenerDireccion(lat, lng);
     }
   }
@@ -97,7 +106,7 @@ export class RegistroIncidenciaComponent implements OnInit {
   }
   onSubmit() {
     if (this.formulario.invalid || !this.archivoSeleccionado) {
-      console.log('dsadasdasd');
+      console.log('Por favor,llenar todos los datos requeridos');
       return;
     }
     
@@ -115,13 +124,16 @@ export class RegistroIncidenciaComponent implements OnInit {
     formIncidente.append('id_estado',"3");
     formIncidente.append('DNI',this.dniUsuario ?? '');
     formIncidente.append('id_categoria', this.formulario.value.categoria.toString());
+    formIncidente.append('latitud', this.latitud_incidencia != null ? this.latitud_incidencia.toString() : 'null' );
+    formIncidente.append('longitud', this.longitud_incidencia != null ? this.longitud_incidencia.toString() : 'null');
     console.log(fechaFormateada);
     console.log(this.formulario.value.descripcion);
     console.log(this.formulario.value.ubicacion);
     console.log(this.archivoSeleccionado.name);
     console.log(this.dniUsuario);
     console.log(this.formulario.value.categoria.toString());
-    
+    console.log( this.latitud_incidencia != null ? this.latitud_incidencia.toString() : 'null' );
+    console.log( this.longitud_incidencia != null ? this.longitud_incidencia.toString() : 'null');
     this.imagenService.saveImagenIncidencia(formData).subscribe(resp=>{
       if(resp){
         console.log('Imagen subida exitosamente');
@@ -155,5 +167,14 @@ export class RegistroIncidenciaComponent implements OnInit {
   
     return `${anio}-${mes}-${dia} ${horas}:${minutos}:${segundos}.${milisegundos}`;
   }
-  
+  getListCategoria(): void {
+    this.categoriaService.getListCategory().subscribe(
+      (respuesta) => {
+        this.optionsCategory = respuesta;
+      },
+      (error) => {
+        console.error('ERROR al obtener lista de Categorias:', error);
+      }
+    );
+  }
 }

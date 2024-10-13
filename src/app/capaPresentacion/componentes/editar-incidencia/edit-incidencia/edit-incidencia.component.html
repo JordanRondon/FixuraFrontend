@@ -42,6 +42,7 @@
                 [center]="center" 
                 [zoom]="zoom"
                 (mapClick)="onUbicacionSeleccionada($event)">
+                <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
             </google-map>
         </div>
 
@@ -49,7 +50,7 @@
             <input placeholder="Dirección" class="input-field" type="text"
             [ngModel]="incidenteEdit?.ubicacion"
             (ngModelChange)="incidenteEdit && (incidenteEdit.ubicacion = $event)"
-            [ngModelOptions]="{standalone: true}">
+            [ngModelOptions]="{standalone: true}" readonly>
             <label for="input-field" class="input-label">Dirección</label>
             <span class="input-highlight"></span>
         </div>
