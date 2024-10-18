@@ -212,6 +212,20 @@ p{
   margin-left: 20px;
 }
 
+.container-check{
+  display: flex;
+  width: 100%;
+  padding-left: 23px;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.container-check span{
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (max-width: 750px){
   .container-image{
     display: none;

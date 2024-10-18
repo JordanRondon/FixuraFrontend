@@ -24,6 +24,13 @@ export default class RegisterComponent implements OnInit{
   selectedProvincia: number | null = null;
   selectedDistrito: number | null = null;
 
+  passwordChecked = {
+    hasNumber : false,
+    hasUpperCase : false,
+    hasLowerCase: false,
+    hasSpecialChar: false,
+  }
+
   formUsuario: FormGroup = new FormGroup({})
 
   constructor(
@@ -44,8 +51,9 @@ export default class RegisterComponent implements OnInit{
       id_distrito: new FormControl(this.selectedDistrito),
     })
 
-    //Actualiza en tiempo real los cambios de los campos de contraseña y confirmar contraseña
-    this.formUsuario.get('contrasenia')?.valueChanges.subscribe(() => {
+    //Actualiza en tiempo "real" los cambios de los campos de contraseña y confirmar contraseña
+    this.formUsuario.get('contrasenia')?.valueChanges.subscribe((value: string) => {
+      this.onPasswordInput(value);
       this.formUsuario.get('confirmarContrasenia')?.updateValueAndValidity();
     });
     this.formUsuario.get('confirmarContrasenia')?.valueChanges.subscribe(() => {
@@ -67,6 +75,16 @@ export default class RegisterComponent implements OnInit{
       this.selectedDistrito === null
     ) {
       alert('Por favor, complete todos los campos correctamente');
+      return;
+    }
+
+    if(
+      !this.passwordChecked.hasNumber &&
+      !this.passwordChecked.hasUpperCase &&
+      !this.passwordChecked.hasLowerCase &&
+      !this.passwordChecked.hasSpecialChar
+    ){
+      alert('La contraseña no es segura');
       return;
     }
     
@@ -148,11 +166,6 @@ export default class RegisterComponent implements OnInit{
     }
   }
 
-  //FUNCION QUE PERMITE DIGITAR SOLO NUMEROS
-  onDniInput(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    target.value = target.value.replace(/[^0-9]/g, '');
-  }
 
   //Validador personalizado para verificar si las contraseñas coinciden
   matchPasswordValidator(): ValidatorFn {
@@ -162,4 +175,25 @@ export default class RegisterComponent implements OnInit{
       return password === confirmPassword ? null : {mismatch: true};
     }
   }
+
+  //FUNCION QUE PERMITE DIGITAR SOLO NUMEROS
+  onDniInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    target.value = target.value.replace(/[^0-9]/g, '');
+  }
+
+  //FUNCION PARA VERIFICAR ROBUSTES DE LA CONTRASEÑA
+  onPasswordInput(password : string) : void{
+    this.passwordChecked.hasNumber = /\d/.test(password);
+    this.passwordChecked.hasUpperCase = /[A-Z]/.test(password);
+    this.passwordChecked.hasLowerCase = /[a-z]/.test(password);
+    this.passwordChecked.hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  }
+
+  //FUNCION PARA CAMBIAR EL COLOR DEL LABEL EN BASE A LAS CONDICIONES
+  getLabelColor(condition: boolean) : string {
+    return condition ? 'green' : 'red';
+  }
+
+
 }
