@@ -26,7 +26,6 @@ import { InfoIncidente } from '../../../Model/InfoIncidente';
   templateUrl: './post-incidencia.component.html',
   styleUrls: ['./post-incidencia.component.css']
 })
-
 export class PostIncidenciaComponent implements OnInit, OnChanges {
   
   showFormEdit: boolean = false;
@@ -52,7 +51,11 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     if (this.infoIncidente) {
-      this.incidenteCopy = JSON.parse(JSON.stringify(this.infoIncidente)); 
+      if (this.infoIncidente.tiene_like) 
+        this.isActive = true;
+
+      this.incidenteCopy = JSON.parse(JSON.stringify(this.infoIncidente));
+
       this.incidenciaLike = {
         dni: this.authService.getToken_dni() ?? '',
         id_incidencia: this.infoIncidente.id_incidencia ?? -1,
@@ -62,8 +65,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) { }
-    
-
+  
   toggleActiveFormEdit() {
     this.showFormEdit = !this.showFormEdit;
   }
