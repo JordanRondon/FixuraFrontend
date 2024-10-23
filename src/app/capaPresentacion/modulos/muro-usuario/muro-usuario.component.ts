@@ -8,11 +8,14 @@ import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { Incidente } from '../../../Model/Incidente';
 import { Usuario } from '../../../Model/Usuario';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import { InfoIncidente } from '../../../Model/InfoIncidente';
+import { Page } from '../../../Model/Page';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-muro-usuario',
   standalone: true,
-  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule],
+  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule, InfiniteScrollModule],
   templateUrl: './muro-usuario.component.html',
   styleUrl: './muro-usuario.component.css'
 })
@@ -20,8 +23,14 @@ import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 export default class MuroUsuarioComponent implements OnInit {
   
   mostrarFormulario: boolean = false;
-  incidentes: Incidente[] = [];
+  // incidentes: Incidente[] = [];
   dataUsuario: Usuario | null  = null;
+
+  listIncidentes: InfoIncidente[] = [];
+  totalElements: number = 0;
+  page: number = 0;
+  size: number = 10;
+  loading: boolean = false;
 
   constructor(
     private registerUserService: UsuariosService,
@@ -31,7 +40,8 @@ export default class MuroUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataUserProfile();
-    this.getIncidentesPorUsuario(this.authService.getToken_dni() ?? '');
+    //this.getIncidentesPorUsuario(this.authService.getToken_dni() ?? '');
+    this.loadIncidentes();
   }
 
   abrirRegistroIncidencia() {
@@ -56,15 +66,41 @@ export default class MuroUsuarioComponent implements OnInit {
     }
   }
 
-  getIncidentesPorUsuario(DNI_usuario: string): void {
-    this.incidenteService.getListaIncidencia(DNI_usuario).subscribe(
-      (data: Incidente[]) => {
-        this.incidentes = data;
-        console.log(this.incidentes);
+  loadIncidentes(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.incidenteService.getListIncidenciaUsuario(this.page, this.size, this.authService.getToken_dni() ?? '').subscribe({
+      next: (response: Page<InfoIncidente>) => {
+        this.listIncidentes = [...this.listIncidentes, ...response.content];// Añadir más incidencias
+        this.totalElements = response.totalElements;
+        this.page += 1;  // Incrementar la página para la siguiente carga
+        console.log('Incidentes cargados:', this.listIncidentes);
+        this.loading = false;
       },
-      (error) => {
-        console.error('Error al obtener los incidentes:', error);
+      error: (error) => {
+        console.error('Error al cargar incidentes:', error);
+        this.loading = false;
       }
-    );
+    });
   }
+
+  onScroll(): void {
+    this.loadIncidentes();
+  }
+
+  // getIncidentesPorUsuario(DNI_usuario: string): void {
+  //   this.incidenteService.getListaIncidencia(DNI_usuario).subscribe(
+  //     (data: Incidente[]) => {
+  //       this.incidentes = data;
+  //       console.log(this.incidentes);
+  //     },
+  //     (error) => {
+  //       console.error('Error al obtener los incidentes:', error);
+  //     }
+  //   );
+  // }
 }

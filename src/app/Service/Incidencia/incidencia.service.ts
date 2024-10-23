@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { parseISO } from 'date-fns';
 import { Incidente } from '../../Model/Incidente';
 import { IncidenteCoordenada } from '../../Model/IncidenteCoordenada';
+import { InfoIncidente } from '../../Model/InfoIncidente';
+import { Page } from '../../Model/Page';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +37,15 @@ export class IncidenciaService {
         item.longitud
       )))
     );
+  }
+
+  getListIncidenciaUsuario(page: number, size: number, dni: string): Observable<Page<InfoIncidente>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('dni', dni);
+      
+    return this.http.get<Page<InfoIncidente>>(this.apiUrl + '/list/paginated/usuario', { params });
   }
 
   getListaIncidenciaMunicipalidad(id_distrito: number): Observable<Incidente[]> {
