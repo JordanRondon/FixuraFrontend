@@ -17,11 +17,11 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./capaPresentacion/modulos/login/login.component')
     },
-    // {
-    //     path: 'muro-administrador',
-    //     loadComponent: () => import('./capaPresentacion/modulos/muro-administrador/muro-administrador.component'),
-    //     canActivate: [authGuard, adminModeratorGuard]
-    // },
+    {
+        path: 'muro-administrador',
+        loadComponent: () => import('./capaPresentacion/modulos/muro-administrador/muro-administrador.component'),
+        canActivate: [authGuard, adminModeratorGuard]
+    },
     {
         path: 'muro-usuario',
         loadComponent: () => import('./capaPresentacion/modulos/muro-usuario/muro-usuario.component'),
