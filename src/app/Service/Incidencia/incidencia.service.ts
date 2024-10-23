@@ -48,6 +48,16 @@ export class IncidenciaService {
     return this.http.get<Page<InfoIncidente>>(this.apiUrl + '/list/paginated/usuario', { params });
   }
 
+  getListIncidenciaUsuarioDistrito(page: number, size: number, dni: string, id_distrito: number): Observable<Page<InfoIncidente>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('dni', dni)
+      .set('id_distrito', id_distrito.toString());
+      
+    return this.http.get<Page<InfoIncidente>>(this.apiUrl + '/list/paginated/usuario_distrito', { params });
+  }
+
   getListaIncidenciaMunicipalidad(id_distrito: number): Observable<Incidente[]> {
     return this.http.get<Incidente[]>(`${this.apiUrl}/list/municipalidad/${id_distrito}`). pipe(
       map((data: any[]) => data.map(item => new Incidente(

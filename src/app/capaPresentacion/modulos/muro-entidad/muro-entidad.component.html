@@ -25,8 +25,14 @@
             </span>
         </button>
         
-        <div class="muro__post-container" *ngIf="incidentes.length > 0; else noData">
-            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente" [nombreUsuario]="User[incidente.dni]">
+        <div class="muro__post-container"
+        *ngIf="listIncidentes.length > 0; else noData"
+        infiniteScroll 
+        [infiniteScrollDistance]="2" 
+        [infiniteScrollThrottle]="150" 
+        (scrolled)="onScroll()"
+        >
+            <app-post-incidencia *ngFor="let infoIncidente of listIncidentes" [infoIncidente]="infoIncidente">
             </app-post-incidencia>
         </div>
         <ng-template #noData>
