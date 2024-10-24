@@ -48,5 +48,5 @@
   </div>
 
 <div class="container-edit" *ngIf="showFormEdit" (click)="closeFormEdit($event)">
-    <app-edit-incidencia [incidenteEdit]="incidenteCopy" (formEditClosed)="showFormEdit = $event"></app-edit-incidencia>
+    <app-edit-incidencia [infoIncidenteEdit]="infoIncidenteCopy" (formEditClosed)="showFormEdit = $event"></app-edit-incidencia>
 </div>

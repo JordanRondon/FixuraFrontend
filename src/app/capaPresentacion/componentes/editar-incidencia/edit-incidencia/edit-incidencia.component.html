@@ -48,8 +48,8 @@
 
         <div class="input-container">
             <input placeholder="Dirección" class="input-field" type="text"
-            [ngModel]="incidenteEdit?.ubicacion"
-            (ngModelChange)="incidenteEdit && (incidenteEdit.ubicacion = $event)"
+            [ngModel]="infoIncidenteEdit?.ubicacion"
+            (ngModelChange)="infoIncidenteEdit && (infoIncidenteEdit.ubicacion = $event)"
             [ngModelOptions]="{standalone: true}" readonly>
             <label for="input-field" class="input-label">Dirección</label>
             <span class="input-highlight"></span>

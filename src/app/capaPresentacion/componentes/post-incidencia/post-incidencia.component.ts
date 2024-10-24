@@ -32,7 +32,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   
   @Input() infoIncidente: InfoIncidente | undefined;
 
-  incidenteCopy: Incidente | undefined;
+  infoIncidenteCopy: InfoIncidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
   incidenciaLike: IncidenciaLike = { 
@@ -54,7 +54,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
       if (this.infoIncidente.tiene_like) 
         this.isActive = true;
 
-      this.incidenteCopy = JSON.parse(JSON.stringify(this.infoIncidente));
+      this.infoIncidenteCopy = JSON.parse(JSON.stringify(this.infoIncidente));
 
       this.incidenciaLike = {
         dni: this.authService.getToken_dni() ?? '',
