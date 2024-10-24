@@ -20,7 +20,7 @@ import { InfoIncidente } from '../../../../Model/InfoIncidente';
   templateUrl: './edit-incidencia.component.html',
   styleUrl: './edit-incidencia.component.css'
 })
-export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit{
+export class EditIncidenciaComponent implements OnInit {
 
   @Output() formEditClosed = new EventEmitter<boolean>();
   @Input() infoIncidenteEdit: InfoIncidente | undefined;
@@ -56,32 +56,34 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
       this.incidenteEditCache = JSON.parse(JSON.stringify(this.infoIncidenteEdit)); 
       this.selectedOptionState = this.infoIncidenteEdit.estado;
       this.selectedOptionCategory = this.infoIncidenteEdit.categoria;
+      this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
     }
     
     // if (this.infoIncidenteEdit?.id_incidencia) {
     //   this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
     // }
 
-    this.center = { lat: this.Coordenada_incidente?.latitud ?? -8.1116, lng: this.Coordenada_incidente?.longitud ?? -79.0288}; // Reestablece la posición 
-    this.zoom = 17; // Reestablece el nivel de zoom
-    console.log('ID_INCIDENCIA:', this.infoIncidenteEdit?.id_incidencia);
-    console.log('Centro:', this.center);
-    console.log('Zoom:', this.zoom);
+    // this.center = { lat: this.infoIncidenteEdit?.latitud ?? -8.1116, lng: this.infoIncidenteEdit?.longitud ?? -79.0288}; // Reestablece la posición 
+    // this.zoom = 17; // Reestablece el nivel de zoom
+    // this.markerPosition = this.center;
+    // console.log('ID_INCIDENCIA:', this.infoIncidenteEdit?.id_incidencia);
+    // console.log('Centro:', this.center);
+    // console.log('Zoom:', this.zoom);
     document.addEventListener('click', this.closeOptions.bind(this));
     
     this.getListEstate();
     this.getListCategoria();
   }
 
-  ngOnChanges() {
-    this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
-    this.zoom = 17; // Reestablece el nivel de zoom
-  }
+  // ngOnChanges() {
+  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
+  //   this.zoom = 17; // Reestablece el nivel de zoom
+  // }
 
-  ngAfterViewInit() {
-    this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
-    this.zoom = 17; // Reestablece el nivel de zoom
-  }
+  // ngAfterViewInit() {
+  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
+  //   this.zoom = 17; // Reestablece el nivel de zoom
+  // }
 
   closeForm() {
     this.formEditClosed.emit(false);
@@ -222,32 +224,32 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     );
   }
 
-  // getCoordenadas(id_incidencia: number): void {
-  //   if (!this.incidenteEdit) {
-  //     console.error('Incidente no está definido');
-  //     return;
-  //   }
+  getCoordenadas(id_incidencia: number): void {
+    if (!this.infoIncidenteEdit) {
+      console.error('Incidente no está definido');
+      return;
+    }
 
-  //   this.incidenciaService.getCoordenadaIncidente(id_incidencia).subscribe(
-  //     (data: IncidenteCoordenada) => {
-  //       this.Coordenada_incidente = data;
-  //       console.log('Coordenadas obtenidas:', this.Coordenada_incidente);
+    this.incidenciaService.getCoordenadaIncidente(id_incidencia).subscribe(
+      (data: IncidenteCoordenada) => {
+        this.Coordenada_incidente = data;
+        console.log('Coordenadas obtenidas:', this.Coordenada_incidente);
 
-  //       // Actualiza el centro y la posición del marcador cuando obtienes las coordenadas
-  //       this.center = { lat: this.Coordenada_incidente.latitud, lng: this.Coordenada_incidente.longitud };
-  //       this.markerPosition = this.center;  // Actualiza la posición del marcador
-  //       this.zoom = 17;  // Mantiene el zoom en 17
-  //       if (this.incidenteEdit){
-  //         this.incidenteEdit.latitud = this.Coordenada_incidente.latitud;
-  //         this.incidenteEdit.longitud = this.Coordenada_incidente.longitud; 
-  //       }
-  //       console.log('Centro actualizado:', this.center);
-  //     },
-  //     (error) => {
-  //       console.error('Error al obtener las coordenadas:', error);
-  //     }
-  //   );
-  // }
+        // Actualiza el centro y la posición del marcador cuando obtienes las coordenadas
+        this.center = { lat: this.Coordenada_incidente.latitud, lng: this.Coordenada_incidente.longitud };
+        this.markerPosition = this.center;  // Actualiza la posición del marcador
+        this.zoom = 17;  // Mantiene el zoom en 17
+        // if (this.infoIncidenteEdit){
+        //   this.infoIncidenteEdit.latitud = this.Coordenada_incidente.latitud;
+        //   this.infoIncidenteEdit.longitud = this.Coordenada_incidente.longitud; 
+        // }
+        console.log('Centro actualizado:', this.center);
+      },
+      (error) => {
+        console.error('Error al obtener las coordenadas:', error);
+      }
+    );
+  }
 
   resetChanges(): void {
     this.infoIncidenteEdit = JSON.parse(JSON.stringify(this.incidenteEditCache));
