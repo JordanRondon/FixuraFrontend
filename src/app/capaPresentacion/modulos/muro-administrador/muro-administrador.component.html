@@ -26,10 +26,19 @@
             </div>
         </aside>
         <section class="muro__col-mid" *ngIf="incidentes.length > 0; else noData">
-            <app-post-incidencia 
-            *ngFor="let incidente of incidentes"
-            [incidente]="incidente"
-            [nombreUsuario]="User[incidente.dni]"></app-post-incidencia>
+            <ng-container *ngIf="mostrarIncidencias">
+                <app-post-incidencia 
+                    *ngFor="let incidente of incidentes"
+                    [incidente]="incidente"
+                    [nombreUsuario]="User[incidente.dni]">
+                </app-post-incidencia>
+            </ng-container>
+            <ng-container *ngIf="mostrarBloquearUsuarios">
+                <app-block-users
+                    *ngFor="let usuario of usuarios"
+                    [usuario]="usuario">
+                </app-block-users>
+            </ng-container>
         </section>
         <ng-template #noData>
             <p>No hay incidentes para mostrar.</p>
@@ -38,7 +47,8 @@
             <div class = "panel-noticias">
                 <h3>Panel Extra</h3>
                 <div class = "elemento">Elemento 1</div>
-                <div class = "elemento">Elemento 2</div>
+                <div class = "elemento" (click)="toggleIncidencias()">Elemento 2</div>
+                <div class = "elemento" id="block-user" (click)="toggleBloquearUsuarios()"><img src="/images/block.svg" alt=""> Bloquear Usuarios</div>
             </div>
         </aside>
     </div>
