@@ -68,6 +68,12 @@ export class RegistroIncidenciaComponent implements OnInit {
         this.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
+          
+        };
+        this.markerPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          
         };
         this.zoom = 17; 
       }, (error) => {
