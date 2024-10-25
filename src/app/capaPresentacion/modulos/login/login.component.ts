@@ -37,7 +37,7 @@ export default class LoginComponent implements OnInit{
         switch (userRole) {
           case 1: 
           case 2: url = '/muro-administrador'; break;
-          case 3: url = '/muro-usuario'; break;
+          case 3: url = '/muro-entidad'; break;
           default: url = '/login';
         }
 
