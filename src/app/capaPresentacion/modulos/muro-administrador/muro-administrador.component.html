@@ -25,11 +25,17 @@
                 </div>
             </div>
         </aside>
-        <section class="muro__col-mid" *ngIf="incidentes.length > 0; else noData">
+        <section class="muro__col-mid" 
+        *ngIf="listIncidentes.length > 0; else noData"
+        infiniteScroll 
+        [infiniteScrollDistance]="2" 
+        [infiniteScrollThrottle]="150" 
+        (scrolled)="onScroll()"
+        >
             <app-post-incidencia 
-            *ngFor="let incidente of incidentes"
-            [incidente]="incidente"
-            [nombreUsuario]="User[incidente.dni]"></app-post-incidencia>
+            *ngFor="let infoIncidente of listIncidentes"
+            [infoIncidente]="infoIncidente">
+            </app-post-incidencia>
         </section>
         <ng-template #noData>
             <p>No hay incidentes para mostrar.</p>

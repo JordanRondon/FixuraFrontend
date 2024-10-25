@@ -6,18 +6,18 @@
                     <img src="https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/perfil/perfil_default.png" alt="Foto de perfil">
                 </div>
                 <div class="user-info">
-                    <span>{{nombreUsuario}}</span>
-                    <p>{{formatearFecha(incidente?.fecha_publicacion)}}</p>
+                    <span>{{infoIncidente?.usuario}}</span>
+                    <p>{{formatearFecha(infoIncidente?.fecha_publicacion)}}</p>
                 </div>
             </div>
-            <p class="category-content"><span>Categoria: </span>{{categoryName}}</p>
-            <p class="comment-content">{{incidente?.descripcion}}</p>
-            <p class="location-content"><span>Ubicacion: </span>{{incidente?.ubicacion}}</p>
+            <p class="category-content"><span>Categoria: </span>{{infoIncidente?.categoria}}</p>
+            <p class="comment-content">{{infoIncidente?.descripcion}}</p>
+            <p class="location-content"><span>Ubicacion: </span>{{infoIncidente?.ubicacion}}</p>
         </div>
 
         <div class="comment-react">
             <div class="content-state">
-                <svg [ngClass]="{'state--pending': incidente?.id_estado === 3, 'state--in-progress': incidente?.id_estado === 2, 'state--completed': incidente?.id_estado === 1}" fill="none" viewBox="0 0 24 24" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
+                <svg [ngClass]="{'state--pending': infoIncidente?.estado === 'PENDIENTE', 'state--in-progress': infoIncidente?.estado === 'EN PROCESO', 'state--completed': infoIncidente?.estado === 'COMPLETADO'}" fill="none" viewBox="0 0 24 24" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                     </svg> 
             </div>
@@ -33,7 +33,7 @@
                 </svg>
             </button>
             <hr>
-            <span>{{incidente?.total_votos}}</span>
+            <span>{{infoIncidente?.total_votos}}</span>
             <hr *appAdminModerator>
             <button class="btn-edit" (click)="toggleActiveFormEdit()" *appAdminModerator>
                 <svg class="svg-edit" height="19" width="19" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -43,10 +43,10 @@
         </div>
     </div>
     <div class="post-img-content">
-        <img src={{incidente?.imagen}} alt="">
+        <img src={{infoIncidente?.imagen}} alt="">
     </div>
   </div>
 
 <div class="container-edit" *ngIf="showFormEdit" (click)="closeFormEdit($event)">
-    <app-edit-incidencia [incidenteEdit]="incidenteCopy" (formEditClosed)="showFormEdit = $event"></app-edit-incidencia>
+    <app-edit-incidencia [infoIncidenteEdit]="infoIncidenteCopy" (formEditClosed)="showFormEdit = $event"></app-edit-incidencia>
 </div>
