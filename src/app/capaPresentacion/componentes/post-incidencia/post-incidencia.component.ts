@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { format } from 'date-fns';
-import { Incidente } from '../../../Model/Incidente';
+//import { Incidente } from '../../../Model/Incidente';
 import { es } from 'date-fns/locale';
 import { IncidenciaLikeService } from '../../../Service/IncidenciaLike/incidencia-like.service';
 import { IncidenciaLike } from '../../../Model/IncidenciaLike';
@@ -10,7 +10,7 @@ import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import { AdminModeratorDirective } from '../../../Auth/Directive/admin-moderator.directive';
 import { CommonUserDirective } from '../../../Auth/Directive/common-user.directive';
 import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/edit-incidencia.component';
-import { CategoriaService } from '../../../Service/Categoria/categoria.service';
+//import { CategoriaService } from '../../../Service/Categoria/categoria.service';
 import { Categoria } from '../../../Model/Categoria';
 import { InfoIncidente } from '../../../Model/InfoIncidente';
 
@@ -46,7 +46,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     private incidenciaLikeService: IncidenciaLikeService,
     private incidenciaService: IncidenciaService,
     private authService: AuthService,
-    private categoriaService: CategoriaService
+    //private categoriaService: CategoriaService
   ) {}
 
   ngOnInit(): void {
