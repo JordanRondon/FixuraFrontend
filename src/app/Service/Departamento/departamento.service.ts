@@ -23,4 +23,8 @@ export class DepartamentoService {
   getDistrito(id_depart: number, id_prov: number): Observable<any>{
     return this.httpClient.get<any>(this.baseUrl + '/' + id_depart + '/provincia/' + id_prov + '/distritos')
   }
+
+  getNameDistrito(id_distrito: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + '/distrito/' + id_distrito)
+  }
 }
