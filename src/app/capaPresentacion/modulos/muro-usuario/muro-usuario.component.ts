@@ -9,6 +9,10 @@ import { Incidente } from '../../../Model/Incidente';
 import { Usuario } from '../../../Model/Usuario';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import EditUsuarioComponent from '../../componentes/edit-usuario/edit-usuario.component';
+import { InfoIncidente } from '../../../Model/InfoIncidente';
+import { Page } from '../../../Model/Page';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 
 @Component({
   selector: 'app-muro-usuario',
@@ -19,6 +23,8 @@ import EditUsuarioComponent from '../../componentes/edit-usuario/edit-usuario.co
     RegistroIncidenciaComponent,
     CommonModule,
     EditUsuarioComponent,
+    InfiniteScrollModule,
+    ImageModalComponent
   ],
   templateUrl: './muro-usuario.component.html',
   styleUrl: './muro-usuario.component.css',
@@ -28,6 +34,17 @@ export default class MuroUsuarioComponent implements OnInit {
   mostrarEditarUsuario: boolean = false;
   incidentes: Incidente[] = [];
   dataUsuario: Usuario | null = null;
+  // incidentes: Incidente[] = [];
+  dataUsuario: Usuario | null  = null;
+
+  selectedImage: string = '';
+  isModalActive: boolean = false;
+
+  listIncidentes: InfoIncidente[] = [];
+  totalElements: number = 0;
+  page: number = 0;
+  size: number = 10;
+  loading: boolean = false;
 
   constructor(
     private registerUserService: UsuariosService,
@@ -37,7 +54,8 @@ export default class MuroUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataUserProfile();
-    this.getIncidentesPorUsuario(this.authService.getToken_dni() ?? '');
+    //this.getIncidentesPorUsuario(this.authService.getToken_dni() ?? '');
+    this.loadIncidentes();
   }
 
   abrirRegistroIncidencia() {
@@ -47,13 +65,22 @@ export default class MuroUsuarioComponent implements OnInit {
   cerrarFormulario() {
     this.mostrarFormulario = false;
   }
-
+  
   abrirEditarUsuario() {
     this.mostrarEditarUsuario = true;
   }
 
   cerrarEditarUsuario() {
     this.mostrarEditarUsuario = false;
+  }
+
+  openImageModal(image: string): void {
+    this.selectedImage = image;
+    this.isModalActive = true;
+  }
+
+  closeImageModal(): void {
+    this.isModalActive = false;
   }
 
   getDataUserProfile(): void {
@@ -70,15 +97,41 @@ export default class MuroUsuarioComponent implements OnInit {
     }
   }
 
-  getIncidentesPorUsuario(DNI_usuario: string): void {
-    this.incidenteService.getListaIncidencia(DNI_usuario).subscribe(
-      (data: Incidente[]) => {
-        this.incidentes = data;
-        console.log(this.incidentes);
+  loadIncidentes(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.incidenteService.getListIncidenciaUsuario(this.page, this.size, this.authService.getToken_dni() ?? '').subscribe({
+      next: (response: Page<InfoIncidente>) => {
+        this.listIncidentes = [...this.listIncidentes, ...response.content];// Añadir más incidencias
+        this.totalElements = response.totalElements;
+        this.page += 1;  // Incrementar la página para la siguiente carga
+        console.log('Incidentes cargados:', this.listIncidentes);
+        this.loading = false;
       },
-      (error) => {
-        console.error('Error al obtener los incidentes:', error);
+      error: (error) => {
+        console.error('Error al cargar incidentes:', error);
+        this.loading = false;
       }
-    );
+    });
   }
+
+  onScroll(): void {
+    this.loadIncidentes();
+  }
+
+  // getIncidentesPorUsuario(DNI_usuario: string): void {
+  //   this.incidenteService.getListaIncidencia(DNI_usuario).subscribe(
+  //     (data: Incidente[]) => {
+  //       this.incidentes = data;
+  //       console.log(this.incidentes);
+  //     },
+  //     (error) => {
+  //       console.error('Error al obtener los incidentes:', error);
+  //     }
+  //   );
+  // }
 }

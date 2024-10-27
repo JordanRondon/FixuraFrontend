@@ -11,7 +11,7 @@
             alt="Foto de perfil"
           />
         </div>
-
+        
         <div class="muro__perfil-details">
           <span>{{ dataUsuario?.nombre }}</span>
           <p>{{ dataUsuario?.correo }}</p>
@@ -62,17 +62,20 @@
         </span>
       </button>
     </div>
-
-    <div
-      class="muro__post-container"
-      *ngIf="incidentes.length > 0; else noData"
-    >
-      <app-post-incidencia
-        *ngFor="let incidente of incidentes"
-        [incidente]="incidente"
-        [nombreUsuario]="dataUsuario?.nombre"
-      >
-      </app-post-incidencia>
+        
+    <div class="muro__post-container" 
+        *ngIf="listIncidentes.length > 0; else noData"
+        infiniteScroll 
+        [infiniteScrollDistance]="2" 
+        [infiniteScrollThrottle]="150" 
+        (scrolled)="onScroll()"
+        >
+            <app-post-incidencia 
+            *ngFor="let infoIncidente of listIncidentes"
+            [infoIncidente]="infoIncidente"
+            (imagenClick)="openImageModal($event)"
+            >
+            </app-post-incidencia>
     </div>
     <ng-template #noData>
       <p>No hay incidentes para mostrar.</p>
@@ -124,3 +127,9 @@
     <app-edit-usuario (close)="cerrarEditarUsuario()"></app-edit-usuario>
   </div>
 </div>
+
+<app-image-modal 
+*ngIf="isModalActive"
+[imageIncidente]="selectedImage" 
+(closeModal)="closeImageModal()">
+</app-image-modal>

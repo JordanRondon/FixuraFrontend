@@ -10,6 +10,7 @@ import { Incidente } from '../../../../Model/Incidente';
 import { IncidenteCoordenada } from '../../../../Model/IncidenteCoordenada';
 import { FormsModule } from '@angular/forms';
 import { IncidenciaService } from '../../../../Service/Incidencia/incidencia.service';
+import { InfoIncidente } from '../../../../Model/InfoIncidente';
 
 
 @Component({
@@ -19,13 +20,15 @@ import { IncidenciaService } from '../../../../Service/Incidencia/incidencia.ser
   templateUrl: './edit-incidencia.component.html',
   styleUrl: './edit-incidencia.component.css'
 })
-export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit{
+export class EditIncidenciaComponent implements OnInit {
 
   @Output() formEditClosed = new EventEmitter<boolean>();
-  @Input() incidenteEdit: Incidente | undefined;
+  @Input() infoIncidenteEdit: InfoIncidente | undefined;
 
-  incidenteEditCache: Incidente | undefined;
+  incidenteEditCache: InfoIncidente | undefined;
+
   Coordenada_incidente: IncidenteCoordenada | undefined;
+
   isOpenState = false; // Para controlar si las opciones están abiertas o no
   selectedOptionState: String = 'Seleccione una Opción'; // Opción seleccionada
   optionsState: Estado[] = [];
@@ -49,35 +52,38 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
 
   ngOnInit() {
     
-    if(this.incidenteEdit) {
-      this.incidenteEditCache = JSON.parse(JSON.stringify(this.incidenteEdit)); 
-      this.getNameState(this.incidenteEdit.id_estado);
-      this.getNameCategory(this.incidenteEdit.id_categoria);
+    if(this.infoIncidenteEdit) {
+      this.incidenteEditCache = JSON.parse(JSON.stringify(this.infoIncidenteEdit)); 
+      this.selectedOptionState = this.infoIncidenteEdit.estado;
+      this.selectedOptionCategory = this.infoIncidenteEdit.categoria;
+      this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
     }
     
-    if (this.incidenteEdit?.id_incidencia) {
-      this.getCoordenadas(this.incidenteEdit.id_incidencia);
-    }
-    this.center = { lat: this.Coordenada_incidente?.latitud ?? -8.1116, lng: this.Coordenada_incidente?.longitud ?? -79.0288}; // Reestablece la posición 
-    this.zoom = 17; // Reestablece el nivel de zoom
-    console.log('ID_INCIDENCIA:', this.incidenteEdit?.id_incidencia);
-    console.log('Centro:', this.center);
-    console.log('Zoom:', this.zoom);
+    // if (this.infoIncidenteEdit?.id_incidencia) {
+    //   this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
+    // }
+
+    // this.center = { lat: this.infoIncidenteEdit?.latitud ?? -8.1116, lng: this.infoIncidenteEdit?.longitud ?? -79.0288}; // Reestablece la posición 
+    // this.zoom = 17; // Reestablece el nivel de zoom
+    // this.markerPosition = this.center;
+    // console.log('ID_INCIDENCIA:', this.infoIncidenteEdit?.id_incidencia);
+    // console.log('Centro:', this.center);
+    // console.log('Zoom:', this.zoom);
     document.addEventListener('click', this.closeOptions.bind(this));
     
     this.getListEstate();
     this.getListCategoria();
   }
 
-  ngOnChanges() {
-    this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
-    this.zoom = 17; // Reestablece el nivel de zoom
-  }
+  // ngOnChanges() {
+  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
+  //   this.zoom = 17; // Reestablece el nivel de zoom
+  // }
 
-  ngAfterViewInit() {
-    this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
-    this.zoom = 17; // Reestablece el nivel de zoom
-  }
+  // ngAfterViewInit() {
+  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
+  //   this.zoom = 17; // Reestablece el nivel de zoom
+  // }
 
   closeForm() {
     this.formEditClosed.emit(false);
@@ -90,8 +96,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
 
   selectOptionState(option: Estado) {
     this.selectedOptionState = option.nombre;
-    if (this.incidenteEdit)
-      this.incidenteEdit.id_estado = option.id_estado;
+    if (this.infoIncidenteEdit)
+      this.infoIncidenteEdit.estado = option.nombre;
     this.isOpenState = false;
   }
 
@@ -101,8 +107,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
 
   selectOptionCategory(option: Categoria) {
     this.selectedOptionCategory = option.nombre;
-    if (this.incidenteEdit)
-      this.incidenteEdit.id_categoria = option.id_categoria;
+    if (this.infoIncidenteEdit)
+      this.infoIncidenteEdit.categoria = option.nombre;
     this.isOpenCategory = false;
   }
 
@@ -119,11 +125,11 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
       this.markerPosition = { lat, lng };
-      if (this.incidenteEdit){
-        this.incidenteEdit.latitud = lat;
-        this.incidenteEdit.longitud = lng; 
-        console.log("LATITUD SELECCIONADA:"+this.incidenteEdit.latitud)
-        console.log("LONGITUD SELECCIONADA:"+this.incidenteEdit.longitud)
+      if (this.infoIncidenteEdit){
+        this.infoIncidenteEdit.latitud = lat;
+        this.infoIncidenteEdit.longitud = lng; 
+        console.log("LATITUD SELECCIONADA:"+this.infoIncidenteEdit.latitud)
+        console.log("LONGITUD SELECCIONADA:"+this.infoIncidenteEdit.longitud)
       }
   
       this.obtenerDireccion(lat, lng);
@@ -136,8 +142,8 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     this.http.get(url).subscribe((data: any) => {
       if (data.status === 'OK' && data.results.length > 0) {
         const direccion = data.results[0].formatted_address;
-        if (this.incidenteEdit){
-          this.incidenteEdit.ubicacion=direccion.toString();
+        if (this.infoIncidenteEdit){
+          this.infoIncidenteEdit.ubicacion=direccion.toString();
         }
         console.error(direccion);
       } else {
@@ -145,6 +151,7 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
       }
     });
   }
+  
   getListEstate(): void {
     this.estadoService.getListState().subscribe(
       (respuesta) => {
@@ -167,36 +174,58 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
     );
   }
 
-  getNameState(id_state: number): void {
-    this.estadoService.getNameState(id_state).subscribe(nameState => {
-      this.selectedOptionState = nameState.nombre;
-    });
-  }
+  // getNameState(id_state: number): void {
+  //   this.estadoService.getNameState(id_state).subscribe(nameState => {
+  //     this.selectedOptionState = nameState.nombre;
+  //   });
+  // }
 
-  getNameCategory(id_category: number): void {
-    this.categoriaService.getNameCategory(id_category).subscribe(nameCategory => {
-      this.selectedOptionCategory = nameCategory.nombre;
-    });
-  }
+  // getNameCategory(id_category: number): void {
+  //   this.categoriaService.getNameCategory(id_category).subscribe(nameCategory => {
+  //     this.selectedOptionCategory = nameCategory.nombre;
+  //   });
+  // }
 
   setIncidencia(): void {
 
-    if (!this.incidenteEdit) {
+    if (!this.infoIncidenteEdit) {
       console.error('Incidente no está definido');
       return;
     }
+
+    const incidente: Incidente = {
+      id_incidencia: this.infoIncidenteEdit.id_incidencia,
+      fecha_publicacion: this.infoIncidenteEdit.fecha_publicacion,
+      descripcion: '',
+      ubicacion: this.infoIncidenteEdit.ubicacion,
+      imagen: '',
+      total_votos: 0,
+      id_estado: 0,
+      dni: '',
+      id_categoria: 0,
+      latitud: this.infoIncidenteEdit.latitud,
+      longitud: this.infoIncidenteEdit.longitud
+    }
+
+    for (const state of this.optionsState) {
+      if(state.nombre === this.infoIncidenteEdit.estado)
+        incidente.id_estado = state.id_estado;
+    }
+
+    for (const category of this.optionsCategory) {
+      if(category.nombre === this.infoIncidenteEdit.categoria)
+        incidente.id_categoria= category.id_categoria;
+    }
     
-    this.incidenciaService.updateIncidencia(this.incidenteEdit).subscribe(
+    this.incidenciaService.updateIncidencia(incidente).subscribe(
       response => {
         console.log('Incidente actualizado correctamente:', response);
       }
     );
   }
 
-
-  
   getCoordenadas(id_incidencia: number): void {
-    if (!this.incidenteEdit) {
+    if (!this.infoIncidenteEdit) {
       console.error('Incidente no está definido');
       return;
     }
@@ -210,10 +239,10 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
         this.center = { lat: this.Coordenada_incidente.latitud, lng: this.Coordenada_incidente.longitud };
         this.markerPosition = this.center;  // Actualiza la posición del marcador
         this.zoom = 17;  // Mantiene el zoom en 17
-        if (this.incidenteEdit){
-          this.incidenteEdit.latitud = this.Coordenada_incidente.latitud;
-          this.incidenteEdit.longitud = this.Coordenada_incidente.longitud; 
-        }
+        // if (this.infoIncidenteEdit){
+        //   this.infoIncidenteEdit.latitud = this.Coordenada_incidente.latitud;
+        //   this.infoIncidenteEdit.longitud = this.Coordenada_incidente.longitud; 
+        // }
         console.log('Centro actualizado:', this.center);
       },
       (error) => {
@@ -221,12 +250,14 @@ export class EditIncidenciaComponent implements OnInit, OnChanges, AfterViewInit
       }
     );
   }
+
   resetChanges(): void {
-    this.incidenteEdit = JSON.parse(JSON.stringify(this.incidenteEditCache));
-    this.getNameState(this.incidenteEdit?.id_estado ?? -1);
-    this.getNameCategory(this.incidenteEdit?.id_categoria ?? -1);
-    const lat =this.incidenteEdit?.latitud;
-    const lng =this.incidenteEdit?.longitud;
+    this.infoIncidenteEdit = JSON.parse(JSON.stringify(this.incidenteEditCache));
+
+    this.selectedOptionState = this.infoIncidenteEdit?.estado ?? 'Seleccione una Opción';
+    this.selectedOptionCategory = this.infoIncidenteEdit?.categoria ?? 'Seleccione una Opción';
+    const lat =this.infoIncidenteEdit?.latitud;
+    const lng =this.infoIncidenteEdit?.longitud;
     if(lat && lng){
       this.markerPosition = { lat, lng };
     }
