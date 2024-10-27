@@ -32,7 +32,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   
   @Output() imagenClick: EventEmitter<string> = new EventEmitter<string>();
   @Input() infoIncidente: InfoIncidente | undefined;
-
+  @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
+  
   infoIncidenteCopy: InfoIncidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;

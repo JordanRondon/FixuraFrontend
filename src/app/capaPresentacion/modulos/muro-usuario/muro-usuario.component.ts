@@ -13,6 +13,7 @@ import { InfoIncidente } from '../../../Model/InfoIncidente';
 import { Page } from '../../../Model/Page';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
+import { DepartamentoService} from '../../../Service/Departamento/departamento.service';
 
 @Component({
   selector: 'app-muro-usuario',
@@ -35,7 +36,6 @@ export default class MuroUsuarioComponent implements OnInit {
   incidentes: Incidente[] = [];
   dataUsuario: Usuario | null = null;
   // incidentes: Incidente[] = [];
-  dataUsuario: Usuario | null  = null;
 
   selectedImage: string = '';
   isModalActive: boolean = false;
@@ -45,10 +45,11 @@ export default class MuroUsuarioComponent implements OnInit {
   page: number = 0;
   size: number = 10;
   loading: boolean = false;
-
+  listDistritoCoordenadas: {id_coordenada: number, latitud: number, longitud: number}[] = [];
   constructor(
     private registerUserService: UsuariosService,
     private incidenteService: IncidenciaService,
+    private departamentoService : DepartamentoService,
     private authService: AuthService
   ) {}
 
@@ -88,6 +89,7 @@ export default class MuroUsuarioComponent implements OnInit {
       this.registerUserService.getUserProfile().subscribe({
         next: (user: Usuario) => {
           this.dataUsuario = user;
+          this.loadDistrito_Coordenadas(this.dataUsuario.idDist);
           console.log('Datos del usuario: ', this.dataUsuario);
         },
         error: (error) => {
@@ -122,7 +124,16 @@ export default class MuroUsuarioComponent implements OnInit {
   onScroll(): void {
     this.loadIncidentes();
   }
-
+  loadDistrito_Coordenadas(id_distrito: number): void {
+    
+    this.departamentoService.getDistrito_Coordenads(id_distrito).subscribe(resp => {
+      if (resp) {
+        console.log(resp)
+        this.listDistritoCoordenadas = resp;
+        console.log("Datos asignados a listDistritoCoordenadas:", this.listDistritoCoordenadas);
+      }
+    });
+  }
   // getIncidentesPorUsuario(DNI_usuario: string): void {
   //   this.incidenteService.getListaIncidencia(DNI_usuario).subscribe(
   //     (data: Incidente[]) => {
