@@ -23,3 +23,5 @@ a {
 html, body {
     overflow-x: hidden; /* Evita el desplazamiento horizontal no deseado */
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,5 +1,5 @@
 .card {
-  height: 90px;
+  height: auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
   background-color: white;
@@ -9,9 +9,9 @@
 
 .post {
   display: grid;
-  grid-template-columns: 1fr 35px;
+  grid-template-columns: 1fr;
   gap: 20px;
-  padding: 20px;
+  padding: 15px 20px;
 }
 
 .post-container {
@@ -23,9 +23,11 @@
 }
 
 .post-container .user {
-  display: grid;
-  grid-template-columns: 40px 430px 1fr;
-  gap: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box; 
 }
 
 .post-container .user .user-pic {
@@ -49,8 +51,8 @@
 }
 
 .post-container .user .user-info {
-  width: 100%;
-  padding-left: 5px;
+  flex-grow: 1; 
+  padding-left: 10px; 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -70,9 +72,11 @@
   color: #acaeb4;
 }
 
-.post-container .user .user-options img{
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  margin-top: 10px;
+.post-container .user .user-options {
+  align-items: flex-end;
+}
+
+.post-container .user-ban{
+  color: rgb(255, 0, 0);
+  font-size: 11px;
 }

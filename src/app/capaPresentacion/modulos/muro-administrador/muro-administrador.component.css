@@ -194,19 +194,20 @@
     transition: .3s;
 }
 
-.elemento img{
+.herramienta img{
     width: 25px;
     height: 25px;
 }
 
-.elemento:hover{
+.herramienta:hover{
     cursor: pointer;
 }
 
 #block-user:hover{
     cursor: pointer;
-    background-color: rgb(236, 28, 28);
+    background-color: rgb(216, 27, 27);
     color: #ffffff;
+    border-radius: 10px;
 }
 
 
@@ -239,7 +240,7 @@
     transition: max-height 0.5s ease; /* Controla la velocidad del despliegue */
 }
 .contenedor-herramientas.mostrar {
-    max-height: 100px; /* Ajusta este valor según el contenido o pon un valor grande */
+    max-height: 200px; /* Ajusta este valor según el contenido o pon un valor grande */
 }
 .material-icons{
     margin-right: 5px;

@@ -78,6 +78,13 @@ export class UsuariosService {
     return this.httpClient.post<String>(`${this.apiUrl}/verifyDni`, dni).pipe();
   }
 
+  banUser(dni: string, isPermanent: boolean, durationBan: string): Observable<any>{
+    return this.httpClient.post<any>(`${this.apiUrl}/${dni}/ban`, {
+      isPermanent,
+      durationBan
+    });
+  }
+
   private validateEmail(email: string) {
     const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@(gmail|outlook|hotmail)\.(com|es|net)$/;
     return emailRegex.test(email);

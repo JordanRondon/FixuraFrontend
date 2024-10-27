@@ -20,8 +20,9 @@
                     <img class="flecha-despliegue" src="/images/flecha-abajo.png" alt="Flecha Despliegue" [ngClass]="{'rotate': mostrarHerramientas}">
                 </div>
                 <div class="contenedor-herramientas" [ngClass]="{'mostrar': mostrarHerramientas}">
-                    <div class = "herramienta">Herramienta 1</div>
+                    <div class = "herramienta" (click)="toggleIncidencias()">Mostrar Incidencias</div>
                     <div class = "herramienta" (click)="mostrarMapa()">Herramienta 2</div>
+                    <div class = "herramienta" id="block-user" (click)="toggleBloquearUsuarios()"><img src="/images/block.svg" alt=""> Bloquear Usuarios</div>
                 </div>
             </div>
         </aside>
@@ -47,8 +48,7 @@
             <div class = "panel-noticias">
                 <h3>Panel Extra</h3>
                 <div class = "elemento">Elemento 1</div>
-                <div class = "elemento" (click)="toggleIncidencias()">Elemento 2</div>
-                <div class = "elemento" id="block-user" (click)="toggleBloquearUsuarios()"><img src="/images/block.svg" alt=""> Bloquear Usuarios</div>
+                <div class = "elemento">Elemento 2</div>
             </div>
         </aside>
     </div>
