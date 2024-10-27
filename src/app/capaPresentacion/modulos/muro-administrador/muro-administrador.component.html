@@ -5,7 +5,7 @@
             <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
         </div>
         <div class = "portada-perfil-inferior">
-            <h2 class="reportes__title">{{dataUsuario?.nombre}}</h2>
+            <h2 class="reportes__title">{{nameMunicipalidad}}</h2>
             <button type="button" class="btn btn-primary reportes__button">
                 <i class="material-icons">edit</i>
                 Editar Perfil
@@ -34,7 +34,8 @@
         >
             <app-post-incidencia 
             *ngFor="let infoIncidente of listIncidentes"
-            [infoIncidente]="infoIncidente">
+            [infoIncidente]="infoIncidente"
+            (imagenClick)="openImageModal($event)">
             </app-post-incidencia>
         </section>
         <ng-template #noData>
@@ -51,3 +52,9 @@
     <app-mapa-incidencias *ngIf="mostrarMapaIncidencias" [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
 
 </main>
+
+<app-image-modal 
+*ngIf="isModalActive"
+[imageIncidente]="selectedImage" 
+(closeModal)="closeImageModal()">
+</app-image-modal>

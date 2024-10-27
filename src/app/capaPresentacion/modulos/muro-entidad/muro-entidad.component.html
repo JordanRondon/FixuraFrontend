@@ -9,8 +9,7 @@
                 </div>
                 
                 <div class="muro__perfil-details">
-                    <span>{{dataUsuario?.nombre}}</span>
-                    <p>{{dataUsuario?.correo}}</p>
+                    <span>{{nameMunicipalidad}}</span>
                 </div>
             </div>
         </div>
@@ -32,7 +31,10 @@
         [infiniteScrollThrottle]="150" 
         (scrolled)="onScroll()"
         >
-            <app-post-incidencia *ngFor="let infoIncidente of listIncidentes" [infoIncidente]="infoIncidente">
+            <app-post-incidencia 
+            *ngFor="let infoIncidente of listIncidentes"
+            [infoIncidente]="infoIncidente"
+            (imagenClick)="openImageModal($event)">
             </app-post-incidencia>
         </div>
         <ng-template #noData>
@@ -60,3 +62,10 @@
     <app-registro-incidencia [dniUsuario]="dataUsuario?.dni"></app-registro-incidencia>
   </div>
 </div>
+
+<app-image-modal 
+*ngIf="isModalActive"
+[imageIncidente]="selectedImage" 
+(closeModal)="closeImageModal()">
+</app-image-modal>
+

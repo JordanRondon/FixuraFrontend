@@ -11,11 +11,13 @@ import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import { InfoIncidente } from '../../../Model/InfoIncidente';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { Page } from '../../../Model/Page';
+import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
+import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 
 @Component({
   selector: 'app-muro-entidad',
   standalone: true,
-  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule, InfiniteScrollModule],
+  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule, InfiniteScrollModule, ImageModalComponent],
   templateUrl: './muro-entidad.component.html',
   styleUrls: ['./muro-entidad.component.css']
 })
@@ -24,6 +26,10 @@ export default class MuroEntidadComponent implements OnInit {
   // incidentes: Incidente[] = [];
   // User: { [dni: string]: String } = {};
   dataUsuario: Usuario | null  = null;
+  nameMunicipalidad: String = '';
+
+  selectedImage: string = '';
+  isModalActive: boolean = false;
 
   listIncidentes: InfoIncidente[] = [];
   totalElements: number = 0;
@@ -33,6 +39,7 @@ export default class MuroEntidadComponent implements OnInit {
 
   constructor(
     private registerUserService: UsuariosService,
+    private departamentoService: DepartamentoService,
     private incidenteService: IncidenciaService,
     private authService: AuthService
   ) { }
@@ -49,12 +56,22 @@ export default class MuroEntidadComponent implements OnInit {
     this.mostrarFormulario = false;
   }
 
+  openImageModal(image: string): void {
+    this.selectedImage = image;
+    this.isModalActive = true;
+  }
+
+  closeImageModal(): void {
+    this.isModalActive = false;
+  }
+
   getDataUserProfile(): void {
     if(this.authService.isAuthenticated()) {
       this.registerUserService.getUserProfile().subscribe({
         next: (user: Usuario) => {
           this.dataUsuario = user
           console.log('Datos del usuario: ', this.dataUsuario)
+          this.getNameDistrito(user.idDist);
           this.loadIncidentes()
         },
         error: (error) => {
@@ -88,6 +105,17 @@ export default class MuroEntidadComponent implements OnInit {
 
   onScroll(): void {
     this.loadIncidentes();
+  }
+
+  getNameDistrito(id_distrito: number): void {
+    this.departamentoService.getNameDistrito(id_distrito).subscribe({
+      next: (distrito: any) => {
+        this.nameMunicipalidad = 'Municipalidad de ' + distrito.nombre;
+      },
+      error: (error) => {
+        console.error('Error al cargar nombre de Distrito:', error);
+      }
+    });
   }
 
   // getIncidentesMunicipalidad(id_distrito: number): void {
