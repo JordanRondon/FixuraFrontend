@@ -12,11 +12,19 @@ import { InfoIncidente } from '../../../Model/InfoIncidente';
 import { Page } from '../../../Model/Page';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
+import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 
 @Component({
   selector: 'app-muro-administrador',
   standalone: true,
-  imports: [CommonModule,NavbarUsuarioComponent,PostIncidenciaComponent,MapaIncidenciasComponent, InfiniteScrollModule],
+  imports: [
+    CommonModule,
+    NavbarUsuarioComponent,
+    PostIncidenciaComponent,
+    MapaIncidenciasComponent,
+    InfiniteScrollModule,
+    ImageModalComponent
+  ],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css'
 })
@@ -28,6 +36,9 @@ export default class MuroAdministradorComponent implements OnInit{
   mostrarMapaIncidencias = false;
   dataUsuario: Usuario | undefined;
   nameMunicipalidad: String = '';
+
+  selectedImage: string = '';
+  isModalActive: boolean = false;
 
   listIncidentes: InfoIncidente[] = [];
   totalElements: number = 0;
@@ -53,6 +64,15 @@ export default class MuroAdministradorComponent implements OnInit{
   toggleHerramientas(){
     console.log('Desplegando herramientas');
     this.mostrarHerramientas = !this.mostrarHerramientas;
+  }
+
+  openImageModal(image: string): void {
+    this.selectedImage = image;
+    this.isModalActive = true;
+  }
+
+  closeImageModal(): void {
+    this.isModalActive = false;
   }
 
   getDataUserProfile(): void {

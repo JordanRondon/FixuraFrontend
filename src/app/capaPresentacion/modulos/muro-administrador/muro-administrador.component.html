@@ -34,7 +34,8 @@
         >
             <app-post-incidencia 
             *ngFor="let infoIncidente of listIncidentes"
-            [infoIncidente]="infoIncidente">
+            [infoIncidente]="infoIncidente"
+            (imagenClick)="openImageModal($event)">
             </app-post-incidencia>
         </section>
         <ng-template #noData>
@@ -51,3 +52,9 @@
     <app-mapa-incidencias *ngIf="mostrarMapaIncidencias" [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
 
 </main>
+
+<app-image-modal 
+*ngIf="isModalActive"
+[imageIncidente]="selectedImage" 
+(closeModal)="closeImageModal()">
+</app-image-modal>

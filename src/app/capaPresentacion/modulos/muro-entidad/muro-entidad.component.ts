@@ -12,11 +12,12 @@ import { InfoIncidente } from '../../../Model/InfoIncidente';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { Page } from '../../../Model/Page';
 import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
+import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 
 @Component({
   selector: 'app-muro-entidad',
   standalone: true,
-  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule, InfiniteScrollModule],
+  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule, InfiniteScrollModule, ImageModalComponent],
   templateUrl: './muro-entidad.component.html',
   styleUrls: ['./muro-entidad.component.css']
 })
@@ -26,6 +27,9 @@ export default class MuroEntidadComponent implements OnInit {
   // User: { [dni: string]: String } = {};
   dataUsuario: Usuario | null  = null;
   nameMunicipalidad: String = '';
+
+  selectedImage: string = '';
+  isModalActive: boolean = false;
 
   listIncidentes: InfoIncidente[] = [];
   totalElements: number = 0;
@@ -50,6 +54,15 @@ export default class MuroEntidadComponent implements OnInit {
 
   cerrarFormulario() {
     this.mostrarFormulario = false;
+  }
+
+  openImageModal(image: string): void {
+    this.selectedImage = image;
+    this.isModalActive = true;
+  }
+
+  closeImageModal(): void {
+    this.isModalActive = false;
   }
 
   getDataUserProfile(): void {

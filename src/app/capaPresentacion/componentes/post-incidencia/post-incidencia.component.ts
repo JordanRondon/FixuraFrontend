@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { format } from 'date-fns';
 //import { Incidente } from '../../../Model/Incidente';
@@ -30,6 +30,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   
   showFormEdit: boolean = false;
   
+  @Output() imagenClick: EventEmitter<string> = new EventEmitter<string>();
   @Input() infoIncidente: InfoIncidente | undefined;
 
   infoIncidenteCopy: InfoIncidente | undefined;
@@ -167,4 +168,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   //     }
   //   );
   // }
+
+  emitirClick(): void {
+    this.imagenClick.emit(this.infoIncidente?.imagen);
+  }
 }
