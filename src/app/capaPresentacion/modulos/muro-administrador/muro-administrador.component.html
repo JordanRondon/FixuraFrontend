@@ -1,17 +1,5 @@
 <app-navbar-usuario></app-navbar-usuario>
 <main class="body">
-    <div class = "portada-perfil">
-        <div class = "portada-perfil-superior">
-            <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
-        </div>
-        <div class = "portada-perfil-inferior">
-            <h2 class="reportes__title">{{dataUsuario?.nombre}}</h2>
-            <button type="button" class="btn btn-primary reportes__button">
-                <i class="material-icons">edit</i>
-                Editar Perfil
-            </button>
-        </div>
-    </div>
     <div class = "muro">
         <aside class="muro__col-izq">
             <div class = "panel-herramientas">
@@ -20,16 +8,41 @@
                     <img class="flecha-despliegue" src="/images/flecha-abajo.png" alt="Flecha Despliegue" [ngClass]="{'rotate': mostrarHerramientas}">
                 </div>
                 <div class="contenedor-herramientas" [ngClass]="{'mostrar': mostrarHerramientas}">
-                    <div class = "herramienta">Herramienta 1</div>
-                    <div class = "herramienta" (click)="mostrarMapa()">Herramienta 2</div>
+                    <div class = "herramienta" (click)="mostrarPerfil()">Ir a Muro</div>
+                    <div class = "herramienta" (click)="mostrarMapa()">Mapa de Incidencias</div>
+                    <div class = "herramienta">Buscar Usuario</div>
                 </div>
             </div>
+            
         </aside>
         <section class="muro__col-mid" *ngIf="incidentes.length > 0; else noData">
-            <app-post-incidencia 
-            *ngFor="let incidente of incidentes"
-            [incidente]="incidente"
-            [nombreUsuario]="User[incidente.dni]"></app-post-incidencia>
+            <div *ngIf="vistaActiva === 'perfil'">
+                <div class = "portada-perfil">
+                    <div class = "portada-perfil-superior">
+                        <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
+                    </div>
+                    <div class = "portada-perfil-inferior">
+                        <h2 class="reportes__title">{{dataUsuario?.nombre}}</h2>
+                        <button type="button" class="btn btn-primary reportes__button">
+                            <i class="material-icons">edit</i>
+                            Editar Perfil
+                        </button>
+                    </div>
+                </div>
+                <app-post-incidencia 
+                *ngFor="let incidente of incidentes"
+                [incidente]="incidente"
+                [nombreUsuario]="User[incidente.dni]"></app-post-incidencia>
+            </div>
+            <!-- <div *ngIf="vistaActiva === 'mapa'">
+                <h2>Estamos aqui</h2>
+            </div> -->
+            <div class="mapa-container" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa' }">
+                <div class="vacio">
+                    <h2>ESTAMOS AQUI</h2>
+                </div>
+                <app-mapa-incidencias [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
+            </div>
         </section>
         <ng-template #noData>
             <p>No hay incidentes para mostrar.</p>
@@ -42,6 +55,5 @@
             </div>
         </aside>
     </div>
-    <app-mapa-incidencias *ngIf="mostrarMapaIncidencias" [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
-
+    <!-- <app-mapa-incidencias *ngIf="mostrarMapaIncidencias" [distrito]="dataUsuario?.idDist"></app-mapa-incidencias> -->
 </main>
