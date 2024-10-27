@@ -35,6 +35,7 @@ export default class MuroAdministradorComponent implements OnInit{
   // User: { [dni: string]: String } = {};
   mostrarMapaIncidencias = false;
   dataUsuario: Usuario | undefined;
+  vistaActiva: string = 'perfil';
   nameMunicipalidad: String = '';
 
   selectedImage: string = '';
@@ -57,8 +58,11 @@ export default class MuroAdministradorComponent implements OnInit{
     this.getDataUserProfile();
     
   }
+  mostrarPerfil(){
+    this.vistaActiva = 'perfil'
+  }
   mostrarMapa() {
-    this.mostrarMapaIncidencias = true;
+    this.vistaActiva = 'mapa';
   }
 
   toggleHerramientas(){
