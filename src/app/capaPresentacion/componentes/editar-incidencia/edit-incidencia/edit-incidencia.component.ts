@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output,ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { HttpClient } from '@angular/common/http';
 import { EstadoService } from '../../../../Service/Estado/estado.service';
 import { Estado } from '../../../../Model/Estado';
@@ -24,8 +24,12 @@ export class EditIncidenciaComponent implements OnInit {
 
   @Output() formEditClosed = new EventEmitter<boolean>();
   @Input() infoIncidenteEdit: InfoIncidente | undefined;
-
+  @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
   incidenteEditCache: InfoIncidente | undefined;
+  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+  polygon: google.maps.Polygon | null = null;
+  polygonPath: google.maps.LatLngLiteral[] = [];
+
 
   Coordenada_incidente: IncidenteCoordenada | undefined;
 
@@ -58,7 +62,12 @@ export class EditIncidenciaComponent implements OnInit {
       this.selectedOptionCategory = this.infoIncidenteEdit.categoria;
       this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
     }
-    
+    this.polygonPath = this.listDistritoCoordenadas.map(coordenada => ({
+      lat: coordenada.latitud,
+      lng: coordenada.longitud
+    }));
+    this.tryInitPolygon();
+    console.log(this.listDistritoCoordenadas)
     // if (this.infoIncidenteEdit?.id_incidencia) {
     //   this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
     // }
@@ -124,15 +133,20 @@ export class EditIncidenciaComponent implements OnInit {
     if (event.latLng) {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
-      this.markerPosition = { lat, lng };
-      if (this.infoIncidenteEdit){
-        this.infoIncidenteEdit.latitud = lat;
-        this.infoIncidenteEdit.longitud = lng; 
-        console.log("LATITUD SELECCIONADA:"+this.infoIncidenteEdit.latitud)
-        console.log("LONGITUD SELECCIONADA:"+this.infoIncidenteEdit.longitud)
-      }
-  
-      this.obtenerDireccion(lat, lng);
+      
+      const clickLocation = new google.maps.LatLng(lat, lng);
+      if (this.polygon && google.maps.geometry.poly.containsLocation(clickLocation, this.polygon)) {
+        if (this.infoIncidenteEdit){
+          this.infoIncidenteEdit.latitud = lat;
+          this.infoIncidenteEdit.longitud = lng; 
+          console.log("LATITUD SELECCIONADA:"+this.infoIncidenteEdit.latitud)
+          console.log("LONGITUD SELECCIONADA:"+this.infoIncidenteEdit.longitud)
+        }
+        this.markerPosition = { lat, lng };
+        this.obtenerDireccion(lat, lng);
+      } else {
+        console.log("El clic está fuera del área delimitada por el polígono.");
+     }
     }
   }
 
@@ -264,5 +278,31 @@ export class EditIncidenciaComponent implements OnInit {
     
     this.changeDetector.markForCheck(); // Forzar actualización de la vista
   }
+  tryInitPolygon(): void {
+    const interval = setInterval(() => {
+      if (this.map && this.map.googleMap) {
+        this.initPolygon();
+        clearInterval(interval);
+      }
+    }, 300); // Revisa cada 300ms si el mapa ya está disponible
+  }
   
+  initPolygon(): void {
+    this.polygon = new google.maps.Polygon({
+      paths: this.polygonPath,
+      strokeColor: '#87CEEB',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#87CEEB',
+      fillOpacity: 0.2,
+      clickable: false,
+    });
+  
+    if (this.map.googleMap) {
+      this.polygon.setMap(this.map.googleMap);
+      console.log("Polígono inicializado y agregado al mapa.");
+    } else {
+      console.error("Mapa no disponible.");
+    }
+  }
 }

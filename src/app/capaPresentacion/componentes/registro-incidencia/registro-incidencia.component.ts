@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,ViewChild  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
 
 import { HttpClient } from '@angular/common/http';
@@ -31,9 +31,13 @@ export class RegistroIncidenciaComponent implements OnInit {
   archivoSeleccionado: File | null = null;
   optionsCategory: Categoria[] = [];
   //usuario: number=32542163;
+  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+  polygon: google.maps.Polygon | null = null;
+  polygonPath: google.maps.LatLngLiteral[] = [];
+
 
   @Input() dniUsuario: string | undefined;
-
+  @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
   constructor(private fb: FormBuilder,private imagenService: ImagenService,private categoriaService: CategoriaService,private registroIncideten: IncidenciaService,private http: HttpClient) {
     this.formulario = this.fb.group({
       categoria: ['', Validators.required],
@@ -45,22 +49,61 @@ export class RegistroIncidenciaComponent implements OnInit {
   
   ngOnInit(): void {
     console.log(this.dniUsuario);
+    console.log("Coordenadas del distrito:", JSON.stringify(this.listDistritoCoordenadas, null, 2));
+    this.polygonPath = this.listDistritoCoordenadas.map(coordenada => ({
+      lat: coordenada.latitud,
+      lng: coordenada.longitud
+    }));
     this.obtenerUbicacionActual();
     this.getListCategoria();
+    this.tryInitPolygon();
   }
 
   // Cuando el usuario selecciona una ubicación en el mapa
   onUbicacionSeleccionada(event: google.maps.MapMouseEvent): void {
     if (event.latLng) {
-      const lat = event.latLng.lat();
-      const lng = event.latLng.lng();
-      this.latitud_incidencia=lat;
-      this.longitud_incidencia=lng;
-      this.markerPosition = { lat, lng };
-      this.obtenerDireccion(lat, lng);
+       const lat = event.latLng.lat();
+       const lng = event.latLng.lng();
+       const clickLocation = new google.maps.LatLng(lat, lng);
+       if (this.polygon && google.maps.geometry.poly.containsLocation(clickLocation, this.polygon)) {
+          this.latitud_incidencia = lat;
+          this.longitud_incidencia = lng;
+          this.markerPosition = { lat, lng };
+          this.obtenerDireccion(lat, lng);
+          console.log("Ubicación dentro del polígono:", lat, lng);
+       } else {
+          console.log("El clic está fuera del área delimitada por el polígono.");
+       }
+    }
+ }
+  //Funcion para extraer la ubicacion actual del usuario
+  tryInitPolygon(): void {
+    const interval = setInterval(() => {
+      if (this.map && this.map.googleMap) {
+        this.initPolygon();
+        clearInterval(interval);
+      }
+    }, 300); // Revisa cada 300ms si el mapa ya está disponible
+  }
+  
+  initPolygon(): void {
+    this.polygon = new google.maps.Polygon({
+      paths: this.polygonPath,
+      strokeColor: '#87CEEB',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#87CEEB',
+      fillOpacity: 0.2,
+      clickable: false,
+    });
+  
+    if (this.map.googleMap) {
+      this.polygon.setMap(this.map.googleMap);
+      console.log("Polígono inicializado y agregado al mapa.");
+    } else {
+      console.error("Mapa no disponible.");
     }
   }
-  //Funcion para extraer la ubicacion actual del usuario
   
   obtenerUbicacionActual(): void {
     if (navigator.geolocation) {
