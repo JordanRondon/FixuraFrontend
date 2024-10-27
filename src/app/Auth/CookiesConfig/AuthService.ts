@@ -13,7 +13,7 @@ export class AuthService {
   setToken(token: string): void {
     this.cookieService.set('token', token, {
       // Configuración de expiración y las opciones de seguridad.
-      expires: 1, // Duración de 1 día
+      expires:  6 / 24, // Duración de 6 horas expresadas en días
       path: '/',
       sameSite: 'Lax',
       //secure: true // para protocolo HTTPS

@@ -20,7 +20,7 @@ export class RegistroIncidenciaComponent implements OnInit {
   formulario: FormGroup;
   //ubicacionSeleccionada: string = '';
   categorias: string[] = ['Poste', 'Pista', 'Desague'];
-  apiKey: string = 'AIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44E'; 
+  apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44x'; 
   center: google.maps.LatLngLiteral = { lat: -8.1116, lng: -79.0288 };
   markerPosition: google.maps.LatLngLiteral | null = this.center; 
   markerOptions: google.maps.MarkerOptions = { position: this.center };

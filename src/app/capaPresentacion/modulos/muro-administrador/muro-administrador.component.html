@@ -13,9 +13,14 @@
                     <div class = "herramienta">Buscar Usuario</div>
                 </div>
             </div>
-            
         </aside>
-        <section class="muro__col-mid" *ngIf="incidentes.length > 0; else noData">
+        <section class="muro__col-mid" 
+        *ngIf="incidentes.length > 0; else noData"
+        infiniteScroll 
+        [infiniteScrollDistance]="2" 
+        [infiniteScrollThrottle]="150" 
+        (scrolled)="onScroll()"
+        >
             <div *ngIf="vistaActiva === 'perfil'">
                 <div class = "portada-perfil">
                     <div class = "portada-perfil-superior">
@@ -30,16 +35,12 @@
                     </div>
                 </div>
                 <app-post-incidencia 
-                *ngFor="let incidente of incidentes"
-                [incidente]="incidente"
-                [nombreUsuario]="User[incidente.dni]"></app-post-incidencia>
+                *ngFor="let infoIncidente of listIncidentes"
+                [infoIncidente]="infoIncidente"
+                (imagenClick)="openImageModal($event)"></app-post-incidencia>
             </div>
-            <!-- <div *ngIf="vistaActiva === 'mapa'">
-                <h2>Estamos aqui</h2>
-            </div> -->
             <div class="mapa-container" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa' }">
                 <div class="vacio">
-                    <h2>ESTAMOS AQUI</h2>
                 </div>
                 <app-mapa-incidencias [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
             </div>
@@ -55,5 +56,10 @@
             </div>
         </aside>
     </div>
-    <!-- <app-mapa-incidencias *ngIf="mostrarMapaIncidencias" [distrito]="dataUsuario?.idDist"></app-mapa-incidencias> -->
 </main>
+
+<app-image-modal 
+*ngIf="isModalActive"
+[imageIncidente]="selectedImage" 
+(closeModal)="closeImageModal()">
+</app-image-modal>

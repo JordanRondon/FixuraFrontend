@@ -1,0 +1,5 @@
+<div class="modal-body" *ngIf="isActive" (click)="closeModalEvent()">
+    <div class="container-img" (click)="$event.stopPropagation()">
+        <img class="img-fluid" src="{{imageIncidente}}" alt=""> 
+    </div>
+</div>

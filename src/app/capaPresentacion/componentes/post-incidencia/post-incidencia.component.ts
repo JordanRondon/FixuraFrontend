@@ -1,7 +1,7 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { format } from 'date-fns';
-import { Incidente } from '../../../Model/Incidente';
+//import { Incidente } from '../../../Model/Incidente';
 import { es } from 'date-fns/locale';
 import { IncidenciaLikeService } from '../../../Service/IncidenciaLike/incidencia-like.service';
 import { IncidenciaLike } from '../../../Model/IncidenciaLike';
@@ -10,8 +10,9 @@ import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import { AdminModeratorDirective } from '../../../Auth/Directive/admin-moderator.directive';
 import { CommonUserDirective } from '../../../Auth/Directive/common-user.directive';
 import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/edit-incidencia.component';
-import { CategoriaService } from '../../../Service/Categoria/categoria.service';
+//import { CategoriaService } from '../../../Service/Categoria/categoria.service';
 import { Categoria } from '../../../Model/Categoria';
+import { InfoIncidente } from '../../../Model/InfoIncidente';
 
 @Component({
   selector: 'app-post-incidencia',
@@ -25,13 +26,14 @@ import { Categoria } from '../../../Model/Categoria';
   templateUrl: './post-incidencia.component.html',
   styleUrls: ['./post-incidencia.component.css']
 })
-
 export class PostIncidenciaComponent implements OnInit, OnChanges {
   
   showFormEdit: boolean = false;
   
-  @Input() incidente: Incidente | undefined;
-  incidenteCopy: Incidente | undefined;
+  @Output() imagenClick: EventEmitter<string> = new EventEmitter<string>();
+  @Input() infoIncidente: InfoIncidente | undefined;
+
+  infoIncidenteCopy: InfoIncidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
   incidenciaLike: IncidenciaLike = { 
@@ -45,36 +47,32 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     private incidenciaLikeService: IncidenciaLikeService,
     private incidenciaService: IncidenciaService,
     private authService: AuthService,
-    private categoriaService: CategoriaService
+    //private categoriaService: CategoriaService
   ) {}
 
   ngOnInit(): void {
-    if (this.incidente) {
-      this.incidenteCopy = JSON.parse(JSON.stringify(this.incidente)); 
+    if (this.infoIncidente) {
+      if (this.infoIncidente.tiene_like) 
+        this.isActive = true;
+
+      this.infoIncidenteCopy = JSON.parse(JSON.stringify(this.infoIncidente));
+
       this.incidenciaLike = {
         dni: this.authService.getToken_dni() ?? '',
-        id_incidencia: this.incidente.id_incidencia ?? -1,
+        id_incidencia: this.infoIncidente.id_incidencia ?? -1,
         hour_liked: new Date()
       };
-      if (this.authService.getToken_Id_rol != null && this.authService.getToken_Id_rol() === 3) {
-        // si el rol es usuario entonces verificar que se dio like a la incidencia
-        this.isLike(this.incidenciaLike);
-      }
-
-      this.getNameCategory(this.incidente.id_categoria);
-      this.getVotos(this.incidente.id_incidencia);
     }
   }
 
   ngOnChanges(changes: SimpleChanges) { }
-    
-
+  
   toggleActiveFormEdit() {
     this.showFormEdit = !this.showFormEdit;
   }
 
   closeFormEdit(event: MouseEvent) {
-    // Verificar si el clic fue dentro de 'app-edit-incidencia'
+    // Verificar si el clik fue dentro de 'app-edit-incidencia'
     const target = event.target as HTMLElement;
     if (target.closest('app-edit-incidencia') === null) {
       this.showFormEdit = false; // Cierra el formulario si se hace clic fuera
@@ -99,8 +97,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     this.incidenciaLikeService.insertLike(incidenciaLike).subscribe(
       (respuesta) => {
         console.log('Like REGISTRADO correctamente:', respuesta);
-        if (this.incidente)
-          this.getVotos(this.incidente.id_incidencia);
+        if (this.infoIncidente)
+          this.infoIncidente.total_votos += 1;
       },
       (error) => {
         console.error('ERROR al REGISTRAR el Like:', error);
@@ -113,8 +111,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     this.incidenciaLikeService.deleteLike(incidenciaLike).subscribe(
       (respuesta) => {
         console.log('Like ELIMINADO correctamente:', respuesta);
-        if (this.incidente)
-          this.getVotos(this.incidente.id_incidencia);
+        if (this.infoIncidente)
+          this.infoIncidente.total_votos -= 1;
       },
       (error) => {
         console.error('ERROR al ELIMINAR el Like:', error);
@@ -123,35 +121,35 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     );
   }
 
-  isLike(incidenciaLike: IncidenciaLike): void {
-    this.incidenciaLikeService.thaLike(incidenciaLike).subscribe(
-      (respuesta) => {
-        this.isActive = respuesta;
-      },
-      (error) => {
-        console.error('ERROR al VERIFICAR el Like:', error);
-      }
-    );
-  }
+  // isLike(incidenciaLike: IncidenciaLike): void {
+  //   this.incidenciaLikeService.thaLike(incidenciaLike).subscribe(
+  //     (respuesta) => {
+  //       this.isActive = respuesta;
+  //     },
+  //     (error) => {
+  //       console.error('ERROR al VERIFICAR el Like:', error);
+  //     }
+  //   );
+  // }
 
-  getVotos(id_incidencia: number): void {
-    this.incidenciaService.getTotalVotos(id_incidencia).subscribe(
-      (totalVotos: number) => {
-        if (this.incidente) {
-          this.incidente.total_votos = totalVotos;
-        }
-      },
-      (error) => {
-        console.error('ERROR al OBTENER total de votos:', error);
-      }
-    );
-  }
+  // getVotos(id_incidencia: number): void {
+  //   this.incidenciaService.getTotalVotos(id_incidencia).subscribe(
+  //     (totalVotos: number) => {
+  //       if (this.incidente) {
+  //         this.incidente.total_votos = totalVotos;
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('ERROR al OBTENER total de votos:', error);
+  //     }
+  //   );
+  // }
 
   deleteIncidencia(): void {
-    if(this.incidente) {
+    if(this.infoIncidente) {
       const confirmacion = window.confirm('¿Estás seguro que quieres eliminar esta incidencia?');
       if(confirmacion) {
-        this.incidenciaService.deleteIncidencia(this.incidente.id_incidencia).subscribe(
+        this.incidenciaService.deleteIncidencia(this.infoIncidente.id_incidencia).subscribe(
           response => {
             console.log('Incidente eliminado correctamente:', response);
           }
@@ -160,14 +158,18 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     }
   }
 
-  getNameCategory(id_category: number): void{
-    this.categoriaService.getNameCategory(id_category).subscribe(
-      (category: Categoria) => {
-        this.categoryName = category.nombre;
-      },
-      (error) => {
-        console.error('ERROR al OBTENER nombre de Categoria:', error);
-      }
-    );
+  // getNameCategory(id_category: number): void{
+  //   this.categoriaService.getNameCategory(id_category).subscribe(
+  //     (category: Categoria) => {
+  //       this.categoryName = category.nombre;
+  //     },
+  //     (error) => {
+  //       console.error('ERROR al OBTENER nombre de Categoria:', error);
+  //     }
+  //   );
+  // }
+
+  emitirClick(): void {
+    this.imagenClick.emit(this.infoIncidente?.imagen);
   }
 }
