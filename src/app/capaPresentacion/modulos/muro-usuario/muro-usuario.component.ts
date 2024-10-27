@@ -8,6 +8,7 @@ import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { Incidente } from '../../../Model/Incidente';
 import { Usuario } from '../../../Model/Usuario';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import EditUsuarioComponent from '../../componentes/edit-usuario/edit-usuario.component';
 import { InfoIncidente } from '../../../Model/InfoIncidente';
 import { Page } from '../../../Model/Page';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -21,16 +22,18 @@ import { ImageModalComponent } from '../../componentes/image-modal/image-modal.c
     PostIncidenciaComponent,
     RegistroIncidenciaComponent,
     CommonModule,
+    EditUsuarioComponent,
     InfiniteScrollModule,
     ImageModalComponent
   ],
   templateUrl: './muro-usuario.component.html',
-  styleUrl: './muro-usuario.component.css'
+  styleUrl: './muro-usuario.component.css',
 })
-
 export default class MuroUsuarioComponent implements OnInit {
-  
   mostrarFormulario: boolean = false;
+  mostrarEditarUsuario: boolean = false;
+  incidentes: Incidente[] = [];
+  dataUsuario: Usuario | null = null;
   // incidentes: Incidente[] = [];
   dataUsuario: Usuario | null  = null;
 
@@ -47,7 +50,7 @@ export default class MuroUsuarioComponent implements OnInit {
     private registerUserService: UsuariosService,
     private incidenteService: IncidenciaService,
     private authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getDataUserProfile();
@@ -62,6 +65,14 @@ export default class MuroUsuarioComponent implements OnInit {
   cerrarFormulario() {
     this.mostrarFormulario = false;
   }
+  
+  abrirEditarUsuario() {
+    this.mostrarEditarUsuario = true;
+  }
+
+  cerrarEditarUsuario() {
+    this.mostrarEditarUsuario = false;
+  }
 
   openImageModal(image: string): void {
     this.selectedImage = image;
@@ -73,15 +84,15 @@ export default class MuroUsuarioComponent implements OnInit {
   }
 
   getDataUserProfile(): void {
-    if(this.authService.isAuthenticated()) {
+    if (this.authService.isAuthenticated()) {
       this.registerUserService.getUserProfile().subscribe({
         next: (user: Usuario) => {
-          this.dataUsuario = user
-          console.log('Datos del usuario: ', this.dataUsuario)
+          this.dataUsuario = user;
+          console.log('Datos del usuario: ', this.dataUsuario);
         },
         error: (error) => {
           console.error('Error al obtener el perfil de usuario', error);
-        }
+        },
       });
     }
   }
