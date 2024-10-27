@@ -2,65 +2,125 @@
 <main class="muro">
   <aside class="muro__col-izq"></aside>
   <section class="muro__col-mid">
-        <div class="muro__header-perfil">
-            <div class="muro__perfil-info">
-                <div class="muro__perfil-img-container">
-                    <img class="muro__perfil-img" src="https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/perfil/perfil_default.png" alt="Foto de perfil">
-                </div>
-                
-                <div class="muro__perfil-details">
-                    <span>{{dataUsuario?.nombre}}</span>
-                    <p>{{dataUsuario?.correo}}</p>
-                </div>
-            </div>
+    <div class="muro__header-perfil">
+      <div class="muro__perfil-info">
+        <div class="muro__perfil-img-container">
+          <img
+            class="muro__perfil-img"
+            src="{{ dataUsuario?.fotoPerfil }}"
+            alt="Foto de perfil"
+          />
+        </div>
 
-            <div class="muro__perfil-configuracion">
-                <button class="perfil-config-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20" fill="none" class="svg-icon"><g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de"><circle r="2.5" cy="10" cx="10"></circle><path fill-rule="evenodd" d="m8.39079 2.80235c.53842-1.51424 2.67991-1.51424 3.21831-.00001.3392.95358 1.4284 1.40477 2.3425.97027 1.4514-.68995 2.9657.82427 2.2758 2.27575-.4345.91407.0166 2.00334.9702 2.34248 1.5143.53842 1.5143 2.67996 0 3.21836-.9536.3391-1.4047 1.4284-.9702 2.3425.6899 1.4514-.8244 2.9656-2.2758 2.2757-.9141-.4345-2.0033.0167-2.3425.9703-.5384 1.5142-2.67989 1.5142-3.21831 0-.33914-.9536-1.4284-1.4048-2.34247-.9703-1.45148.6899-2.96571-.8243-2.27575-2.2757.43449-.9141-.01669-2.0034-.97028-2.3425-1.51422-.5384-1.51422-2.67994.00001-3.21836.95358-.33914 1.40476-1.42841.97027-2.34248-.68996-1.45148.82427-2.9657 2.27575-2.27575.91407.4345 2.00333-.01669 2.34247-.97026z" clip-rule="evenodd"></path></g></svg>
-                    <span class="lable">editar</span>
-                </button>
-            </div>
+        <div class="muro__perfil-details">
+          <span>{{ dataUsuario?.nombre }}</span>
+          <p>{{ dataUsuario?.correo }}</p>
         </div>
-        
-        <div class="reportes__header">
-            <h2 class="reportes__title">Historial de Reportes</h2>
-            <button class="reportes__button" (click)="abrirRegistroIncidencia()">
-                <span>
-                  <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
-                  </svg>
-                  Nuevo Reporte
-                </span>
-            </button>              
-        </div>
-        
-        <div class="muro__post-container" *ngIf="incidentes.length > 0; else noData">
-            <app-post-incidencia *ngFor="let incidente of incidentes" [incidente]="incidente" [nombreUsuario]="dataUsuario?.nombre">
-            </app-post-incidencia>
-        </div>
-        <ng-template #noData>
-          <p>No hay incidentes para mostrar.</p>
-        </ng-template>
-    </section>
-    <aside class="muro__col-der"></aside>
+      </div>
+
+      <div class="muro__perfil-configuracion">
+        <button class="perfil-config-button" (click)="abrirEditarUsuario()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            viewBox="0 0 20 20"
+            height="20"
+            fill="none"
+            class="svg-icon"
+          >
+            <g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de">
+              <circle r="2.5" cy="10" cx="10"></circle>
+              <path
+                fill-rule="evenodd"
+                d="m8.39079 2.80235c.53842-1.51424 2.67991-1.51424 3.21831-.00001.3392.95358 1.4284 1.40477 2.3425.97027 1.4514-.68995 2.9657.82427 2.2758 2.27575-.4345.91407.0166 2.00334.9702 2.34248 1.5143.53842 1.5143 2.67996 0 3.21836-.9536.3391-1.4047 1.4284-.9702 2.3425.6899 1.4514-.8244 2.9656-2.2758 2.2757-.9141-.4345-2.0033.0167-2.3425.9703-.5384 1.5142-2.67989 1.5142-3.21831 0-.33914-.9536-1.4284-1.4048-2.34247-.9703-1.45148.6899-2.96571-.8243-2.27575-2.2757.43449-.9141-.01669-2.0034-.97028-2.3425-1.51422-.5384-1.51422-2.67994.00001-3.21836.95358-.33914 1.40476-1.42841.97027-2.34248-.68996-1.45148.82427-2.9657 2.27575-2.27575.91407.4345 2.00333-.01669 2.34247-.97026z"
+                clip-rule="evenodd"
+              ></path>
+            </g>
+          </svg>
+          <span class="lable">editar</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="reportes__header">
+      <h2 class="reportes__title">Historial de Reportes</h2>
+      <button class="reportes__button" (click)="abrirRegistroIncidencia()">
+        <span>
+          <svg
+            height="24"
+            width="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0 0h24v24H0z" fill="none"></path>
+            <path
+              d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          Nuevo Reporte
+        </span>
+      </button>
+    </div>
+
+    <div
+      class="muro__post-container"
+      *ngIf="incidentes.length > 0; else noData"
+    >
+      <app-post-incidencia
+        *ngFor="let incidente of incidentes"
+        [incidente]="incidente"
+        [nombreUsuario]="dataUsuario?.nombre"
+      >
+      </app-post-incidencia>
+    </div>
+    <ng-template #noData>
+      <p>No hay incidentes para mostrar.</p>
+    </ng-template>
+  </section>
+  <aside class="muro__col-der"></aside>
 </main>
 <!-- Contenedor del formulario-->
 <div class="overlay" *ngIf="mostrarFormulario" (click)="cerrarFormulario()">
   <div class="formulario-contenedor" (click)="$event.stopPropagation()">
     <button class="close-button" (click)="cerrarFormulario()">
-      <svg class="close-icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        class="close-icon"
+        width="800px"
+        height="800px"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <g clip-path="url(#clip0_429_11083)">
-        <path class="icon-path" d="M7 7.00006L17 17.0001M7 17.0001L17 7.00006" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path
+            class="icon-path"
+            d="M7 7.00006L17 17.0001M7 17.0001L17 7.00006"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </g>
         <defs>
-        <clipPath id="clip0_429_11083">
-        <rect width="24" height="24" fill="white"/>
-        </clipPath>
+          <clipPath id="clip0_429_11083">
+            <rect width="24" height="24" fill="white" />
+          </clipPath>
         </defs>
       </svg>
-      
     </button>
-    <app-registro-incidencia [dniUsuario]="dataUsuario?.dni"></app-registro-incidencia>
+    <app-registro-incidencia
+      [dniUsuario]="dataUsuario?.dni"
+    ></app-registro-incidencia>
+  </div>
+</div>
+
+<!-- Contenedor de edit-usuario -->
+<div
+  class="overlay"
+  *ngIf="mostrarEditarUsuario"
+  (click)="cerrarEditarUsuario()"
+>
+  <div class="formulario-contenedor2" (click)="$event.stopPropagation()">
+    <app-edit-usuario (close)="cerrarEditarUsuario()"></app-edit-usuario>
   </div>
 </div>

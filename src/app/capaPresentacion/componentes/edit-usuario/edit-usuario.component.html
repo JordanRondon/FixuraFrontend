@@ -1,0 +1,71 @@
+<div class="card-config">
+  <h2>Configuración</h2>
+  <div class="profile-section">
+    <div class="profile-pic">
+      <img [src]="profilePicture" alt="User Profile Picture" />
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        style="display: none"
+        #fileInput
+      />
+    </div>
+    <button class="btn-edit-pic" (click)="fileInput.click()">
+      Cambiar Foto
+    </button>
+    <p><strong>Correo:</strong> {{ dataUsuario?.correo }}</p>
+    <p><strong>Usuario:</strong> {{ dataUsuario?.nombre }}</p>
+  </div>
+
+  <form class="config-form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <div class="form-label">Departamento:</div>
+      <select
+        id="departamento"
+        name="departamento"
+        (change)="onDepartamentoChange($event)"
+      >
+        <option value="">Seleccione un departamento</option>
+        <option
+          *ngFor="let departamento of listDepartamento"
+          [value]="departamento.id_departamento"
+        >
+          {{ departamento.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <div class="form-label">Provincias:</div>
+      <select
+        id="provincia"
+        name="provincia"
+        (change)="onProvinciaChange($event)"
+      >
+        <option value="">Seleccione una provincia</option>
+        <option
+          *ngFor="let provincia of listProvincia"
+          [value]="provincia.id_provincia"
+        >
+          {{ provincia.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <div class="form-label">Distrito:</div>
+      <select id="distrito" name="distrito" (change)="onDistritoChange($event)">
+        <option value="">Seleccione un distrito</option>
+        <option
+          *ngFor="let distrito of listDistrito"
+          [value]="distrito.id_distrito"
+        >
+          {{ distrito.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-save">Guardar</button>
+  </form>
+</div>

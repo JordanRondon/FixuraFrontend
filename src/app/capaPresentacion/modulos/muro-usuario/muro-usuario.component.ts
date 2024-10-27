@@ -8,26 +8,32 @@ import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { Incidente } from '../../../Model/Incidente';
 import { Usuario } from '../../../Model/Usuario';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import EditUsuarioComponent from '../../componentes/edit-usuario/edit-usuario.component';
 
 @Component({
   selector: 'app-muro-usuario',
   standalone: true,
-  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule],
+  imports: [
+    NavbarUsuarioComponent,
+    PostIncidenciaComponent,
+    RegistroIncidenciaComponent,
+    CommonModule,
+    EditUsuarioComponent,
+  ],
   templateUrl: './muro-usuario.component.html',
-  styleUrl: './muro-usuario.component.css'
+  styleUrl: './muro-usuario.component.css',
 })
-
 export default class MuroUsuarioComponent implements OnInit {
-  
   mostrarFormulario: boolean = false;
+  mostrarEditarUsuario: boolean = false;
   incidentes: Incidente[] = [];
-  dataUsuario: Usuario | null  = null;
+  dataUsuario: Usuario | null = null;
 
   constructor(
     private registerUserService: UsuariosService,
     private incidenteService: IncidenciaService,
     private authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getDataUserProfile();
@@ -42,16 +48,24 @@ export default class MuroUsuarioComponent implements OnInit {
     this.mostrarFormulario = false;
   }
 
+  abrirEditarUsuario() {
+    this.mostrarEditarUsuario = true;
+  }
+
+  cerrarEditarUsuario() {
+    this.mostrarEditarUsuario = false;
+  }
+
   getDataUserProfile(): void {
-    if(this.authService.isAuthenticated()) {
+    if (this.authService.isAuthenticated()) {
       this.registerUserService.getUserProfile().subscribe({
         next: (user: Usuario) => {
-          this.dataUsuario = user
-          console.log('Datos del usuario: ', this.dataUsuario)
+          this.dataUsuario = user;
+          console.log('Datos del usuario: ', this.dataUsuario);
         },
         error: (error) => {
           console.error('Error al obtener el perfil de usuario', error);
-        }
+        },
       });
     }
   }
