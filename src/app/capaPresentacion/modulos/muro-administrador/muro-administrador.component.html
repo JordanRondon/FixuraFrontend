@@ -19,8 +19,7 @@
         infiniteScroll 
         [infiniteScrollDistance]="2" 
         [infiniteScrollThrottle]="150" 
-        (scrolled)="onScroll()"
-        >
+        (scrolled)="onScroll()">
             <div *ngIf="vistaActiva === 'perfil'">
                 <div class = "portada-perfil">
                     <div class = "portada-perfil-superior">
@@ -37,6 +36,7 @@
                 <app-post-incidencia 
                 *ngFor="let infoIncidente of listIncidentes"
                 [infoIncidente]="infoIncidente"
+                [listDistritoCoordenadas]="listDistritoCoordenadas"
                 (imagenClick)="openImageModal($event)"></app-post-incidencia>
             </div>
             <div class="mapa-container" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa' }">

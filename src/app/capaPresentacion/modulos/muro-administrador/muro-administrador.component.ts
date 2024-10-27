@@ -46,7 +46,7 @@ export default class MuroAdministradorComponent implements OnInit{
   page: number = 0;
   size: number = 10;
   loading: boolean = false;
-
+  listDistritoCoordenadas: {id_coordenada: number, latitud: number, longitud: number}[] = [];
   constructor(
     private registerUserService: UsuariosService,
     private departamentoService: DepartamentoService,
@@ -87,6 +87,7 @@ export default class MuroAdministradorComponent implements OnInit{
           console.log('Datos del usuario: ', this.dataUsuario)
           this.getNameDistrito(user.idDist);
           this.loadIncidentes();
+          this.loadDistrito_Coordenadas(this.dataUsuario.idDist);
         },
         error: (error) => {
           console.error('Error al obtener el perfil de usuario', error);
@@ -131,7 +132,16 @@ export default class MuroAdministradorComponent implements OnInit{
       }
     });
   }
-
+  loadDistrito_Coordenadas(id_distrito: number): void {
+    
+    this.departamentoService.getDistrito_Coordenads(id_distrito).subscribe(resp => {
+      if (resp) {
+        console.log(resp)
+        this.listDistritoCoordenadas = resp;
+        console.log("Datos asignados a listDistritoCoordenadas:", this.listDistritoCoordenadas);
+      }
+    });
+  }
   // getIncidentesMunicipalidad(id_distrito: number): void {
   //   this.incidenteService.getListaIncidenciaMunicipalidad(id_distrito).subscribe(
   //     (data: Incidente[]) => {

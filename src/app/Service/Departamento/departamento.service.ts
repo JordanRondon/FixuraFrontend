@@ -27,4 +27,7 @@ export class DepartamentoService {
   getNameDistrito(id_distrito: number): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + '/distrito/' + id_distrito)
   }
+  getDistrito_Coordenads(id_distrito: number): Observable<any>{
+    return this.httpClient.get<any>(this.baseUrl + '/distrito/coordenadas/' + id_distrito)
+  }
 }
