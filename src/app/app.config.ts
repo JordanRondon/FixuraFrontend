@@ -6,6 +6,7 @@ import { authInterceptor } from './Auth/CookiesConfig/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { loadingInterceptor } from './Auth/CookiesConfig/loading.interceptor';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,6 @@ export const appConfig: ApplicationConfig = {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
     }),
-    importProvidersFrom([BrowserAnimationsModule])
+    importProvidersFrom([BrowserAnimationsModule]), provideAnimationsAsync('noop')
   ]
 };

@@ -253,3 +253,12 @@
 .mapa-container.visible {
     display: block; /* Muestra el mapa cuando está activo */
 }
+
+.usuarios-container.oculto {
+    display: none; /* Oculta el mapa completamente */
+}
+
+.usuarios-container.visible {
+    display: block; /* Muestra el mapa cuando está activo */
+    margin-top: 50px;
+}

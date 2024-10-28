@@ -1,0 +1,15 @@
+
+<mat-dialog-content align="center">
+  <mat-form-field>
+    <mat-label>Selecciona una fecha</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="date" [min]="minDate"/>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Cancelar</button>
+  <button mat-button (click)="confirmSelection()" cdkFocusInitial>Aceptar</button>
+</mat-dialog-actions>
+
