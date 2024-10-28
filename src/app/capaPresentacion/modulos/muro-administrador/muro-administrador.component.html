@@ -11,11 +11,12 @@
                     <div class = "herramienta" (click)="mostrarPerfil()">Ir a Muro</div>
                     <div class = "herramienta" (click)="mostrarMapa()">Mapa de Incidencias</div>
                     <div class = "herramienta">Buscar Usuario</div>
+                    <div class = "herramienta" (click)="mostrarUsuarios()">Bloquear Usuarios</div>
                 </div>
             </div>
         </aside>
         <section class="muro__col-mid" 
-        *ngIf="incidentes.length > 0; else noData"
+        *ngIf="listIncidentes.length > 0; else noData"
         infiniteScroll 
         [infiniteScrollDistance]="2" 
         [infiniteScrollThrottle]="150" 
@@ -33,16 +34,26 @@
                         </button>
                     </div>
                 </div>
+
                 <app-post-incidencia 
-                *ngFor="let infoIncidente of listIncidentes"
-                [infoIncidente]="infoIncidente"
-                [listDistritoCoordenadas]="listDistritoCoordenadas"
-                (imagenClick)="openImageModal($event)"></app-post-incidencia>
+                    *ngFor="let infoIncidente of listIncidentes"
+                    [infoIncidente]="infoIncidente"
+                    [listDistritoCoordenadas]="listDistritoCoordenadas"
+                    (imagenClick)="openImageModal($event)">
+                </app-post-incidencia>
+
             </div>
-            <div class="mapa-container" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa' }">
+            <div class="mapa-container" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa'}">
                 <div class="vacio">
                 </div>
                 <app-mapa-incidencias [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
+            </div>
+
+            <div class="usuarios-container" [ngClass]="{ 'visible': vistaActiva === 'usuarios', 'oculto': vistaActiva !== 'usuarios'}">
+                <app-block-users
+                    *ngFor="let usuario of usuarios"
+                    [usuario]="usuario">
+                </app-block-users>
             </div>
         </section>
         <ng-template #noData>

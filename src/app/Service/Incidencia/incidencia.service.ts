@@ -7,6 +7,8 @@ import { Incidente } from '../../Model/Incidente';
 import { IncidenteCoordenada } from '../../Model/IncidenteCoordenada';
 import { InfoIncidente } from '../../Model/InfoIncidente';
 import { Page } from '../../Model/Page';
+import { Usuario } from 'app/Model/Usuario';
+import { UsuarioBlock } from 'app/Model/UsuarioBlock';
 @Injectable({
   providedIn: 'root'
 })
@@ -84,6 +86,19 @@ export class IncidenciaService {
       )))
     );
   }
+
+  getListaUsuariosMunicipalidad(id_distrito: number) : Observable<UsuarioBlock[]>{
+    return this.http.get<UsuarioBlock[]>(`${this.apiUrl}/list/municipalidad/usuarios/${id_distrito}`). pipe(
+      map((data: any[]) => data.map(item => new UsuarioBlock(
+        item.dni,
+        item.nombre,
+        item.apellido,
+        item.correo,
+        item.fotoPerfil
+      )))
+    );
+  }
+
   getListaCoordenadasIncidentes(id_distrito: number): Observable<IncidenteCoordenada[]> {
     return this.http.get<IncidenteCoordenada[]>(`${this.apiUrl}/list/coordenadas/${id_distrito}`). pipe(
       map((data: any[]) => data.map(item => new IncidenteCoordenada(

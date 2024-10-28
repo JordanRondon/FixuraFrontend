@@ -13,6 +13,8 @@ import { Page } from '../../../Model/Page';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
+import { BlockUsersComponent } from "../../componentes/block-users/block-users.component";
+import { UsuarioBlock } from 'app/Model/UsuarioBlock';
 
 @Component({
   selector: 'app-muro-administrador',
@@ -23,7 +25,8 @@ import { ImageModalComponent } from '../../componentes/image-modal/image-modal.c
     PostIncidenciaComponent,
     MapaIncidenciasComponent,
     InfiniteScrollModule,
-    ImageModalComponent
+    ImageModalComponent,
+    BlockUsersComponent
   ],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css'
@@ -33,6 +36,8 @@ export default class MuroAdministradorComponent implements OnInit{
   mostrarHerramientas: boolean = true;
   // incidentes: Incidente[] = [];
   // User: { [dni: string]: String } = {};
+  UserBlock: {} = {}
+  usuarios: UsuarioBlock[] = [];
   mostrarMapaIncidencias = false;
   dataUsuario: Usuario | undefined;
   vistaActiva: string = 'perfil';
@@ -40,6 +45,8 @@ export default class MuroAdministradorComponent implements OnInit{
 
   selectedImage: string = '';
   isModalActive: boolean = false;
+  mostrarIncidencias: boolean = true;
+  mostrarBloquearUsuarios: boolean = false;
 
   listIncidentes: InfoIncidente[] = [];
   totalElements: number = 0;
@@ -63,6 +70,10 @@ export default class MuroAdministradorComponent implements OnInit{
   }
   mostrarMapa() {
     this.vistaActiva = 'mapa';
+  }
+  mostrarUsuarios(){
+    this.vistaActiva = 'usuarios';
+    this.getUsuariosMunicipalidad(this.dataUsuario?.idDist ?? -1);
   }
 
   toggleHerramientas(){
@@ -142,6 +153,29 @@ export default class MuroAdministradorComponent implements OnInit{
       }
     });
   }
+
+  getUsuariosMunicipalidad(id_distrito: number): void {
+    this.incidenteService.getListaUsuariosMunicipalidad(id_distrito).subscribe({
+      next: (result: UsuarioBlock[]) => {
+        this.usuarios = result;
+        this.getDataUsuarios(this.usuarios);
+      },
+      error: (error) => {
+        console.error('Error al obtener a los usuarios:', error);
+      }
+    });
+  }
+
+  getDataUsuarios(listUsuarios: UsuarioBlock[]): void {
+    const usuariosData = listUsuarios.map(usuario => ({
+      dni: usuario.dni,
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      correo: usuario.correo,
+      fotoPerfil: usuario.fotoPerfil
+    }));
+  }
+
   // getIncidentesMunicipalidad(id_distrito: number): void {
   //   this.incidenteService.getListaIncidenciaMunicipalidad(id_distrito).subscribe(
   //     (data: Incidente[]) => {

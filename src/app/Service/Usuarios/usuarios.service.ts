@@ -100,4 +100,11 @@ export class UsuariosService {
       )
       .pipe(map((res) => res));
   }
+
+  banUser(dni: string, isPermanent: boolean, durationBan: string): Observable<any>{
+    return this.httpClient.post<any>(`${this.apiUrl}/${dni}/ban`, {
+      isPermanent,
+      durationBan
+    });
+  }
 }
