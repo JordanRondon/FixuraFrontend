@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe} from '@angular/common';
 import { NavbarUsuarioComponent } from '../../componentes/navbar-usuario/navbar-usuario.component';
 import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-incidencia.component';
 import { Incidente } from '../../../Model/Incidente';
@@ -15,6 +15,12 @@ import { DepartamentoService } from '../../../Service/Departamento/departamento.
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 import { BlockUsersComponent } from "../../componentes/block-users/block-users.component";
 import { UsuarioBlock } from 'app/Model/UsuarioBlock';
+import { FormControl, ReactiveFormsModule, ValueChangeEvent } from '@angular/forms';
+import { debounceTime, map, Observable, startWith } from 'rxjs';
+import { MatOption } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-muro-administrador',
@@ -26,7 +32,13 @@ import { UsuarioBlock } from 'app/Model/UsuarioBlock';
     MapaIncidenciasComponent,
     InfiniteScrollModule,
     ImageModalComponent,
-    BlockUsersComponent
+    BlockUsersComponent,
+    MatOption,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    AsyncPipe
   ],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css'
@@ -36,8 +48,11 @@ export default class MuroAdministradorComponent implements OnInit{
   mostrarHerramientas: boolean = true;
   // incidentes: Incidente[] = [];
   // User: { [dni: string]: String } = {};
-  UserBlock: {} = {}
   usuarios: UsuarioBlock[] = [];
+
+  control = new FormControl('');
+  usuariosFiltrados: UsuarioBlock[] = [];
+
   mostrarMapaIncidencias = false;
   dataUsuario: Usuario | undefined;
   vistaActiva: string = 'perfil';
@@ -47,6 +62,7 @@ export default class MuroAdministradorComponent implements OnInit{
   isModalActive: boolean = false;
   mostrarIncidencias: boolean = true;
   mostrarBloquearUsuarios: boolean = false;
+  isExpanded: boolean = false;
 
   listIncidentes: InfoIncidente[] = [];
   totalElements: number = 0;
@@ -63,7 +79,12 @@ export default class MuroAdministradorComponent implements OnInit{
 
   ngOnInit(): void {
     this.getDataUserProfile();
-    
+
+    this.control.valueChanges.pipe(
+      debounceTime(200)
+    ).subscribe(value => {
+      this.filtrarUsuarios(value || '');
+    })
   }
   mostrarPerfil(){
     this.vistaActiva = 'perfil'
@@ -73,7 +94,13 @@ export default class MuroAdministradorComponent implements OnInit{
   }
   mostrarUsuarios(){
     this.vistaActiva = 'usuarios';
-    this.getUsuariosMunicipalidad(this.dataUsuario?.idDist ?? -1);
+    if (this.usuarios.length === 0 && this.dataUsuario?.idDist !== undefined) {
+      this.getUsuariosMunicipalidad(this.dataUsuario.idDist);
+    }
+  }
+
+  openInput(){
+    this.isExpanded = !this.isExpanded;
   }
 
   toggleHerramientas(){
@@ -158,6 +185,7 @@ export default class MuroAdministradorComponent implements OnInit{
     this.incidenteService.getListaUsuariosMunicipalidad(id_distrito).subscribe({
       next: (result: UsuarioBlock[]) => {
         this.usuarios = result;
+        this.usuariosFiltrados = result
         this.getDataUsuarios(this.usuarios);
       },
       error: (error) => {
@@ -167,13 +195,19 @@ export default class MuroAdministradorComponent implements OnInit{
   }
 
   getDataUsuarios(listUsuarios: UsuarioBlock[]): void {
-    const usuariosData = listUsuarios.map(usuario => ({
+    listUsuarios.map(usuario => ({
       dni: usuario.dni,
       nombre: usuario.nombre,
       apellido: usuario.apellido,
       correo: usuario.correo,
       fotoPerfil: usuario.fotoPerfil
     }));
+  }
+
+  filtrarUsuarios(nombre: string) : void {
+    this.usuariosFiltrados = this.usuarios.filter(usuario =>
+      usuario.nombre.toLowerCase().includes(nombre.toLowerCase())
+    );
   }
 
   // getIncidentesMunicipalidad(id_distrito: number): void {

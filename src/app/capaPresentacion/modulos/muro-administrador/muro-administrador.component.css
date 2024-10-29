@@ -262,3 +262,51 @@
     display: block; /* Muestra el mapa cuando está activo */
     margin-top: 50px;
 }
+
+.usuarios-container {
+    display: flex;
+}
+
+.container-search{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 40px;
+    font-size: 14px;
+    border-radius: 50px;
+    border: none;
+    line-height: 1.5;
+    padding: 5px 10px;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    height: 36px;
+    margin-left: 10px;
+    transition: width 0.4s ease-in-out;
+}
+
+.usuarios-container .container-search img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.search-user{
+    width: 0;
+    background: #dee1e2;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    transition: width 0.4s ease-in-out;
+    opacity: 0;
+}
+
+.search-user.expanded {
+    width: 200px; 
+    opacity: 1;
+}
+
+.container-search.expanded {
+    width: 400px; 
+    border-radius: 15px;
+}
+

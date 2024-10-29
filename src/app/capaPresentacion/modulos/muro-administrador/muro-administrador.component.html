@@ -48,10 +48,18 @@
                 </div>
                 <app-mapa-incidencias [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
             </div>
-
             <div class="usuarios-container" [ngClass]="{ 'visible': vistaActiva === 'usuarios', 'oculto': vistaActiva !== 'usuarios'}">
+                <div class="container-search" [ngClass]="{'expanded': isExpanded}">
+                    <img src="/images/search.svg" alt="Buscar Usuarios" (click)="openInput()">
+                    <input 
+                        class="search-user" 
+                        type="text" 
+                        [placeholder]="isExpanded ? 'Buscar Usuario...' : ''"  
+                        [ngClass]="{'expanded': isExpanded }" 
+                        [formControl]="control">
+                </div>
                 <app-block-users
-                    *ngFor="let usuario of usuarios"
+                    *ngFor="let usuario of usuariosFiltrados"
                     [usuario]="usuario">
                 </app-block-users>
             </div>
