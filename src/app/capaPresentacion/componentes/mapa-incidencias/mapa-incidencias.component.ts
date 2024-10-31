@@ -24,6 +24,7 @@ export class MapaIncidenciasComponent {
   polygon: google.maps.Polygon | null = null;
   polygonPath: google.maps.LatLngLiteral[] = [];
   incidencia: InfoIncidente | undefined ;
+  bandMAPAINCIDENCIAS: boolean = true;
   @Input() distrito: number | undefined;
   @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
   
