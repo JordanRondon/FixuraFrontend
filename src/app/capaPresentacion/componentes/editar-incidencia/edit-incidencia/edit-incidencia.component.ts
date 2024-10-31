@@ -30,7 +30,7 @@ export class EditIncidenciaComponent implements OnInit {
   polygon: google.maps.Polygon | null = null;
   polygonPath: google.maps.LatLngLiteral[] = [];
 
-
+  
   Coordenada_incidente: IncidenteCoordenada | undefined;
 
   isOpenState = false; // Para controlar si las opciones están abiertas o no

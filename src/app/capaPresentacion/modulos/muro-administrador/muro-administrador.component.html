@@ -46,7 +46,7 @@
             <div class="mapa-container" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa'}">
                 <div class="vacio">
                 </div>
-                <app-mapa-incidencias [distrito]="dataUsuario?.idDist"></app-mapa-incidencias>
+                <app-mapa-incidencias [distrito]="dataUsuario?.idDist" [listDistritoCoordenadas]="listDistritoCoordenadas"></app-mapa-incidencias>
             </div>
             <div class="usuarios-container" [ngClass]="{ 'visible': vistaActiva === 'usuarios', 'oculto': vistaActiva !== 'usuarios'}">
                 <div class="container-search" [ngClass]="{'expanded': isExpanded}">
