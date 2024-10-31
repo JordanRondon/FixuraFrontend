@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { format } from 'date-fns';
 //import { Incidente } from '../../../Model/Incidente';
@@ -33,7 +33,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   @Output() imagenClick: EventEmitter<string> = new EventEmitter<string>();
   @Input() infoIncidente: InfoIncidente | undefined;
   @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
-  
+  editIncidenciaAbierto: boolean | undefined;
+
   infoIncidenteCopy: InfoIncidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
@@ -47,7 +48,8 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   constructor(
     private incidenciaLikeService: IncidenciaLikeService,
     private incidenciaService: IncidenciaService,
-    private authService: AuthService,
+    private authService: AuthService
+
     //private categoriaService: CategoriaService
   ) {}
 
