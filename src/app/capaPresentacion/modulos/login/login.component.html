@@ -19,6 +19,7 @@
 					<input type="password" placeholder="Contraseña" [(ngModel)] = "contrasenia" name="contrasenia" required>
 				</div>
 				<button type="submit" class="btn">Iniciar Sesion</button>
+				<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 				<p><a [routerLink]="['/password-reset']">¿Olvidaste tu contraseña?</a></p>
 				<p>¿No tienes un cuenta? <a [routerLink]="['/register']"><b>Registrate</b></a></p>
 			</form>

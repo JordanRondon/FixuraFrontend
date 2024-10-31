@@ -39,12 +39,13 @@ export class BlockUsersComponent implements OnInit {
 
   banTemporal(): void {
     const dialogRef = this.dialog.open(DatepickerDialogComponent, {
-      minWidth: '450px',
+      minWidth: '400px',
       data: { selectedDate: null },
     });
 
     dialogRef.afterClosed().subscribe((result: string | null) => {
       if (result && this.usuario) {
+        console.log(result);
         this.userService.banUser(this.usuario.dni, false, result).subscribe((response) =>{
           console.log('Usuario bloqueado temporalmente hasta', result, response)
         });

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {UsuariosService}  from '../../../Service/Usuarios/usuarios.service';
+import { UsuariosService }  from '../../../Service/Usuarios/usuarios.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, FormsModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -15,6 +16,7 @@ export default class LoginComponent implements OnInit{
   
   correo: string = '';
   contrasenia: string = '';
+  errorMessage: string | null = null;
 
   constructor(
     private registroUsuarioService: UsuariosService, 
@@ -44,8 +46,8 @@ export default class LoginComponent implements OnInit{
         this.route.navigate([url]);
       },
       error: (error) => {
-        console.error('Error durante el login', error);
-        alert('Credenciales inválidas');
+        console.log("Error en el component: " + error);
+        this.errorMessage = error;
       }
     });
   }

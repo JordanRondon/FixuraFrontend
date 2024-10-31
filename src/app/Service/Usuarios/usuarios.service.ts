@@ -46,8 +46,8 @@ export class UsuariosService {
       .post<any>(this.apiUrl + '/login', { correo, contrasenia })
       .pipe(
         catchError((error) => {
-          console.error('Error durante el inicio de sesión', error);
-          return throwError(() => new Error('Error en el proceso de login'));
+          console.log("Error en el service: " + error.error);
+          return throwError(() => error.error || 'Error de autenticación');
         })
       );
   }
