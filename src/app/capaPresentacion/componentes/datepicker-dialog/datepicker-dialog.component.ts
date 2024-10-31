@@ -48,7 +48,7 @@ export class DatepickerDialogComponent {
 
   currentTime = new Date();
 
-  selectedDate: Date | null = null;
+  selectedDate: Date = new Date();
   selectedTime: Date = new Date();
 
   cancel(): void{

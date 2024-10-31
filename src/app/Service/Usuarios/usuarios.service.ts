@@ -101,10 +101,18 @@ export class UsuariosService {
       .pipe(map((res) => res));
   }
 
+  getBanStaus(dni: string): Observable<boolean>{
+    return this.httpClient.post<boolean>(`${this.apiUrl}/${dni}/ban-status`, dni);
+  }
+
   banUser(dni: string, isPermanent: boolean, durationBan: string): Observable<any>{
     return this.httpClient.post<any>(`${this.apiUrl}/${dni}/ban`, {
       isPermanent,
       durationBan
     });
+  }
+
+  unbanUser(dni: string): Observable<any>{
+    return this.httpClient.post<any>(`${this.apiUrl}/${dni}/desban`, dni);
   }
 }
