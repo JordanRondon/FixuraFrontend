@@ -34,7 +34,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   @Input() infoIncidente: InfoIncidente | undefined;
   @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
   editIncidenciaAbierto: boolean | undefined;
-
+  @Input() bandMAPAINCIDENCIAS: boolean | undefined;
   infoIncidenteCopy: InfoIncidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
