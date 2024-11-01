@@ -21,6 +21,8 @@ import { MatOption } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { IncidenciaConsolidadoService } from 'app/Service/IncidenciaConsolidado/incidencia-consolidado.service';
+import { IncidenciaConsolidado } from 'app/Model/IncidenciaConsolidado';
 
 @Component({
   selector: 'app-muro-administrador',
@@ -74,6 +76,7 @@ export default class MuroAdministradorComponent implements OnInit{
     private registerUserService: UsuariosService,
     private departamentoService: DepartamentoService,
     private incidenteService: IncidenciaService,
+    private incConsolidadoService: IncidenciaConsolidadoService,
     private authService: AuthService
   ) { }
 
@@ -246,6 +249,23 @@ export default class MuroAdministradorComponent implements OnInit{
     this.page = 0;
     this.size = 10;
     this.loading = false;
+  }
+
+  saveConsolidadoIncidencia(id_incidencia: number): void {
+    const isConfirmed = window.confirm("¿Estás seguro de consolidar esta incidencia?");
+
+    if (isConfirmed) {
+      const incidenciaConsolidado = new IncidenciaConsolidado(
+        this.authService.getToken_dni() ?? '',
+        id_incidencia,
+        new Date());
+
+      this.incConsolidadoService.insertIncidenciaConsolidado(incidenciaConsolidado).subscribe({
+        error: (error) => {
+          console.error('Error al obtener a los usuarios:', error);
+        }
+      });
+    }
   }
 
   // getIncidentesMunicipalidad(id_distrito: number): void {

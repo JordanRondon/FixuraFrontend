@@ -43,7 +43,8 @@
                     (imagenClick)="openImageModal($event)">
 
                     <ng-container slot="extra-button">
-                        <button type="button" class="btn btn-success">Añadir a Consolidación</button>
+                        <button type="button" class="btn btn-success"
+                        (click)="saveConsolidadoIncidencia(infoIncidente.id_incidencia)">Añadir a Consolidación</button>
                     </ng-container>
                 </app-post-incidencia>
 
