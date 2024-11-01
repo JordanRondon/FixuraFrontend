@@ -1,7 +1,7 @@
 <!--ENCABEZADO-->
 <nav>
   <div class="nav__content">
-    <div class="logo"><a href="#">Fixura</a></div>
+    <div class="logo"><img src="images/logo.png" alt=""></div>
   </div>
 </nav>
 
@@ -19,6 +19,7 @@
 					<input type="password" placeholder="Contraseña" [(ngModel)] = "contrasenia" name="contrasenia" required>
 				</div>
 				<button type="submit" class="btn">Iniciar Sesion</button>
+				<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 				<p><a [routerLink]="['/password-reset']">¿Olvidaste tu contraseña?</a></p>
 				<p>¿No tienes un cuenta? <a [routerLink]="['/register']"><b>Registrate</b></a></p>
 			</form>

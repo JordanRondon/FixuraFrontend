@@ -11,26 +11,29 @@ import { IncidenteCoordenada } from '../../../../Model/IncidenteCoordenada';
 import { FormsModule } from '@angular/forms';
 import { IncidenciaService } from '../../../../Service/Incidencia/incidencia.service';
 import { InfoIncidente } from '../../../../Model/InfoIncidente';
+import { DialogService } from 'app/Service/Dialog/dialog.service';
 
 
 @Component({
   selector: 'app-edit-incidencia',
   standalone: true,
-  imports: [ CommonModule, GoogleMapsModule, FormsModule ],
+  imports: [CommonModule, GoogleMapsModule, FormsModule],
   templateUrl: './edit-incidencia.component.html',
-  styleUrl: './edit-incidencia.component.css'
+  styleUrl: './edit-incidencia.component.css',
 })
 export class EditIncidenciaComponent implements OnInit {
-
   @Output() formEditClosed = new EventEmitter<boolean>();
   @Input() infoIncidenteEdit: InfoIncidente | undefined;
-  @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
+  @Input() listDistritoCoordenadas: {
+    id_coordenada: number;
+    latitud: number;
+    longitud: number;
+  }[] = [];
   incidenteEditCache: InfoIncidente | undefined;
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   polygon: google.maps.Polygon | null = null;
   polygonPath: google.maps.LatLngLiteral[] = [];
 
-  
   Coordenada_incidente: IncidenteCoordenada | undefined;
 
   isOpenState = false; // Para controlar si las opciones están abiertas o no
@@ -41,56 +44,58 @@ export class EditIncidenciaComponent implements OnInit {
   selectedOptionCategory: String = 'Seleccione una Opción'; // Opción seleccionada
   optionsCategory: Categoria[] = [];
 
-  apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X'; 
+  apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X';
   center: google.maps.LatLngLiteral = { lat: -8.1116, lng: -79.0288 };
-  markerPosition: google.maps.LatLngLiteral | null = this.center; 
+  markerPosition: google.maps.LatLngLiteral | null = this.center;
   zoom = 17;
-  
+
   constructor(
     private http: HttpClient,
     private estadoService: EstadoService,
     private categoriaService: CategoriaService,
     private incidenciaService: IncidenciaService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
-    
-    if(this.infoIncidenteEdit) {
-      this.incidenteEditCache = JSON.parse(JSON.stringify(this.infoIncidenteEdit)); 
+    if (this.infoIncidenteEdit) {
+      this.incidenteEditCache = JSON.parse(
+        JSON.stringify(this.infoIncidenteEdit)
+      );
       this.selectedOptionState = this.infoIncidenteEdit.estado;
       this.selectedOptionCategory = this.infoIncidenteEdit.categoria;
       this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
     }
-    this.polygonPath = this.listDistritoCoordenadas.map(coordenada => ({
+    this.polygonPath = this.listDistritoCoordenadas.map((coordenada) => ({
       lat: coordenada.latitud,
-      lng: coordenada.longitud
+      lng: coordenada.longitud,
     }));
     this.tryInitPolygon();
-    console.log(this.listDistritoCoordenadas)
+    console.log(this.listDistritoCoordenadas);
     // if (this.infoIncidenteEdit?.id_incidencia) {
     //   this.getCoordenadas(this.infoIncidenteEdit.id_incidencia);
     // }
 
-    // this.center = { lat: this.infoIncidenteEdit?.latitud ?? -8.1116, lng: this.infoIncidenteEdit?.longitud ?? -79.0288}; // Reestablece la posición 
+    // this.center = { lat: this.infoIncidenteEdit?.latitud ?? -8.1116, lng: this.infoIncidenteEdit?.longitud ?? -79.0288}; // Reestablece la posición
     // this.zoom = 17; // Reestablece el nivel de zoom
     // this.markerPosition = this.center;
     // console.log('ID_INCIDENCIA:', this.infoIncidenteEdit?.id_incidencia);
     // console.log('Centro:', this.center);
     // console.log('Zoom:', this.zoom);
     document.addEventListener('click', this.closeOptions.bind(this));
-    
+
     this.getListEstate();
     this.getListCategoria();
   }
 
   // ngOnChanges() {
-  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
+  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición
   //   this.zoom = 17; // Reestablece el nivel de zoom
   // }
 
   // ngAfterViewInit() {
-  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición 
+  //   this.center = { lat: -8.1116, lng: -79.0288 }; // Reestablece la posición
   //   this.zoom = 17; // Reestablece el nivel de zoom
   // }
 
@@ -105,8 +110,7 @@ export class EditIncidenciaComponent implements OnInit {
 
   selectOptionState(option: Estado) {
     this.selectedOptionState = option.nombre;
-    if (this.infoIncidenteEdit)
-      this.infoIncidenteEdit.estado = option.nombre;
+    if (this.infoIncidenteEdit) this.infoIncidenteEdit.estado = option.nombre;
     this.isOpenState = false;
   }
 
@@ -133,20 +137,25 @@ export class EditIncidenciaComponent implements OnInit {
     if (event.latLng) {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
-      
+
       const clickLocation = new google.maps.LatLng(lat, lng);
-      if (this.polygon && google.maps.geometry.poly.containsLocation(clickLocation, this.polygon)) {
-        if (this.infoIncidenteEdit){
+      if (
+        this.polygon &&
+        google.maps.geometry.poly.containsLocation(clickLocation, this.polygon)
+      ) {
+        if (this.infoIncidenteEdit) {
           this.infoIncidenteEdit.latitud = lat;
-          this.infoIncidenteEdit.longitud = lng; 
-          console.log("LATITUD SELECCIONADA:"+this.infoIncidenteEdit.latitud)
-          console.log("LONGITUD SELECCIONADA:"+this.infoIncidenteEdit.longitud)
+          this.infoIncidenteEdit.longitud = lng;
+          console.log('LATITUD SELECCIONADA:' + this.infoIncidenteEdit.latitud);
+          console.log(
+            'LONGITUD SELECCIONADA:' + this.infoIncidenteEdit.longitud
+          );
         }
         this.markerPosition = { lat, lng };
         this.obtenerDireccion(lat, lng);
       } else {
-        console.log("El clic está fuera del área delimitada por el polígono.");
-     }
+        console.log('El clic está fuera del área delimitada por el polígono.');
+      }
     }
   }
 
@@ -156,8 +165,8 @@ export class EditIncidenciaComponent implements OnInit {
     this.http.get(url).subscribe((data: any) => {
       if (data.status === 'OK' && data.results.length > 0) {
         const direccion = data.results[0].formatted_address;
-        if (this.infoIncidenteEdit){
-          this.infoIncidenteEdit.ubicacion=direccion.toString();
+        if (this.infoIncidenteEdit) {
+          this.infoIncidenteEdit.ubicacion = direccion.toString();
         }
         console.error(direccion);
       } else {
@@ -165,7 +174,7 @@ export class EditIncidenciaComponent implements OnInit {
       }
     });
   }
-  
+
   getListEstate(): void {
     this.estadoService.getListState().subscribe(
       (respuesta) => {
@@ -201,7 +210,6 @@ export class EditIncidenciaComponent implements OnInit {
   // }
 
   setIncidencia(): void {
-
     if (!this.infoIncidenteEdit) {
       console.error('Incidente no está definido');
       return;
@@ -218,23 +226,31 @@ export class EditIncidenciaComponent implements OnInit {
       dni: '',
       id_categoria: 0,
       latitud: this.infoIncidenteEdit.latitud,
-      longitud: this.infoIncidenteEdit.longitud
-    }
+      longitud: this.infoIncidenteEdit.longitud,
+    };
 
     for (const state of this.optionsState) {
-      if(state.nombre === this.infoIncidenteEdit.estado)
+      if (state.nombre === this.infoIncidenteEdit.estado)
         incidente.id_estado = state.id_estado;
     }
 
     for (const category of this.optionsCategory) {
-      if(category.nombre === this.infoIncidenteEdit.categoria)
-        incidente.id_categoria= category.id_categoria;
+      if (category.nombre === this.infoIncidenteEdit.categoria)
+        incidente.id_categoria = category.id_categoria;
     }
-    
-    this.incidenciaService.updateIncidencia(incidente).subscribe(
-      response => {
-        console.log('Incidente actualizado correctamente:', response);
-      }
+
+    this.incidenciaService.updateIncidencia(incidente).subscribe((response) => {
+      console.log('Incidente actualizado correctamente:', response);
+    });
+  }
+
+  openDialog(): void {
+    this.dialogService.openDialog(
+      {
+        tipo: 'Editar Incidencia',
+        titulo: '¿Estás seguro de editar esta incidencia?',
+      },
+      () => this.setIncidencia()
     );
   }
 
@@ -250,12 +266,15 @@ export class EditIncidenciaComponent implements OnInit {
         console.log('Coordenadas obtenidas:', this.Coordenada_incidente);
 
         // Actualiza el centro y la posición del marcador cuando obtienes las coordenadas
-        this.center = { lat: this.Coordenada_incidente.latitud, lng: this.Coordenada_incidente.longitud };
-        this.markerPosition = this.center;  // Actualiza la posición del marcador
-        this.zoom = 17;  // Mantiene el zoom en 17
+        this.center = {
+          lat: this.Coordenada_incidente.latitud,
+          lng: this.Coordenada_incidente.longitud,
+        };
+        this.markerPosition = this.center; // Actualiza la posición del marcador
+        this.zoom = 17; // Mantiene el zoom en 17
         // if (this.infoIncidenteEdit){
         //   this.infoIncidenteEdit.latitud = this.Coordenada_incidente.latitud;
-        //   this.infoIncidenteEdit.longitud = this.Coordenada_incidente.longitud; 
+        //   this.infoIncidenteEdit.longitud = this.Coordenada_incidente.longitud;
         // }
         console.log('Centro actualizado:', this.center);
       },
@@ -266,16 +285,20 @@ export class EditIncidenciaComponent implements OnInit {
   }
 
   resetChanges(): void {
-    this.infoIncidenteEdit = JSON.parse(JSON.stringify(this.incidenteEditCache));
+    this.infoIncidenteEdit = JSON.parse(
+      JSON.stringify(this.incidenteEditCache)
+    );
 
-    this.selectedOptionState = this.infoIncidenteEdit?.estado ?? 'Seleccione una Opción';
-    this.selectedOptionCategory = this.infoIncidenteEdit?.categoria ?? 'Seleccione una Opción';
-    const lat =this.infoIncidenteEdit?.latitud;
-    const lng =this.infoIncidenteEdit?.longitud;
-    if(lat && lng){
+    this.selectedOptionState =
+      this.infoIncidenteEdit?.estado ?? 'Seleccione una Opción';
+    this.selectedOptionCategory =
+      this.infoIncidenteEdit?.categoria ?? 'Seleccione una Opción';
+    const lat = this.infoIncidenteEdit?.latitud;
+    const lng = this.infoIncidenteEdit?.longitud;
+    if (lat && lng) {
       this.markerPosition = { lat, lng };
     }
-    
+
     this.changeDetector.markForCheck(); // Forzar actualización de la vista
   }
   tryInitPolygon(): void {
@@ -286,7 +309,7 @@ export class EditIncidenciaComponent implements OnInit {
       }
     }, 300); // Revisa cada 300ms si el mapa ya está disponible
   }
-  
+
   initPolygon(): void {
     this.polygon = new google.maps.Polygon({
       paths: this.polygonPath,
@@ -297,12 +320,12 @@ export class EditIncidenciaComponent implements OnInit {
       fillOpacity: 0.2,
       clickable: false,
     });
-  
+
     if (this.map.googleMap) {
       this.polygon.setMap(this.map.googleMap);
-      console.log("Polígono inicializado y agregado al mapa.");
+      console.log('Polígono inicializado y agregado al mapa.');
     } else {
-      console.error("Mapa no disponible.");
+      console.error('Mapa no disponible.');
     }
   }
 }

@@ -13,11 +13,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { Page } from '../../../Model/Page';
 import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 
 @Component({
   selector: 'app-muro-entidad',
   standalone: true,
-  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule, InfiniteScrollModule, ImageModalComponent],
+  imports: [NavbarUsuarioComponent, PostIncidenciaComponent,RegistroIncidenciaComponent,CommonModule, InfiniteScrollModule, ImageModalComponent, AlertComponent],
   templateUrl: './muro-entidad.component.html',
   styleUrls: ['./muro-entidad.component.css']
 })
@@ -35,8 +36,12 @@ export default class MuroEntidadComponent implements OnInit {
   totalElements: number = 0;
   page: number = 0;
   size: number = 10;
+  
   loading: boolean = false;
   listDistritoCoordenadas: {id_coordenada: number, latitud: number, longitud: number}[] = [];
+
+  incomplete: boolean = false;
+
   constructor(
     private registerUserService: UsuariosService,
     private departamentoService: DepartamentoService,
@@ -70,7 +75,6 @@ export default class MuroEntidadComponent implements OnInit {
       this.registerUserService.getUserProfile().subscribe({
         next: (user: Usuario) => {
           this.dataUsuario = user
-          console.log('Datos del usuario: ', this.dataUsuario)
           this.getNameDistrito(user.idDist);
           this.loadIncidentes()
           this.loadDistrito_Coordenadas(this.dataUsuario.idDist);

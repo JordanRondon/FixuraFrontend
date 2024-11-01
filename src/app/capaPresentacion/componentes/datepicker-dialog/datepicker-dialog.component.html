@@ -1,15 +1,25 @@
+<div class="container p-3">
+  <h2 mat-dialog-title>Selecciona Fecha y Hora</h2>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Selecciona la fecha</mat-label>
+      <input 
+        matInput 
+        [matDatepicker]="picker" 
+        [(ngModel)]="selectedDate" 
+        [min]="currentTime">
+        
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
-<mat-dialog-content align="center">
-  <mat-form-field>
-    <mat-label>Selecciona una fecha</mat-label>
-    <input matInput [matDatepicker]="picker" [formControl]="date" [min]="minDate"/>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close()">Cancelar</button>
-  <button mat-button (click)="confirmSelection()" cdkFocusInitial>Aceptar</button>
-</mat-dialog-actions>
-
+    <div class="form-group">
+      <label style="color: #000000;">Selecciona la hora:</label>
+      <timepicker [(ngModel)]="selectedTime" [showMeridian]="true"></timepicker>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="button" class="btn btn-outline-danger" (click)="cancel()">Cancelar</button>
+    <button type="button" class="btn btn-outline-success" (click)="confirm()" style="margin-left: 5px;">Aceptar</button>
+  </mat-dialog-actions>
+</div>

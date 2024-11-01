@@ -1,28 +1,29 @@
 <div class="card">
-  <div class="post">
-      <div class="post-container">
-          <div class="user">
-              <div class="user-pic">
-                  <img src="https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/perfil/perfil_default.png" alt="Foto de perfil">
-              </div>
-              <div class="user-info">
-                  <span>{{usuario?.nombre}} {{usuario?.apellido}}</span>
-                  <p>{{usuario?.correo}}</p>
-              </div>
-              <div class="user-options">
-              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                  <mat-icon>
-                      more_vert
-                  </mat-icon>
-                  </button>
-              <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="banTemporal()">Bloquear Temporalmente</button>
-                  <button mat-menu-item (click)="banPermanent()">Bloquear Permanentemente</button>
-              </mat-menu>
-              </div>
-          </div>
-        <span class="user-ban" *ngIf="isBanned">BANEADO</span>
-      </div>
-  </div>
+    <div class="post">
+        <div class="post-container">
+            <div class="user">
+                <div class="user-pic">
+                    <img src="https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/perfil/perfil_default.png" alt="Foto de perfil">
+                </div>
+                <div class="user-info">
+                    <span>{{usuario?.nombre}} {{usuario?.apellido}}</span>
+                    <p>{{usuario?.correo}}</p>
+                </div>
+                <div class="user-options">
+                    <button mat-icon-button [matMenuTriggerFor]="isBanned ? menuBanned : menuNotBanned" aria-label="Example icon-button with a menu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #menuNotBanned="matMenu">
+                        <button mat-menu-item (click)="banTemporal()">Bloquear Temporalmente</button>
+                        <button mat-menu-item (click)="openDialogBan()">Bloquear Permanentemente</button>
+                    </mat-menu>
+                    <mat-menu #menuBanned="matMenu">
+                        <button mat-menu-item (click)="openDialogDesban()">Desbanear Usuario</button>
+                    </mat-menu>
+
+                    
+                </div>
+            </div>
+            <span class="user-ban" *ngIf="isBanned">BANEADO</span>
+        </div>
+    </div>
 </div>
 

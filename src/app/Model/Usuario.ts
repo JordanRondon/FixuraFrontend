@@ -1,5 +1,6 @@
 export class Usuario {
   nombre : string;
+  apellido : string;
   dni : string;
   correo : string;
   contrasenia : string;
@@ -10,6 +11,7 @@ export class Usuario {
 
   constructor(
       nombre : string,
+      apellido : string,
       dni : string,
       correo : string,
       contrasenia : string,
@@ -19,6 +21,7 @@ export class Usuario {
       idDist : number
   ) {
       this.nombre = nombre;
+      this.apellido = apellido;
       this.dni = dni;
       this.correo = correo;
       this.contrasenia = contrasenia;

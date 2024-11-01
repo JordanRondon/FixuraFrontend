@@ -21,6 +21,7 @@ import { MatOption } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { IncidenciaConsolidadoService } from 'app/Service/IncidenciaConsolidado/incidencia-consolidado.service';
 import { IncidenciaConsolidado } from 'app/Model/IncidenciaConsolidado';
 
@@ -40,7 +41,8 @@ import { IncidenciaConsolidado } from 'app/Model/IncidenciaConsolidado';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    AsyncPipe
+    AsyncPipe,
+    AlertComponent
   ],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css'
@@ -72,6 +74,9 @@ export default class MuroAdministradorComponent implements OnInit{
   size: number = 10;
   loading: boolean = false;
   listDistritoCoordenadas: {id_coordenada: number, latitud: number, longitud: number}[] = [];
+
+  existUser: boolean = false;
+
   constructor(
     private registerUserService: UsuariosService,
     private departamentoService: DepartamentoService,
@@ -220,6 +225,7 @@ export default class MuroAdministradorComponent implements OnInit{
         this.usuarios = result;
         this.usuariosFiltrados = result
         this.getDataUsuarios(this.usuarios);
+        this.existUser = true;
       },
       error: (error) => {
         console.error('Error al obtener a los usuarios:', error);

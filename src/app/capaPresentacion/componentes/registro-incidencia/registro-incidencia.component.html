@@ -17,6 +17,7 @@
           <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
       </google-map>
     </div>
+
     <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <label for="ubicacion">Ubicación seleccionada:</label>
       <input formControlName="ubicacion" type="text" readonly>
@@ -53,16 +54,20 @@
         <img [src]="imagenPrevisualizacion" alt="Previsualización" class="preview-img">
       </div>
       
-      <button type="submit" [disabled]="formulario.invalid" class="button">
+      <div class="containter-alert" *ngIf="incomplete">
+        <alert type="warning">
+          <strong>¡Cuidado!</strong> Es necesario completar los datos 
+        </alert>
+      </div>
+
+      <button type="submit" class="button">
         <svg class="enviar-icon" xmlns="http://www.w3.org/2000/svg" fill="none" style="transform: translateY(1px);" viewBox="0 0 24 24" stroke-width="1.5">
           <path class="enviar-path" stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
         </svg>
         <div class="text">
           Subir
         </div>
-      </button>
-      
-      
+      </button> 
     </form>
   
   </div>
