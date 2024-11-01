@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" *ngIf="!showFormEdit || !bandMAPAINCIDENCIAS">
     <div class="post">
         <div class="post-container">
             <div class="user">
@@ -10,6 +10,10 @@
                     <p>{{formatearFecha(infoIncidente?.fecha_publicacion)}}</p>
                 </div>
             </div>
+
+            <ng-content select="[slot=extra-button]" *appAdminModerator>
+            </ng-content>
+
             <p class="category-content"><span>Categoria: </span>{{infoIncidente?.categoria}}</p>
             <p class="comment-content">{{infoIncidente?.descripcion}}</p>
             <p class="location-content"><span>Ubicacion: </span>{{infoIncidente?.ubicacion}}</p>
