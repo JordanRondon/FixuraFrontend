@@ -21,6 +21,8 @@ import { MatOption } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { IncidenciaConsolidadoService } from 'app/Service/IncidenciaConsolidado/incidencia-consolidado.service';
+import { IncidenciaConsolidado } from 'app/Model/IncidenciaConsolidado';
 
 @Component({
   selector: 'app-muro-administrador',
@@ -74,6 +76,7 @@ export default class MuroAdministradorComponent implements OnInit{
     private registerUserService: UsuariosService,
     private departamentoService: DepartamentoService,
     private incidenteService: IncidenciaService,
+    private incConsolidadoService: IncidenciaConsolidadoService,
     private authService: AuthService
   ) { }
 
@@ -88,6 +91,8 @@ export default class MuroAdministradorComponent implements OnInit{
   }
   mostrarPerfil(){
     this.vistaActiva = 'perfil'
+    this.resetVarsPage();
+    this.loadIncidentes();
   }
   mostrarMapa() {
     this.vistaActiva = 'mapa';
@@ -97,6 +102,12 @@ export default class MuroAdministradorComponent implements OnInit{
     if (this.usuarios.length === 0 && this.dataUsuario?.idDist !== undefined) {
       this.getUsuariosMunicipalidad(this.dataUsuario.idDist);
     }
+  }
+
+  mostrarConsolidacion() {
+    this.vistaActiva = 'consolidacion';
+    this.resetVarsPage();
+    this.loadConsolidado();
   }
 
   openInput(){
@@ -147,6 +158,28 @@ export default class MuroAdministradorComponent implements OnInit{
         this.totalElements = response.totalElements;
         this.page += 1;  // Incrementar la página para la siguiente carga
         console.log('Incidentes cargados:', this.listIncidentes);
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar incidentes:', error);
+        this.loading = false;
+      }
+    });
+  }
+
+  loadConsolidado(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.incidenteService.getListConsolidadoDistrito(this.page, this.size, this.dataUsuario?.idDist ?? -1).subscribe({
+      next: (response: Page<InfoIncidente>) => {
+        this.listIncidentes = [...this.listIncidentes, ...response.content];// Añadir más incidencias
+        this.totalElements = response.totalElements;
+        this.page += 1;  // Incrementar la página para la siguiente carga
+        console.log('Consolidados cargados:', this.listIncidentes);
         this.loading = false;
       },
       error: (error) => {
@@ -208,6 +241,31 @@ export default class MuroAdministradorComponent implements OnInit{
     this.usuariosFiltrados = this.usuarios.filter(usuario =>
       usuario.nombre.toLowerCase().includes(nombre.toLowerCase())
     );
+  }
+
+  resetVarsPage(): void {
+    this.listIncidentes = [];
+    this.totalElements = 0;
+    this.page = 0;
+    this.size = 10;
+    this.loading = false;
+  }
+
+  saveConsolidadoIncidencia(id_incidencia: number): void {
+    const isConfirmed = window.confirm("¿Estás seguro de consolidar esta incidencia?");
+
+    if (isConfirmed) {
+      const incidenciaConsolidado = new IncidenciaConsolidado(
+        this.authService.getToken_dni() ?? '',
+        id_incidencia,
+        new Date());
+
+      this.incConsolidadoService.insertIncidenciaConsolidado(incidenciaConsolidado).subscribe({
+        error: (error) => {
+          console.error('Error al obtener a los usuarios:', error);
+        }
+      });
+    }
   }
 
   // getIncidentesMunicipalidad(id_distrito: number): void {

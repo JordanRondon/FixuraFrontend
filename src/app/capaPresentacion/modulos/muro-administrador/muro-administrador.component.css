@@ -267,6 +267,18 @@
     display: flex;
 }
 
+.consolidacion-container.oculto {
+    display: none; /* Oculta el consolidacion completamente */
+}
+
+.consolidacion-container.visible {
+    display: block; /* Muestra el consolidacion cuando está activo */
+}
+
+.consolidacion-container {
+    margin-top: 2rem; /* Muestra el consolidacion cuando está activo */
+}
+
 .container-search{
     display: flex;
     flex-direction: row;
