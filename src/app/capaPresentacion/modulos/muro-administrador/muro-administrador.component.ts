@@ -88,6 +88,8 @@ export default class MuroAdministradorComponent implements OnInit{
   }
   mostrarPerfil(){
     this.vistaActiva = 'perfil'
+    this.resetVarsPage();
+    this.loadIncidentes();
   }
   mostrarMapa() {
     this.vistaActiva = 'mapa';
@@ -101,6 +103,8 @@ export default class MuroAdministradorComponent implements OnInit{
 
   mostrarConsolidacion() {
     this.vistaActiva = 'consolidacion';
+    this.resetVarsPage();
+    this.loadConsolidado();
   }
 
   openInput(){
@@ -151,6 +155,28 @@ export default class MuroAdministradorComponent implements OnInit{
         this.totalElements = response.totalElements;
         this.page += 1;  // Incrementar la página para la siguiente carga
         console.log('Incidentes cargados:', this.listIncidentes);
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar incidentes:', error);
+        this.loading = false;
+      }
+    });
+  }
+
+  loadConsolidado(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.incidenteService.getListConsolidadoDistrito(this.page, this.size, this.dataUsuario?.idDist ?? -1).subscribe({
+      next: (response: Page<InfoIncidente>) => {
+        this.listIncidentes = [...this.listIncidentes, ...response.content];// Añadir más incidencias
+        this.totalElements = response.totalElements;
+        this.page += 1;  // Incrementar la página para la siguiente carga
+        console.log('Consolidados cargados:', this.listIncidentes);
         this.loading = false;
       },
       error: (error) => {
@@ -212,6 +238,14 @@ export default class MuroAdministradorComponent implements OnInit{
     this.usuariosFiltrados = this.usuarios.filter(usuario =>
       usuario.nombre.toLowerCase().includes(nombre.toLowerCase())
     );
+  }
+
+  resetVarsPage(): void {
+    this.listIncidentes = [];
+    this.totalElements = 0;
+    this.page = 0;
+    this.size = 10;
+    this.loading = false;
   }
 
   // getIncidentesMunicipalidad(id_distrito: number): void {
