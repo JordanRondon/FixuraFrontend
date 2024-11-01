@@ -40,7 +40,24 @@ export class IncidenciaService {
       )))
     );
   }
-
+  getIncidenciaporID(id_incidencia: string): Observable<InfoIncidente> {
+    return this.http.get<InfoIncidente>(`${this.apiUrl}/list/incidente_id/${id_incidencia}`).pipe(
+      map((item: any) => new InfoIncidente(
+        item.id_incidencia,
+        parseISO(item.fecha_publicacion),
+        item.descripcion,
+        item.ubicacion,
+        item.imagen,
+        item.total_votos,
+        item.estado,
+        item.usuario,
+        item.categoria,
+        item.latitud,
+        item.longitud,
+        item.tiene_like
+      ))
+    );
+  }
   getListIncidenciaUsuario(page: number, size: number, dni: string): Observable<Page<InfoIncidente>> {
     const params = new HttpParams()
       .set('page', page.toString())
@@ -67,6 +84,15 @@ export class IncidenciaService {
       .set('id_distrito', id_distrito.toString());
       
     return this.http.get<Page<InfoIncidente>>(this.apiUrl + '/list/paginated/distrito', { params });
+  }
+
+  getListConsolidadoDistrito(page: number, size: number, id_distrito: number): Observable<Page<InfoIncidente>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('id_distrito', id_distrito.toString());
+      
+    return this.http.get<Page<InfoIncidente>>(this.apiUrl + '/list/paginated/consolidado', { params });
   }
 
   getListaIncidenciaMunicipalidad(id_distrito: number): Observable<Incidente[]> {

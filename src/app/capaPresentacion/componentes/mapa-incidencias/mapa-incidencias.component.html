@@ -5,7 +5,19 @@
         [center]="center" 
         [zoom]="zoom">
         <map-marker *ngFor="let incidente of IncidenteCoordenada"
-            [position]="{lat: incidente.latitud, lng: incidente.longitud}">
+            [position]="{lat: incidente.latitud, lng: incidente.longitud}"
+            (mapClick)="onMarkerClick(incidente.id_incidencia)">
         </map-marker>
     </google-map>
 </div>
+
+<div class="overlay" *ngIf="vistaActiva === true" (click)="CerrarIncidencia()">
+    <div class="formulario-contenedor" (click)="$event.stopPropagation()">
+      <app-post-incidencia
+        [infoIncidente]="incidencia"
+        [listDistritoCoordenadas]="listDistritoCoordenadas"
+        [bandMAPAINCIDENCIAS]="bandMAPAINCIDENCIAS"
+        >
+    </app-post-incidencia>
+    </div>
+  </div>
