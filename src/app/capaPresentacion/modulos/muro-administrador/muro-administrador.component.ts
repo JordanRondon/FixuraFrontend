@@ -99,6 +99,10 @@ export default class MuroAdministradorComponent implements OnInit{
     }
   }
 
+  mostrarConsolidacion() {
+    this.vistaActiva = 'consolidacion';
+  }
+
   openInput(){
     this.isExpanded = !this.isExpanded;
   }

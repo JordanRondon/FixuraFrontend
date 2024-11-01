@@ -12,6 +12,7 @@
                     <div class = "herramienta" (click)="mostrarMapa()">Mapa de Incidencias</div>
                     <div class = "herramienta">Buscar Usuario</div>
                     <div class = "herramienta" (click)="mostrarUsuarios()">Bloquear Usuarios</div>
+                    <div class = "herramienta" (click)="mostrarConsolidacion()">Incidencias consolidadas</div>
                 </div>
             </div>
         </aside>
@@ -40,6 +41,10 @@
                     [infoIncidente]="infoIncidente"
                     [listDistritoCoordenadas]="listDistritoCoordenadas"
                     (imagenClick)="openImageModal($event)">
+
+                    <ng-container slot="extra-button">
+                        <button type="button" class="btn btn-success">Añadir a Consolidación</button>
+                    </ng-container>
                 </app-post-incidencia>
 
             </div>
@@ -62,6 +67,15 @@
                     *ngFor="let usuario of usuariosFiltrados"
                     [usuario]="usuario">
                 </app-block-users>
+            </div>
+
+            <div class="consolidacion-container" [ngClass]="{ 'visible': vistaActiva === 'consolidacion', 'oculto': vistaActiva !== 'consolidacion'}">
+                <app-post-incidencia 
+                    *ngFor="let infoIncidente of listIncidentes"
+                    [infoIncidente]="infoIncidente"
+                    [listDistritoCoordenadas]="listDistritoCoordenadas"
+                    (imagenClick)="openImageModal($event)">
+                </app-post-incidencia>
             </div>
         </section>
         <ng-template #noData>
