@@ -13,10 +13,10 @@
                     <button mat-icon-button [matMenuTriggerFor]="isBanned ? menuBanned : menuNotBanned" aria-label="Example icon-button with a menu"><mat-icon>more_vert</mat-icon></button>
                     <mat-menu #menuNotBanned="matMenu">
                         <button mat-menu-item (click)="banTemporal()">Bloquear Temporalmente</button>
-                        <button mat-menu-item (click)="banPermanent()">Bloquear Permanentemente</button>
+                        <button mat-menu-item (click)="openDialogBan()">Bloquear Permanentemente</button>
                     </mat-menu>
                     <mat-menu #menuBanned="matMenu">
-                        <button mat-menu-item (click)="desbanUser()">Desbanear Usuario</button>
+                        <button mat-menu-item (click)="openDialogDesban()">Desbanear Usuario</button>
                     </mat-menu>
 
                     

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { format } from 'date-fns';
 //import { Incidente } from '../../../Model/Incidente';
@@ -13,6 +13,10 @@ import { EditIncidenciaComponent } from '../editar-incidencia/edit-incidencia/ed
 //import { CategoriaService } from '../../../Service/Categoria/categoria.service';
 import { Categoria } from '../../../Model/Categoria';
 import { InfoIncidente } from '../../../Model/InfoIncidente';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { DialogService } from 'app/Service/Dialog/dialog.service';
+
 
 @Component({
   selector: 'app-post-incidencia',
@@ -21,53 +25,59 @@ import { InfoIncidente } from '../../../Model/InfoIncidente';
     CommonModule,
     EditIncidenciaComponent,
     AdminModeratorDirective,
-    CommonUserDirective
+    CommonUserDirective,
   ],
   templateUrl: './post-incidencia.component.html',
-  styleUrls: ['./post-incidencia.component.css']
+  styleUrls: ['./post-incidencia.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostIncidenciaComponent implements OnInit, OnChanges {
-  
   showFormEdit: boolean = false;
-  
+
   @Output() imagenClick: EventEmitter<string> = new EventEmitter<string>();
   @Input() infoIncidente: InfoIncidente | undefined;
-  @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
-  
+  @Input() listDistritoCoordenadas: {
+    id_coordenada: number;
+    latitud: number;
+    longitud: number;
+  }[] = [];
+
   infoIncidenteCopy: InfoIncidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
-  incidenciaLike: IncidenciaLike = { 
+  incidenciaLike: IncidenciaLike = {
     dni: '',
     id_incidencia: -1,
-    hour_liked: new Date()
+    hour_liked: new Date(),
   };
-  categoryName: string='';
+  categoryName: string = '';
+
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private incidenciaLikeService: IncidenciaLikeService,
     private incidenciaService: IncidenciaService,
     private authService: AuthService,
-    //private categoriaService: CategoriaService
-  ) {}
+    private dialogService: DialogService
+  ) //private categoriaService: CategoriaService
+  {}
 
   ngOnInit(): void {
     if (this.infoIncidente) {
-      if (this.infoIncidente.tiene_like) 
-        this.isActive = true;
+      if (this.infoIncidente.tiene_like) this.isActive = true;
 
       this.infoIncidenteCopy = JSON.parse(JSON.stringify(this.infoIncidente));
 
       this.incidenciaLike = {
         dni: this.authService.getToken_dni() ?? '',
         id_incidencia: this.infoIncidente.id_incidencia ?? -1,
-        hour_liked: new Date()
+        hour_liked: new Date(),
       };
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) { }
-  
+  ngOnChanges(changes: SimpleChanges) {}
+
   toggleActiveFormEdit() {
     this.showFormEdit = !this.showFormEdit;
   }
@@ -88,18 +98,18 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   }
 
   formatearFecha(fecha?: Date): string {
-    if (fecha) 
-      return format(fecha, "d 'de' MMMM 'del' yyyy, 'a las' hh:mm a", { locale: es });
-    else
-      return "Sin Información"
+    if (fecha)
+      return format(fecha, "d 'de' MMMM 'del' yyyy, 'a las' hh:mm a", {
+        locale: es,
+      });
+    else return 'Sin Información';
   }
 
   setInsertLike(incidenciaLike: IncidenciaLike): void {
     this.incidenciaLikeService.insertLike(incidenciaLike).subscribe(
       (respuesta) => {
         console.log('Like REGISTRADO correctamente:', respuesta);
-        if (this.infoIncidente)
-          this.infoIncidente.total_votos += 1;
+        if (this.infoIncidente) this.infoIncidente.total_votos += 1;
       },
       (error) => {
         console.error('ERROR al REGISTRAR el Like:', error);
@@ -112,8 +122,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
     this.incidenciaLikeService.deleteLike(incidenciaLike).subscribe(
       (respuesta) => {
         console.log('Like ELIMINADO correctamente:', respuesta);
-        if (this.infoIncidente)
-          this.infoIncidente.total_votos -= 1;
+        if (this.infoIncidente) this.infoIncidente.total_votos -= 1;
       },
       (error) => {
         console.error('ERROR al ELIMINAR el Like:', error);
@@ -147,16 +156,23 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   // }
 
   deleteIncidencia(): void {
-    if(this.infoIncidente) {
-      const confirmacion = window.confirm('¿Estás seguro que quieres eliminar esta incidencia?');
-      if(confirmacion) {
-        this.incidenciaService.deleteIncidencia(this.infoIncidente.id_incidencia).subscribe(
-          response => {
-            console.log('Incidente eliminado correctamente:', response);
-          }
-        );
-      }
+    if (this.infoIncidente) {
+      this.incidenciaService
+        .deleteIncidencia(this.infoIncidente.id_incidencia)
+        .subscribe((response) => {
+          console.log('Incidente eliminado correctamente:', response);
+        });
     }
+  }
+
+  openDialogDelete(): void {
+    this.dialogService.openDialog(
+      {
+        tipo: 'Eliminar Incidencia',
+        titulo: '¿Estás seguro de eliminar esta incidencia?',
+      },
+      () => this.deleteIncidencia()
+    );
   }
 
   // getNameCategory(id_category: number): void{

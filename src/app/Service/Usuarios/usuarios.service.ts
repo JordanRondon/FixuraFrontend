@@ -58,6 +58,7 @@ export class UsuariosService {
       map((data: any) => {
         return new Usuario(
           data.nombre,
+          data.apellido,
           data.dni,
           data.correo,
           data.contrasenia,

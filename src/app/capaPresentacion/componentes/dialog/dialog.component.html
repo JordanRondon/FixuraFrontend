@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{data.tipo}}</h2>
+<mat-dialog-content>
+  {{data.titulo}}
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button (click)="close()">Cancelar</button>
+  <button mat-flat-button cdkFocusInitial (click)="accept()" style="background-color: green; color: #fff;">Aceptar</button>
+</mat-dialog-actions>

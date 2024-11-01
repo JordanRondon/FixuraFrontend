@@ -9,8 +9,8 @@
 .muro__header-perfil {
     margin-top: 75px;
     background-image: radial-gradient(circle, #5bd1f1, #4eccf3, #41c7f5, #34c2f7, #2abcf9, #1db6f9, #12b0f9, #0ea9f9, #02a1f7, #0598f4, #138ff0, #2186ec);
-    height: 13rem;
-    padding: 0 4rem;
+    height: auto;
+    padding: 1rem 4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,13 +47,13 @@
 
 .muro__perfil-details {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin-left: 10px;
+    align-items: end;
+    margin-bottom: 15px;
 }
 
 .muro__perfil-details span {
     margin: 0%;
+    width: auto;
     font-weight: 700;
     font-size: 25px;
     color: black;
@@ -103,6 +103,11 @@
     height: 100vh;
     padding: 0 10%;
 }
+
+.container-alert{
+    margin-top: 10px;
+}
+
 /* Estilo para el fondo oscuro */
 .overlay {
   position: fixed;
@@ -117,6 +122,7 @@
   z-index: 1000;
   overflow-y: auto;
 }
+
 /* Estilos para centrar el formulario */
 .formulario-contenedor {
   background: white;
@@ -127,17 +133,18 @@
   max-height: 90vh;
   overflow-y: auto;
 }
+
 .close-button {
-  position: absolute;
-  top: 1%;
-  right: 2%;
-  overflow: hidden;
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
+    position: absolute;
+    top: 1%;
+    right: 2%;
+    overflow: hidden;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
 }
 .icon-path{
     stroke:white;

@@ -27,7 +27,7 @@
                         <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
                     </div>
                     <div class = "portada-perfil-inferior">
-                        <h2 class="reportes__title">{{dataUsuario?.nombre}}</h2>
+                        <h2 class="reportes__title">{{dataUsuario?.nombre}} {{dataUsuario?.apellido}}</h2>
                         <button type="button" class="btn btn-primary reportes__button">
                             <i class="material-icons">edit</i>
                             Editar Perfil
@@ -61,6 +61,13 @@
                 <app-block-users
                     *ngFor="let usuario of usuariosFiltrados"
                     [usuario]="usuario">
+
+                    <div class="container-alert" *ngIf="existUser">
+                        <alert type="warning">
+                        No hay usuarios registrados
+                        </alert>
+                    </div>
+                    
                 </app-block-users>
             </div>
         </section>
