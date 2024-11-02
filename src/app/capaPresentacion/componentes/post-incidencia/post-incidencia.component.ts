@@ -17,7 +17,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialogService } from 'app/Service/Dialog/dialog.service';
 
-
 @Component({
   selector: 'app-post-incidencia',
   standalone: true,
