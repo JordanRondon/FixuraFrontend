@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { UsuariosService }  from '../../../Service/Usuarios/usuarios.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import { CommonModule } from '@angular/common';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, FormsModule, CommonModule],
+  imports: [RouterModule, FormsModule, CommonModule, AlertComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
