@@ -51,6 +51,7 @@ export class IncidenciaService {
         item.total_votos,
         item.estado,
         item.usuario,
+        item.usuario_foto,
         item.categoria,
         item.latitud,
         item.longitud,
