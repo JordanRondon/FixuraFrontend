@@ -17,7 +17,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialogService } from 'app/Service/Dialog/dialog.service';
 
-
 @Component({
   selector: 'app-post-incidencia',
   standalone: true,
@@ -39,7 +38,6 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   @Input() listDistritoCoordenadas: { id_coordenada: number, latitud: number, longitud: number }[] = [];
   editIncidenciaAbierto: boolean | undefined;
   @Input() bandMAPAINCIDENCIAS: boolean | undefined;
-
   infoIncidenteCopy: InfoIncidente | undefined;
   @Input() nombreUsuario: String | undefined;
   isActive: boolean = false;
