@@ -78,7 +78,7 @@ export default class MuroAdministradorComponent implements OnInit {
     latitud: number;
     longitud: number;
   }[] = [];
-
+  listIncidentesMasVotados: InfoIncidente[] = [];
   existUser: boolean = false;
 
   constructor(
@@ -210,6 +210,9 @@ export default class MuroAdministradorComponent implements OnInit {
   }
 
   onScroll(): void {
+    if (this.vistaActiva === 'masVotadas') {
+      return; // No cargar más incidencias originales
+    } 
     this.loadIncidentes();
   }
 
@@ -322,4 +325,22 @@ export default class MuroAdministradorComponent implements OnInit {
   //     });
   //   }
   // }
+  aplicarFiltroMasVotados(): void {
+    this.vistaActiva = 'masVotadas'; 
+    this.page = 0; 
+    this.listIncidentes = []; 
+
+    this.loading = true;
+    this.incidenteService.getIncidentesMasVotados(this.page, this.size, this.dataUsuario?.idDist ?? -1).subscribe({
+       next: (response: Page<InfoIncidente>) => {
+         this.listIncidentes = [...this.listIncidentes, ...response.content]; 
+         this.totalElements = response.totalElements;
+         this.loading = false;
+       },
+       error: (error) => {
+         console.error('Error incidencias mas votadas:',error.message, error);
+         this.loading = false;
+       },
+     });
+  }
 }
