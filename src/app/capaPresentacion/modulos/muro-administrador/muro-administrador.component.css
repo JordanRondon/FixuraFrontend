@@ -2,35 +2,32 @@
 
 /*------------configuracion de layout------------*/
 
-.body{
+body{  
+    padding: 0;
+    margin: 0;
     background-color: #ffffff;
+}
+.main{
     display: flex;
-    min-height: 100vh;
     justify-content: center;
-    overflow-x: hidden;
-
+    padding: 20px;
 }
 .muro {
-
+    position: absolute;
     display: flex;
-    justify-content: center;
-    position: relative;
-    padding: 20px;
+    width: 100%;;
     background-color: rgb(234, 246, 255);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-
+    justify-content: center;
 }
 /* Imagen de fondo */
-.banner{
+/* .banner{
     width:100%;
     height: 300px;
     background: linear-gradient(to bottom,rgba(4, 9, 30, 0) 70%, rgba(4,9,30,0.7) 100%),url('/images/municipalidad-trujillo.jpg') no-repeat center top;
     background-size: cover;
     background-position: center;
     position: relative;
-    /* background-attachment: fixed; */
-}
+} */
 /*-----------cabecera de muro personal-------------*/
 .portada-perfil{
     display: flex;
@@ -40,7 +37,7 @@
 .portada-perfil-superior{
     position: relative;
     width: 100%;
-    height: 120px;
+    height: 6vw;
     background: #23A1F5;
     background-size: cover;
 }
@@ -52,6 +49,7 @@
     padding: 20px;
 }
 .foto-perfil{
+    user-select: none;
     position: absolute;
     bottom: -60px;
     left: 3%;
@@ -68,10 +66,9 @@
     position: absolute;
     bottom: -70px;
     left: 2%;
-    /* transform: translateX(-100%); */
     width: 145px;
     height: 145px;
-    background: radial-gradient(circle, rgba(255,255,255,0.5), rgba(255,255,255,0)); /*Gradiente que se desvanece*/
+    background: radial-gradient(circle, rgba(255,255,255,0.5), rgba(255,255,255,0));
     border-radius: 50%;
     pointer-events: none;
 }
@@ -157,32 +154,24 @@
 }
 /* Columnas */
 .muro__col-mid {
-    margin-top: 3%;
-    max-width: 946px;
-    min-width: 946px;
+    padding-top: 3vw;
+    margin:0 1vw;
+    max-width: 50%;
   }
 
 .muro__col-izq, .muro__col-der {
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-    width: 25%;
-    border-radius: 10px;
+    padding-top: 5vw;
+    width: 20%;
     background-color: #f8f9fa;
-    position: fixed;
-    margin-top: 4%;
-    height: 100%;
-    padding: 20px;
-}
-.muro__col-izq{
-    left: 0;
-}
-.muro__col-der {
-    right: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 .panel-herramientas{
+    margin:0 1vw; 
     user-select: none;
-    margin-left: 30%;
+    padding: 10px;
     background-color: rgb(231, 245, 255);
 }
 .herramienta {
@@ -196,9 +185,6 @@
 .herramienta:hover {
     background-color: #6f99e7; 
     color: #ffffff; 
-}
-.panel-noticias{
-    padding: 10px;
 }
 .elemento{
     background-color: #d0d0d0;
@@ -216,15 +202,13 @@
     width: 15px;
     height: 15px;
     margin-right: 10px;
+    transition: transform 0.3s ease;
 }
 .cabecera-herramienta{
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-}
-.flecha-despliegue{
-    transition: transform 0.3s ease;
 }
 .flecha-despliegue.rotate{
     transform: rotate(180deg);
@@ -242,9 +226,16 @@
     transform: scaleY(1);
     opacity: 1; 
 }
+/* ------------FILTROS----------------------- */
+.filtros{
+    margin:0 1vw; 
+    padding: 10px;
+    background-color: #6f99e7;
+}
 /* -----------------------MAPA-------------------------- */
 .vacio {
     height: 50px;
+    min-width: 2000px;
 }
 .mapa-container.oculto {
     display: none; /* Oculta el mapa completamente */

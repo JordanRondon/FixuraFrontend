@@ -159,4 +159,11 @@ export class IncidenciaService {
   deleteIncidencia(id_incidencia: number): Observable<any> {
     return this.http.put<any>(this.apiUrl + '/delete/' + id_incidencia, null).pipe();
   }
+  getIncidentesMasVotados(page: number, size: number, id_distrito: number): Observable<Page<InfoIncidente>> {
+    const params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', size.toString())
+    .set('id_distrito', id_distrito.toString());
+    return this.http.get<Page<InfoIncidente>>(this.apiUrl+'/list/paginated/masVotados', { params });
+  }
 }

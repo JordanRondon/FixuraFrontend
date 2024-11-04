@@ -10,7 +10,6 @@
                 <div class="contenedor-herramientas" [ngClass]="{'mostrar': mostrarHerramientas}">
                     <div class = "herramienta" (click)="mostrarPerfil()">Ir a Muro</div>
                     <div class = "herramienta" (click)="mostrarMapa()">Mapa de Incidencias</div>
-                    <div class = "herramienta">Buscar Usuario</div>
                     <div class = "herramienta" (click)="mostrarUsuarios()">Bloquear Usuarios</div>
                     <div class = "herramienta" (click)="mostrarConsolidacion()">Incidencias consolidadas</div>
                 </div>
@@ -22,7 +21,7 @@
         [infiniteScrollDistance]="2" 
         [infiniteScrollThrottle]="150" 
         (scrolled)="onScroll()">
-            <div *ngIf="vistaActiva === 'perfil'">
+            <div *ngIf="vistaActiva === 'perfil'|| vistaActiva === 'masVotadas'">
                 <div class = "portada-perfil">
                     <div class = "portada-perfil-superior">
                         <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
@@ -90,11 +89,12 @@
             <p>No hay incidentes para mostrar.</p>
         </ng-template>
         <aside class="muro__col-der">
-            <div class = "panel-noticias">
-                <h3>Panel Extra</h3>
-                <div class = "elemento">Elemento 1</div>
-                <div class = "elemento">Elemento 2</div>
-            </div>
+            <section class="filtros">
+                <h2>Filtros</h2>
+                <button (click)="aplicarFiltroMasVotados()" class="btn btn-primary">
+                Más Votadas
+                </button>
+            </section>
         </aside>
     </div>
 </main>
