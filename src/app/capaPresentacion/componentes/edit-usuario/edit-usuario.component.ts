@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../../../Model/Usuario';
@@ -36,6 +36,8 @@ export default class EditUsuarioComponent {
   selectedProvincia: number | null = null;
   selectedDistrito: number | null = null;
   archivoSeleccionado: File | null = null;
+
+  @Output() usuarioActualizado = new EventEmitter<void>();
 
   // Método para manejar la selección de archivos
   onFileSelected(event: Event) {
@@ -182,6 +184,7 @@ export default class EditUsuarioComponent {
             this.UserService.updatePerfilUsuario(formUsuario).subscribe(
               (response) => {
                 console.log('Usuario actualizado correctamente:', response);
+                this.usuarioActualizado.emit();
               }
             );
           } else {
