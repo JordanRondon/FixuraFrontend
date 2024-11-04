@@ -13,7 +13,7 @@ import { InfoIncidente } from '../../../Model/InfoIncidente';
 import { Page } from '../../../Model/Page';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
-import { DepartamentoService} from '../../../Service/Departamento/departamento.service';
+import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
 
 @Component({
   selector: 'app-muro-usuario',
@@ -25,7 +25,7 @@ import { DepartamentoService} from '../../../Service/Departamento/departamento.s
     CommonModule,
     EditUsuarioComponent,
     InfiniteScrollModule,
-    ImageModalComponent
+    ImageModalComponent,
   ],
   templateUrl: './muro-usuario.component.html',
   styleUrl: './muro-usuario.component.css',
@@ -35,6 +35,7 @@ export default class MuroUsuarioComponent implements OnInit {
   mostrarEditarUsuario: boolean = false;
   incidentes: Incidente[] = [];
   dataUsuario: Usuario | null = null;
+  listaIncidencias: InfoIncidente[] = []; // Lista de incidencias
   // incidentes: Incidente[] = [];
 
   selectedImage: string = '';
@@ -45,11 +46,15 @@ export default class MuroUsuarioComponent implements OnInit {
   page: number = 0;
   size: number = 10;
   loading: boolean = false;
-  listDistritoCoordenadas: {id_coordenada: number, latitud: number, longitud: number}[] = [];
+  listDistritoCoordenadas: {
+    id_coordenada: number;
+    latitud: number;
+    longitud: number;
+  }[] = [];
   constructor(
     private registerUserService: UsuariosService,
     private incidenteService: IncidenciaService,
-    private departamentoService : DepartamentoService,
+    private departamentoService: DepartamentoService,
     private authService: AuthService
   ) {}
 
@@ -65,14 +70,24 @@ export default class MuroUsuarioComponent implements OnInit {
 
   cerrarFormulario() {
     this.mostrarFormulario = false;
+    this.page = 0; // Reinicia la página para cargar desde el principio
+    this.listIncidentes = []; // Limpia la lista de incidentes para evitar duplicados
+    this.loadIncidentes();
   }
-  
+
   abrirEditarUsuario() {
     this.mostrarEditarUsuario = true;
   }
 
   cerrarEditarUsuario() {
     this.mostrarEditarUsuario = false;
+    this.getDataUserProfile();
+    this.loadIncidentes();
+  }
+
+  onUsuarioActualizado() {
+    this.getDataUserProfile();
+    this.loadIncidentes();
   }
 
   openImageModal(image: string): void {
@@ -106,33 +121,43 @@ export default class MuroUsuarioComponent implements OnInit {
 
     this.loading = true;
 
-    this.incidenteService.getListIncidenciaUsuario(this.page, this.size, this.authService.getToken_dni() ?? '').subscribe({
-      next: (response: Page<InfoIncidente>) => {
-        this.listIncidentes = [...this.listIncidentes, ...response.content];// Añadir más incidencias
-        this.totalElements = response.totalElements;
-        this.page += 1;  // Incrementar la página para la siguiente carga
-        console.log('Incidentes cargados:', this.listIncidentes);
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al cargar incidentes:', error);
-        this.loading = false;
-      }
-    });
+    this.incidenteService
+      .getListIncidenciaUsuario(
+        this.page,
+        this.size,
+        this.authService.getToken_dni() ?? ''
+      )
+      .subscribe({
+        next: (response: Page<InfoIncidente>) => {
+          this.listIncidentes = [...this.listIncidentes, ...response.content]; // Añadir más incidencias
+          this.totalElements = response.totalElements;
+          this.page += 1; // Incrementar la página para la siguiente carga
+          console.log('Incidentes cargados:', this.listIncidentes);
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error al cargar incidentes:', error);
+          this.loading = false;
+        },
+      });
   }
 
   onScroll(): void {
     this.loadIncidentes();
   }
   loadDistrito_Coordenadas(id_distrito: number): void {
-    
-    this.departamentoService.getDistrito_Coordenads(id_distrito).subscribe(resp => {
-      if (resp) {
-        console.log(resp)
-        this.listDistritoCoordenadas = resp;
-        console.log("Datos asignados a listDistritoCoordenadas:", this.listDistritoCoordenadas);
-      }
-    });
+    this.departamentoService
+      .getDistrito_Coordenads(id_distrito)
+      .subscribe((resp) => {
+        if (resp) {
+          console.log(resp);
+          this.listDistritoCoordenadas = resp;
+          console.log(
+            'Datos asignados a listDistritoCoordenadas:',
+            this.listDistritoCoordenadas
+          );
+        }
+      });
   }
   // getIncidentesPorUsuario(DNI_usuario: string): void {
   //   this.incidenteService.getListaIncidencia(DNI_usuario).subscribe(

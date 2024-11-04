@@ -1,111 +1,125 @@
 /*------------configuracion de layout------------*/
 .muro {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  height: 100vh;
 }
 
 /*-----------cabecera de muro personal-------------*/
 .muro__header-perfil {
-    margin-top: 75px;
-    background-image: radial-gradient(circle, #5bd1f1, #4eccf3, #41c7f5, #34c2f7, #2abcf9, #1db6f9, #12b0f9, #0ea9f9, #02a1f7, #0598f4, #138ff0, #2186ec);
-    height: auto;
-    padding: 1rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    box-shadow: rgba(56, 56, 56, 0.25) 0px 14px 28px, rgba(58, 58, 58, 0.22) 0px 10px 10px;
+  margin-top: 75px;
+  background-image: radial-gradient(
+    circle,
+    #5bd1f1,
+    #4eccf3,
+    #41c7f5,
+    #34c2f7,
+    #2abcf9,
+    #1db6f9,
+    #12b0f9,
+    #0ea9f9,
+    #02a1f7,
+    #0598f4,
+    #138ff0,
+    #2186ec
+  );
+  height: auto;
+  padding: 1rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: rgba(56, 56, 56, 0.25) 0px 14px 28px,
+    rgba(58, 58, 58, 0.22) 0px 10px 10px;
 }
 
 .muro__perfil-info {
-    width: auto;
-    height: 150px;
-    display: flex;
+  width: auto;
+  height: 150px;
+  display: flex;
 }
 
 .muro__perfil-img-container {
-    width: 9.375em;
-    height: 9.375em;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f1f1f1;
-    border-radius: 50%;
-    overflow: hidden; /* Oculta los bordes excedentes de la imagen */
+  width: 9.375em;
+  height: 9.375em;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  border-radius: 50%;
+  overflow: hidden; /* Oculta los bordes excedentes de la imagen */
 }
 
 .muro__perfil-img {
-    width: auto;
-    height: 100%;
-    object-fit: cover; /* Recorta la imagen y asegura que mantenga la proporción */
-    object-position: center; /* Centra la imagen en el contenedor */
-    border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recorta la imagen y asegura que mantenga la proporción */
+  object-position: center; /* Centra la imagen en el contenedor */
+  border-radius: 50%;
 }
 
 .muro__perfil-details {
-    display: flex;
-    align-items: end;
-    margin-bottom: 15px;
+  display: flex;
+  align-items: end;
+  margin-bottom: 15px;
 }
 
 .muro__perfil-details span {
-    margin: 0%;
-    width: auto;
-    font-weight: 700;
-    font-size: 25px;
-    color: black;
+  margin: 0%;
+  width: auto;
+  font-weight: 700;
+  font-size: 25px;
+  color: black;
 }
 
 .muro__perfil-details p {
-    margin: 0%;
-    font-size: 14px;
-    color: black;
+  margin: 0%;
+  font-size: 14px;
+  color: black;
 }
 
 /*----------cabecera apartado reportes-----------*/
 .reportes__button {
-    position: fixed;
-    right: 25px;
-    bottom: 25px;
-    z-index: 1000;
-    border: none;
-    background-color: #24b4fb;
-    border-radius: 0.9em;
-    cursor: pointer;
-    padding: 0.5em 1.2em 0.5em 1em;
-    transition: all ease-in-out 0.1s;
-    font-size: 16px;
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  z-index: 1000;
+  border: none;
+  background-color: #24b4fb;
+  border-radius: 0.9em;
+  cursor: pointer;
+  padding: 0.5em 1.2em 0.5em 1em;
+  transition: all ease-in-out 0.1s;
+  font-size: 16px;
 }
-  
+
 .reportes__button span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
 }
-  
+
 .reportes__button:hover {
-    background-color: #0071e2;
+  background-color: #0071e2;
 }
 
 .reportes__button:active {
-    background-color: #0071e2;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+  background-color: #0071e2;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  transform: translateY(2px);
 }
-  
 
 .muro__post-container {
-    height: 100vh;
-    padding: 0 10%;
+  height: 100vh;
+  padding: 0 10%;
 }
 
-.container-alert{
-    margin-top: 10px;
+.container-alert {
+  margin-top: 10px;
 }
 
 /* Estilo para el fondo oscuro */
@@ -129,106 +143,112 @@
   border-radius: 10px;
   width: 80%;
   max-width: 600px;
-  position: relative; 
+  position: relative;
   max-height: 90vh;
   overflow-y: auto;
 }
 
 .close-button {
-    position: absolute;
-    top: 1%;
-    right: 2%;
-    overflow: hidden;
-    background-color: transparent;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
+  position: absolute;
+  top: 1%;
+  right: 2%;
+  overflow: hidden;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
 }
-.icon-path{
-    stroke:white;
+.icon-path {
+  stroke: white;
 }
-.close-icon{
-    width: 23px;
-    height: 23px;
+.close-icon {
+  width: 23px;
+  height: 23px;
 }
-.close-button:hover .icon-path{
-    stroke: rgb(0, 0, 0);
-    transition: stroke 1.2s;
+.close-button:hover .icon-path {
+  stroke: rgb(0, 0, 0);
+  transition: stroke 1.2s;
 }
 .close-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background-color: rgba(78, 78, 78, 0.212); /* Color de la onda (rojo con algo de transparencia) */
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    transition: transform 0.9s, opacity 0.1s; /* Controla la animación */
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: rgba(
+    78,
+    78,
+    78,
+    0.212
+  ); /* Color de la onda (rojo con algo de transparencia) */
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.9s, opacity 0.1s; /* Controla la animación */
 }
 
 .close-button:hover::before {
-    transform: translate(-50%, -50%) scale(1); /* Onda se expande */
-    opacity: 1; /* Onda se hace visible */
+  transform: translate(-50%, -50%) scale(1); /* Onda se expande */
+  opacity: 1; /* Onda se hace visible */
 }
 /* ---hasta aqui boton------------ */
-@media(max-width: 1200px) {
-    .muro {
-        display: grid;
-        grid-template-columns: 0.5fr 9fr 0.5fr;
-    }
-    
-    .muro__post-container {
-        padding: 0 3rem;
-    }
+@media (max-width: 1200px) {
+  .muro {
+    display: grid;
+    grid-template-columns: 0.5fr 9fr 0.5fr;
+  }
+
+  .muro__post-container {
+    padding: 0 3rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .muro__col-izq, .muro__col-der {
-        display: none;
-    }
+  .muro__col-izq,
+  .muro__col-der {
+    display: none;
+  }
 
-    .muro{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
+  .muro {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .muro__header-perfil {
-        height: auto;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: 15px 0;
-    }
+  .muro__header-perfil {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+  }
 
-    .muro__perfil-info {
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+  .muro__perfil-info {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .muro__perfil-img-container {
-        width: 7.375em;
-        height: 7.375em;
-    }
+  .muro__perfil-img-container {
+    width: 7.375em;
+    height: 7.375em;
+  }
 
-    .muro__perfil-details {
-        margin: 0px;
-        display: flex;
-        align-items: center;
-    }
+  .muro__perfil-details {
+    margin: 0px;
+    display: flex;
+    align-items: center;
+  }
 
-    .muro__perfil-details span {
-        text-align: center;
-    }
+  .muro__perfil-details span {
+    text-align: center;
+  }
 
-    .muro__post-container {
-        padding: 0 0.6rem;
-    }
+  .muro__post-container {
+    padding: 0 0.6rem;
+  }
 }

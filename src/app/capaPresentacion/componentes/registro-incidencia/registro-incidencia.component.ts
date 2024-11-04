@@ -1,5 +1,17 @@
-import { Component, Input, OnInit,ViewChild  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  EventEmitter,
+  Output,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +22,6 @@ import { Incidente } from '../../../Model/Incidente';
 import { CategoriaService } from '../../../Service/Categoria/categoria.service';
 import { Categoria } from '../../../Model/Categoria';
 import { AlertComponent } from 'ngx-bootstrap/alert';
-
 
 @Component({
   selector: 'app-registro-incidencia',
@@ -25,6 +36,7 @@ import { AlertComponent } from 'ngx-bootstrap/alert';
   styleUrls: ['./registro-incidencia.component.css'],
 })
 export class RegistroIncidenciaComponent implements OnInit {
+  @Output() nuevaIncidenciaRegistrada = new EventEmitter<void>();
   formulario: FormGroup;
   //ubicacionSeleccionada: string = '';
   categorias: string[] = ['Poste', 'Pista', 'Desague'];
@@ -102,7 +114,7 @@ export class RegistroIncidenciaComponent implements OnInit {
       }
     }
   }
-  
+
   //Funcion para extraer la ubicacion actual del usuario
   tryInitPolygon(): void {
     const interval = setInterval(() => {
@@ -243,6 +255,7 @@ export class RegistroIncidenciaComponent implements OnInit {
             if (resp) {
               this.formulario.reset();
               this.imagenPrevisualizacion = null;
+              this.nuevaIncidenciaRegistrada.emit(); // Emitir el evento
             }
           });
       } else {

@@ -7,13 +7,13 @@
         <div class="muro__perfil-img-container">
           <img
             class="muro__perfil-img"
-            src={{dataUsuario?.fotoPerfil}}
+            src="{{ dataUsuario?.fotoPerfil }}"
             alt="Foto de perfil"
           />
         </div>
-        
+
         <div class="muro__perfil-details">
-          <span>{{ dataUsuario?.nombre }}</span>
+          <span>{{ dataUsuario?.nombre }} {{ dataUsuario?.apellido }}</span>
           <p>{{ dataUsuario?.correo }}</p>
         </div>
       </div>
@@ -62,20 +62,21 @@
         </span>
       </button>
     </div>
-        
-    <div class="muro__post-container" 
-        *ngIf="listIncidentes.length > 0; else noData"
-        infiniteScroll 
-        [infiniteScrollDistance]="2" 
-        [infiniteScrollThrottle]="150" 
-        (scrolled)="onScroll()"
-        >
-            <app-post-incidencia 
-            *ngFor="let infoIncidente of listIncidentes"
-            [infoIncidente]="infoIncidente"
-            (imagenClick)="openImageModal($event)"
-            >
-            </app-post-incidencia>
+
+    <div
+      class="muro__post-container"
+      *ngIf="listIncidentes.length > 0; else noData"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="150"
+      (scrolled)="onScroll()"
+    >
+      <app-post-incidencia
+        *ngFor="let infoIncidente of listIncidentes"
+        [infoIncidente]="infoIncidente"
+        (imagenClick)="openImageModal($event)"
+      >
+      </app-post-incidencia>
     </div>
     <ng-template #noData>
       <p>No hay incidentes para mostrar.</p>
@@ -111,7 +112,11 @@
         </defs>
       </svg>
     </button>
-    <app-registro-incidencia [dniUsuario]="dataUsuario?.dni" [listDistritoCoordenadas]="listDistritoCoordenadas"></app-registro-incidencia>
+    <app-registro-incidencia
+      (nuevaIncidenciaRegistrada)="cerrarFormulario()"
+      [dniUsuario]="dataUsuario?.dni"
+      [listDistritoCoordenadas]="listDistritoCoordenadas"
+    ></app-registro-incidencia>
   </div>
 </div>
 
@@ -122,12 +127,16 @@
   (click)="cerrarEditarUsuario()"
 >
   <div class="formulario-contenedor2" (click)="$event.stopPropagation()">
-    <app-edit-usuario (close)="cerrarEditarUsuario()"></app-edit-usuario>
+    <app-edit-usuario
+      (usuarioActualizado)="onUsuarioActualizado()"
+      *ngIf="mostrarEditarUsuario"
+    ></app-edit-usuario>
   </div>
 </div>
 
-<app-image-modal 
-*ngIf="isModalActive"
-[imageIncidente]="selectedImage" 
-(closeModal)="closeImageModal()">
+<app-image-modal
+  *ngIf="isModalActive"
+  [imageIncidente]="selectedImage"
+  (closeModal)="closeImageModal()"
+>
 </app-image-modal>
