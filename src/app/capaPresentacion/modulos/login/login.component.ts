@@ -5,11 +5,12 @@ import { UsuariosService }  from '../../../Service/Usuarios/usuarios.service';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from 'ngx-bootstrap/alert';
+import { NavbarUsuarioComponent } from "../../componentes/navbar-usuario/navbar-usuario.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, FormsModule, CommonModule, AlertComponent],
+  imports: [RouterModule, FormsModule, CommonModule, AlertComponent, NavbarUsuarioComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -22,7 +23,7 @@ export default class LoginComponent implements OnInit{
   constructor(
     private registroUsuarioService: UsuariosService, 
     private route: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ){}
 
   ngOnInit(): void {

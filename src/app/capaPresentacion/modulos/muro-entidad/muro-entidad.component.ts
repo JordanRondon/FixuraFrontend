@@ -14,6 +14,7 @@ import { Page } from '../../../Model/Page';
 import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 import { AlertComponent } from 'ngx-bootstrap/alert';
+import { NotificacionesService } from 'app/Service/Notificaciones/notificaciones.service';
 
 @Component({
   selector: 'app-muro-entidad',
@@ -46,11 +47,20 @@ export default class MuroEntidadComponent implements OnInit {
     private registerUserService: UsuariosService,
     private departamentoService: DepartamentoService,
     private incidenteService: IncidenciaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationService: NotificacionesService,
   ) { }
 
   ngOnInit(): void {
     this.getDataUserProfile();
+    this.refreshIncidentes();
+  }
+
+  refreshIncidentes(){
+    this.notificationService.getIncidentUpdates().subscribe(() => {
+      this.resetVarsPage();
+      this.loadIncidentes();  
+    });
   }
 
   abrirRegistroIncidencia() {
@@ -84,6 +94,14 @@ export default class MuroEntidadComponent implements OnInit {
         }
       });
     }
+  }
+
+  resetVarsPage(): void {
+    this.listIncidentes = [];
+    this.totalElements = 0;
+    this.page = 0;
+    this.size = 10;
+    this.loading = false;
   }
 
   loadIncidentes(): void {

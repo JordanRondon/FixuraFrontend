@@ -13,10 +13,9 @@
                     <div class = "herramienta" (click)="mostrarUsuarios()">Bloquear Usuarios</div>
                     <div class = "herramienta" (click)="mostrarConsolidacion()">Incidencias consolidadas</div>
                 </div>
-            </div>
+            </div>      
         </aside>
         <section class="muro__col-mid" 
-        *ngIf="listIncidentes.length > 0; else noData"
         infiniteScroll 
         [infiniteScrollDistance]="2" 
         [infiniteScrollThrottle]="150" 
@@ -33,6 +32,12 @@
                             Editar Perfil
                         </button>
                     </div>
+                    <div class="container-alert" *ngIf="!existIncidentes">
+                        <alert type="warning">
+                        No hay incidentes registrados
+                        </alert>
+                    </div>
+                    
                 </div>
 
                 <app-post-incidencia 
@@ -67,7 +72,7 @@
                     *ngFor="let usuario of usuariosFiltrados"
                     [usuario]="usuario">
 
-                    <div class="container-alert" *ngIf="existUser">
+                    <div class="container-alert" *ngIf="!existUser">
                         <alert type="warning">
                         No hay usuarios registrados
                         </alert>

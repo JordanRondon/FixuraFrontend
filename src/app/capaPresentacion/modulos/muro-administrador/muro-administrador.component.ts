@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, AsyncPipe} from '@angular/common';
 import { NavbarUsuarioComponent } from '../../componentes/navbar-usuario/navbar-usuario.component';
 import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-incidencia.component';
@@ -25,6 +25,8 @@ import { AlertComponent } from 'ngx-bootstrap/alert';
 import { IncidenciaConsolidadoService } from 'app/Service/IncidenciaConsolidado/incidencia-consolidado.service';
 import { IncidenciaConsolidado } from 'app/Model/IncidenciaConsolidado';
 import { DialogService } from 'app/Service/Dialog/dialog.service';
+import { NotificacionesService } from 'app/Service/Notificaciones/notificaciones.service';
+import { ToastrService, ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-muro-administrador',
@@ -44,11 +46,12 @@ import { DialogService } from 'app/Service/Dialog/dialog.service';
     ReactiveFormsModule,
     AsyncPipe,
     AlertComponent,
+    ToastrModule,
   ],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css',
 })
-export default class MuroAdministradorComponent implements OnInit {
+export default class MuroAdministradorComponent implements OnInit, OnDestroy {
   mostrarHerramientas: boolean = true;
   // incidentes: Incidente[] = [];
   // User: { [dni: string]: String } = {};
@@ -80,6 +83,7 @@ export default class MuroAdministradorComponent implements OnInit {
   }[] = [];
   listIncidentesMasVotados: InfoIncidente[] = [];
   existUser: boolean = false;
+  existIncidentes: boolean = false;
 
   constructor(
     private registerUserService: UsuariosService,
@@ -87,16 +91,51 @@ export default class MuroAdministradorComponent implements OnInit {
     private incidenteService: IncidenciaService,
     private incConsolidadoService: IncidenciaConsolidadoService,
     private authService: AuthService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private notificacionesService: NotificacionesService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.getDataUserProfile();
 
+    this.subscribeToNotifications();
+
+    //this.refreshIncidentes();
+
     this.control.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
       this.filtrarUsuarios(value || '');
     });
   }
+
+  ngOnDestroy(): void {
+    this.notificacionesService.disconnect();
+  }
+
+  subscribeToNotifications(): void {
+    this.notificacionesService.getMessage().subscribe((message) => {
+      this.showToast(message);
+    });
+  }
+
+  private showToast(message: string): void {
+    this.toastr.info(message, 'Notificación', {
+      closeButton: true,
+      timeOut: 4000,
+      extendedTimeOut: 1000,
+      easeTime: 300,
+      progressBar: true,
+      positionClass: 'toast-bottom-right'
+    });
+  }
+
+  refreshIncidentes(): void{
+    this.notificacionesService.getIncidentUpdates().subscribe(() => {
+      this.resetVarsPage();
+      this.loadIncidentes();  
+    });
+  }
+
   mostrarPerfil() {
     this.vistaActiva = 'perfil';
     this.resetVarsPage();
@@ -107,9 +146,7 @@ export default class MuroAdministradorComponent implements OnInit {
   }
   mostrarUsuarios() {
     this.vistaActiva = 'usuarios';
-    if (this.usuarios.length === 0 && this.dataUsuario?.idDist !== undefined) {
-      this.getUsuariosMunicipalidad(this.dataUsuario.idDist);
-    }
+    this.getUsuariosMunicipalidad(this.dataUsuario?.idDist??-1);
   }
 
   mostrarConsolidacion() {
@@ -173,6 +210,7 @@ export default class MuroAdministradorComponent implements OnInit {
           this.page += 1; // Incrementar la página para la siguiente carga
           console.log('Incidentes cargados:', this.listIncidentes);
           this.loading = false;
+          this.existIncidentes = true;
         },
         error: (error) => {
           console.error('Error al cargar incidentes:', error);
@@ -212,7 +250,7 @@ export default class MuroAdministradorComponent implements OnInit {
   onScroll(): void {
     if (this.vistaActiva === 'masVotadas') {
       return; // No cargar más incidencias originales
-    } 
+    }
     this.loadIncidentes();
   }
 
@@ -326,21 +364,27 @@ export default class MuroAdministradorComponent implements OnInit {
   //   }
   // }
   aplicarFiltroMasVotados(): void {
-    this.vistaActiva = 'masVotadas'; 
-    this.page = 0; 
-    this.listIncidentes = []; 
+    this.vistaActiva = 'masVotadas';
+    this.page = 0;
+    this.listIncidentes = [];
 
     this.loading = true;
-    this.incidenteService.getIncidentesMasVotados(this.page, this.size, this.dataUsuario?.idDist ?? -1).subscribe({
-       next: (response: Page<InfoIncidente>) => {
-         this.listIncidentes = [...this.listIncidentes, ...response.content]; 
-         this.totalElements = response.totalElements;
-         this.loading = false;
-       },
-       error: (error) => {
-         console.error('Error incidencias mas votadas:',error.message, error);
-         this.loading = false;
-       },
-     });
+    this.incidenteService
+      .getIncidentesMasVotados(
+        this.page,
+        this.size,
+        this.dataUsuario?.idDist ?? -1
+      )
+      .subscribe({
+        next: (response: Page<InfoIncidente>) => {
+          this.listIncidentes = [...this.listIncidentes, ...response.content];
+          this.totalElements = response.totalElements;
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error incidencias mas votadas:', error.message, error);
+          this.loading = false;
+        },
+      });
   }
 }

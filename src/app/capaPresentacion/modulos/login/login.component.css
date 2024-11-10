@@ -40,11 +40,11 @@ nav {
 
 nav .logo img {
   width: 100px;
-  height: 100px;
+  height: 80px;
 }
 
-nav .logo img:hover {
-  color: var(--primary-color-dark);
+nav .logo img:hover{
+  cursor: pointer;
 }
 
 
