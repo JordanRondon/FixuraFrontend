@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule  } from '@angular/router';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
