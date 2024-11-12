@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, AsyncPipe} from '@angular/common';
 import { NavbarUsuarioComponent } from '../../componentes/navbar-usuario/navbar-usuario.component';
 import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-incidencia.component';
-import { Incidente } from '../../../Model/Incidente';
 import { Usuario } from '../../../Model/Usuario';
 import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
@@ -27,6 +26,9 @@ import { IncidenciaConsolidado } from 'app/Model/IncidenciaConsolidado';
 import { DialogService } from 'app/Service/Dialog/dialog.service';
 import { NotificacionesService } from 'app/Service/Notificaciones/notificaciones.service';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-muro-administrador',
@@ -47,6 +49,10 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
     AsyncPipe,
     AlertComponent,
     ToastrModule,
+    MatIconModule,
+    MatMenu,
+    MatMenuModule,
+    MatButtonModule,
   ],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css',
@@ -84,6 +90,8 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
   listIncidentesMasVotados: InfoIncidente[] = [];
   existUser: boolean = false;
   existIncidentes: boolean = false;
+  notificaciones: String[] = [];
+  notificacionesCount: number = 0;
 
   constructor(
     private registerUserService: UsuariosService,
@@ -97,9 +105,15 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    
+    //localStorage.clear();
+
     this.getDataUserProfile();
 
     this.subscribeToNotifications();
+
+    this.notificaciones = this.getFromLocalStorage('notificaciones', []);
+    this.notificacionesCount = this.getFromLocalStorage('notificaiones-count', 0);
 
     //this.refreshIncidentes();
 
@@ -112,10 +126,33 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
     this.notificacionesService.disconnect();
   }
 
+  private getFromLocalStorage(key: string, defaultValue: any): any {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : defaultValue;
+  }
+
   subscribeToNotifications(): void {
     this.notificacionesService.getMessage().subscribe((message) => {
+      if (this.notificaciones.length === 5) {
+        this.notificaciones.shift();
+      }
+
+      this.notificaciones.push(message);
+      this.notificacionesCount++;
+      
+      this.updateLocalStorage();
       this.showToast(message);
     });
+  }
+
+  private updateLocalStorage(): void {
+    localStorage.setItem('notificaciones', JSON.stringify(this.notificaciones));
+    localStorage.setItem('notificaiones-count', JSON.stringify(this.notificacionesCount));
+  }
+
+  resetCount():void{
+    this.notificacionesCount = 0;
+    this.updateLocalStorage();
   }
 
   private showToast(message: string): void {

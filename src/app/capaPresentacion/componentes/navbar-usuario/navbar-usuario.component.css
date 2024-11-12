@@ -1,21 +1,17 @@
 .navbar {
-  background: #ffffff;
   position: fixed;
-  top: 0px;
-  z-index: 1000;
-  height: 75px;
   width: 100%;
-  padding: 0 25rem;
+  overflow: hidden;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 10px 50px;
 }
 
-.navbar__logo a {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: black;
-  text-decoration: none;
+.navbar__logo a img{
+  width: 60px;
+  height: 50px;
 }
 
 .navbar__logo a:hover {
