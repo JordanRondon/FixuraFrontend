@@ -63,7 +63,9 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
   mostrarMapaIncidencias = false;
   dataUsuario: Usuario | undefined;
   vistaActiva: string = 'perfil';
+
   nameMunicipalidad: String = '';
+  imageMuniciapalidad: String = '';
 
   selectedImage: string = '';
   isModalActive: boolean = false;
@@ -258,6 +260,7 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
     this.departamentoService.getNameDistrito(id_distrito).subscribe({
       next: (distrito: any) => {
         this.nameMunicipalidad = 'Municipalidad de ' + distrito.nombre;
+        this.imageMuniciapalidad = distrito.foto_perfil;
       },
       error: (error) => {
         console.error('Error al cargar nombre de Distrito:', error);
