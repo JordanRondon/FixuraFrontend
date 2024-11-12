@@ -23,7 +23,7 @@
             <div *ngIf="vistaActiva === 'perfil'|| vistaActiva === 'masVotadas'">
                 <div class = "portada-perfil">
                     <div class = "portada-perfil-superior">
-                        <img class="foto-perfil" src="/images/images.png" alt="Foto de perfil">
+                        <img class="foto-perfil" src="{{ imageMuniciapalidad }}" alt="Foto de perfil">
                     </div>
                     <div class = "portada-perfil-inferior">
                         <h2 class="reportes__title">{{dataUsuario?.nombre}} {{dataUsuario?.apellido}}</h2>
@@ -52,6 +52,11 @@
                                 </mat-menu>
                             </div>
                         </div>
+                        <h2 class="reportes__title">{{ nameMunicipalidad }}</h2>
+                        <button type="button" class="btn btn-primary reportes__button">
+                            <i class="material-icons">edit</i>
+                            Editar Perfil
+                        </button>
                     </div>
                     <div class="container-alert" *ngIf="!existIncidentes">
                         <alert type="warning">
