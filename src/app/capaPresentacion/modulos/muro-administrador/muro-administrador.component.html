@@ -26,6 +26,32 @@
                         <img class="foto-perfil" src="{{ imageMuniciapalidad }}" alt="Foto de perfil">
                     </div>
                     <div class = "portada-perfil-inferior">
+                        <h2 class="reportes__title">{{dataUsuario?.nombre}} {{dataUsuario?.apellido}}</h2>
+                        <div class="container-botones">
+                            <button type="button" class="btn btn-primary reportes__button">
+                                <i class="material-icons">edit</i>
+                                Editar Perfil
+                            </button>
+                            <div class="boton-notificacion">
+                                <div class=notification>
+                                    <div class="notification-icon">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true" (click)="resetCount()">
+                                            <mat-icon>notifications</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div class="notification-count" *ngIf="notificacionesCount > 0">
+                                        <span>
+                                            {{notificacionesCount}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item *ngFor="let notificacion of notificaciones" class="custom-menu-item">
+                                        <span class="custom-menu-item-span">{{notificacion}}</span>
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </div>
                         <h2 class="reportes__title">{{ nameMunicipalidad }}</h2>
                         <button type="button" class="btn btn-primary reportes__button">
                             <i class="material-icons">edit</i>
