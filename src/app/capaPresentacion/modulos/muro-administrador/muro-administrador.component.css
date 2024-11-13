@@ -339,6 +339,7 @@ body{
 }
 
 .usuarios-container.visible {
+    width: 100%;
     display: block; /* Muestra el mapa cuando está activo */
     margin-top: 50px;
 }
@@ -390,6 +391,7 @@ body{
     outline: none;
     transition: width 0.4s ease-in-out;
     opacity: 0;
+    font-weight: 500;
 }
 
 .search-user.expanded {
