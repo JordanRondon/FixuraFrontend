@@ -99,6 +99,7 @@
             </div>
 
             <div class="consolidacion-container" [ngClass]="{ 'visible': vistaActiva === 'consolidacion', 'oculto': vistaActiva !== 'consolidacion'}">
+                <h2 class="consolidacion__title">Incidencias Consolidadas</h2>
                 <app-post-incidencia 
                     *ngFor="let infoIncidente of listIncidentes"
                     [infoIncidente]="infoIncidente"
