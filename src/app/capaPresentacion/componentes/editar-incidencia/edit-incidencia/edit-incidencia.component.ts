@@ -44,7 +44,7 @@ export class EditIncidenciaComponent implements OnInit {
   selectedOptionCategory: String = 'Seleccione una Opción'; // Opción seleccionada
   optionsCategory: Categoria[] = [];
 
-  apiKey: string = 'XIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44X';
+  apiKey: string = 'AIzaSyAu2e7Y6k3AS3Z0olMqdDtI-OdQZB0p44E';
   center: google.maps.LatLngLiteral = { lat: -8.1116, lng: -79.0288 };
   markerPosition: google.maps.LatLngLiteral | null = this.center;
   zoom = 17;
