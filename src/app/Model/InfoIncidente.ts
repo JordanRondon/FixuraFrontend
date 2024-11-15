@@ -6,7 +6,8 @@ export class InfoIncidente {
     imagen: string;
     total_votos: number;
     estado: string;
-    usuario: string;
+    usuarioFirstName: string;
+    usuarioLastName: string;
     usuario_foto: string;
     categoria: string;
     latitud: number;
@@ -21,7 +22,8 @@ export class InfoIncidente {
         imagen: string,
         total_votos: number,
         estado: string,
-        usuario: string,
+        usuarioFirstName: string,
+        usuarioLastName: string,
         usuario_foto: string,
         categoria: string,
         latitud: number,
@@ -35,7 +37,8 @@ export class InfoIncidente {
         this.imagen = imagen;
         this.total_votos = total_votos;
         this.estado = estado;
-        this.usuario = usuario;
+        this.usuarioFirstName = usuarioFirstName;
+        this.usuarioLastName = usuarioLastName;
         this.usuario_foto = usuario_foto;
         this.categoria = categoria;
         this.latitud = latitud;

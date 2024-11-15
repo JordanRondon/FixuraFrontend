@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule  } from '@angular/router';
 import { AuthService } from '../../../Auth/CookiesConfig/AuthService';
+import { CommonUserDirective } from 'app/Auth/Directive/common-user.directive';
 
 @Component({
   selector: 'app-navbar-usuario',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CommonUserDirective],
   templateUrl: './navbar-usuario.component.html',
   styleUrls: ['./navbar-usuario.component.css']
 })
