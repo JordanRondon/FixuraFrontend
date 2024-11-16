@@ -14,7 +14,7 @@ import { UsuarioBlock } from 'app/Model/UsuarioBlock';
 })
 export class IncidenciaService {
 
-  private apiUrl = 'http://localhost:8080/api/incidente';
+  private apiUrl = 'https://fixurabackend.onrender.com/api/incidente';
 
   constructor(private http: HttpClient) { }
 
@@ -154,7 +154,7 @@ export class IncidenciaService {
   }
 
   updateIncidencia(incidente: Incidente): Observable<any> {
-    return this.http.put<any>('http://localhost:8080/api/incidente/updateIncidencia', incidente).pipe();
+    return this.http.put<any>('https://fixurabackend.onrender.com/api/incidente/updateIncidencia', incidente).pipe();
   }
 
   deleteIncidencia(id_incidencia: number): Observable<any> {

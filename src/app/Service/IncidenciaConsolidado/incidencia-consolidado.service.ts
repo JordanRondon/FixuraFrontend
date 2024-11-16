@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 })
 export class IncidenciaConsolidadoService {
 
-  private apiUrl = 'http://localhost:8080/api/incidenteConsolidado';
+  private apiUrl = 'https://fixurabackend.onrender.com/api/incidenteConsolidado';
 
   constructor(
     private http: HttpClient

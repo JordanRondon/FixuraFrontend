@@ -19,7 +19,7 @@ export class NotificacionesService {
   }
 
   private connect(): void {
-    const ws = new SockJS('http://localhost:8080/ws');
+    const ws = new SockJS('https://fixurabackend.onrender.com/ws');
     this.socketClient = Stomp.over(ws);
 
     this.socketClient.connect(
