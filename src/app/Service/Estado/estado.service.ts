@@ -8,7 +8,7 @@ import { Estado } from '../../Model/Estado';
 })
 export class EstadoService {
 
-  private apiUrl = 'http://localhost:8080/api/estado';
+  private apiUrl = 'https://fixurabackend.onrender.com/api/estado';
 
   constructor(
     private http: HttpClient

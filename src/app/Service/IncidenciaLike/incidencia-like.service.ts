@@ -8,7 +8,7 @@ import { IncidenciaLike } from '../../Model/IncidenciaLike';
 })
 export class IncidenciaLikeService {
 
-  private apiUrl = 'http://localhost:8080/api/incidenteLike';
+  private apiUrl = 'https://fixurabackend.onrender.com/api/incidenteLike';
 
   constructor(
     private http: HttpClient

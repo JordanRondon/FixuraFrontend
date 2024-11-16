@@ -8,7 +8,7 @@ import { Categoria } from '../../Model/Categoria';
 })
 export class CategoriaService {
 
-  private apiUrl = 'http://localhost:8080/api/categoria';
+  private apiUrl = 'https://fixurabackend.onrender.com/api/categoria';
 
   constructor(
     private http: HttpClient

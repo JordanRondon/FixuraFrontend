@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 })
 export class DepartamentoService {
 
-  private baseUrl = 'http://localhost:8080/api/v1/departamento';
+  private baseUrl = 'https://fixurabackend.onrender.com/api/v1/departamento';
 
   constructor(private httpClient: HttpClient) {
   }

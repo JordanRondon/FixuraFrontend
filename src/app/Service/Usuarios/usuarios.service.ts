@@ -7,7 +7,7 @@ import { Usuario } from '../../Model/Usuario';
   providedIn: 'root',
 })
 export class UsuariosService {
-  private apiUrl = 'http://localhost:8080/api/usuario';
+  private apiUrl = 'https://fixurabackend.onrender.com/api/usuario';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -96,7 +96,7 @@ export class UsuariosService {
   updatePerfilUsuario(request: any): Observable<any> {
     return this.httpClient
       .put<any>(
-        'http://localhost:8080/api/usuario/updatePerfil/Usuario',
+        'https://fixurabackend.onrender.com/api/usuario/updatePerfil/Usuario',
         request
       )
       .pipe(map((res) => res));
