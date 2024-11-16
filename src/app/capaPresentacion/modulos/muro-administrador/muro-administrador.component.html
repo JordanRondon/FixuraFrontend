@@ -70,12 +70,12 @@
                 </app-post-incidencia>
 
             </div>
-            <div class="mapa-container" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa'}">
+            <div class="mapa-container" *ngIf="vistaActiva === 'mapa'" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa'}">
                 <div class="vacio">
                 </div>
                 <app-mapa-incidencias [distrito]="dataUsuario?.idDist" [listDistritoCoordenadas]="listDistritoCoordenadas"></app-mapa-incidencias>
             </div>
-            <div class="usuarios-container" [ngClass]="{ 'visible': vistaActiva === 'usuarios', 'oculto': vistaActiva !== 'usuarios'}">
+            <div class="usuarios-container" *ngIf="vistaActiva === 'usuarios'" [ngClass]="{ 'visible': vistaActiva === 'usuarios', 'oculto': vistaActiva !== 'usuarios'}">
                 <div class="container-search" [ngClass]="{'expanded': isExpanded}">
                     <img src="/images/search.svg" alt="Buscar Usuarios" (click)="openInput()">
                     <input 
@@ -98,7 +98,7 @@
                 </app-block-users>
             </div>
 
-            <div class="consolidacion-container" [ngClass]="{ 'visible': vistaActiva === 'consolidacion', 'oculto': vistaActiva !== 'consolidacion'}">
+            <div class="consolidacion-container" *ngIf="vistaActiva === 'consolidacion'" [ngClass]="{ 'visible': vistaActiva === 'consolidacion', 'oculto': vistaActiva !== 'consolidacion'}">
                 <h2 class="consolidacion__title">Incidencias Consolidadas</h2>
                 <app-post-incidencia 
                     *ngFor="let infoIncidente of listIncidentes"
