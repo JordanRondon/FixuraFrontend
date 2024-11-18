@@ -181,18 +181,20 @@ export class RegistroIncidenciaComponent implements OnInit {
     //});
   //}
   obtenerDireccion(lat: number, lng: number): void {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.apiKey}`;
-  
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const url = `${proxyUrl}https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.apiKey}`;
+
     this.http.get(url).subscribe((data: any) => {
       if (data.status === 'OK' && data.results.length > 0) {
         const direccion = data.results[0].formatted_address;
         this.formulario.patchValue({ ubicacion: direccion });
         console.log(this.formulario.value.ubicacion);
       } else {
-        console.error('Error al obtener la direcciÃ³n');
+        console.error('Error al obtener la dirección');
       }
     });
   }
+
   onFileSelected(event: any): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     this.archivoSeleccionado = event.target.files[0];
