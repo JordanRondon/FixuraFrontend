@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { format } from 'date-fns';
 //import { Incidente } from '../../../Model/Incidente';
@@ -16,7 +16,7 @@ import { InfoIncidente } from '../../../Model/InfoIncidente';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialogService } from 'app/Service/Dialog/dialog.service';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 @Component({
   selector: 'app-post-incidencia',
   standalone: true,
@@ -25,6 +25,7 @@ import { DialogService } from 'app/Service/Dialog/dialog.service';
     EditIncidenciaComponent,
     AdminModeratorDirective,
     CommonUserDirective,
+    MatExpansionModule,
   ],
   templateUrl: './post-incidencia.component.html',
   styleUrls: ['./post-incidencia.component.css'],
@@ -49,6 +50,7 @@ export class PostIncidenciaComponent implements OnInit, OnChanges {
   categoryName: string = '';
 
   readonly dialog = inject(MatDialog);
+  readonly panelOpenState = signal(false);
 
   constructor(
     private incidenciaLikeService: IncidenciaLikeService,
