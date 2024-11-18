@@ -159,22 +159,41 @@ export class EditIncidenciaComponent implements OnInit {
     }
   }
 
+  // obtenerDireccion(lat: number, lng: number): void {
+  //   const url = `/api/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.apiKey}`;
+
+  //   this.http.get(url).subscribe((data: any) => {
+  //     if (data.status === 'OK' && data.results.length > 0) {
+  //       const direccion = data.results[0].formatted_address;
+  //       if (this.infoIncidenteEdit) {
+  //         this.infoIncidenteEdit.ubicacion = direccion.toString();
+  //       }
+  //       console.error(direccion);
+  //     } else {
+  //       console.error('Error al obtener la dirección');
+  //     }
+  //   });
+  // }
   obtenerDireccion(lat: number, lng: number): void {
-    const url = `/api/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.apiKey}`;
-
-    this.http.get(url).subscribe((data: any) => {
-      if (data.status === 'OK' && data.results.length > 0) {
-        const direccion = data.results[0].formatted_address;
-        if (this.infoIncidenteEdit) {
-          this.infoIncidenteEdit.ubicacion = direccion.toString();
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.apiKey}`;
+  
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) throw new Error('Error al obtener la dirección');
+        return response.json();
+      })
+      .then((data) => {
+        if (data.status === 'OK' && data.results.length > 0) {
+          const direccion = data.results[0].formatted_address;
+          if (this.infoIncidenteEdit) {
+            this.infoIncidenteEdit.ubicacion = direccion.toString();
+          }
+        } else {
+          console.error('Error en la respuesta de la API', data);
         }
-        console.error(direccion);
-      } else {
-        console.error('Error al obtener la dirección');
-      }
-    });
+      })
+      .catch((error) => console.error('Fetch error:', error));
   }
-
   getListEstate(): void {
     this.estadoService.getListState().subscribe(
       (respuesta) => {
