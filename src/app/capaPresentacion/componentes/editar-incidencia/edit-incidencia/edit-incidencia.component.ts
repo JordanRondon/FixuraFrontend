@@ -301,6 +301,7 @@ export class EditIncidenciaComponent implements OnInit {
         console.error('Error al obtener las coordenadas:', error);
       }
     );
+    this.changeDetector.markForCheck();
   }
 
   resetChanges(): void {
