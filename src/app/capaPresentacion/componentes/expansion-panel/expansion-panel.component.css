@@ -1,0 +1,107 @@
+/*--------------HEADER DEL EXPANSION PANEL--------------------*/
+
+.hearders-align .mat-expansion-panel{
+  padding: 10px 0px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.hearders-align .mat-expansion-panel-header-title{
+  justify-content: space-between;
+}
+
+.hearders-align .mat-expansion-panel-header-title .panel-info{
+  display: flex;
+  margin-top: 10px;
+}
+
+.hearders-align .mat-expansion-panel-header-title .panel-info img{
+  width: 50px;
+  height: 50px;
+}
+
+.hearders-align .mat-expansion-panel-header-title .panel-info .panel-info-user{
+  margin-left: 7px;
+  margin-top: 5px;
+}
+
+.hearders-align .mat-expansion-panel-header-title .panel-info .panel-info-user span{
+  font-weight: 700;
+  font-size: 16px;
+  color: #47484b;
+}
+
+.hearders-align .mat-expansion-panel-header-title .panel-info .panel-info-user p{
+  font-weight: 600;
+  font-size: 11px;
+  color: #acaeb4;
+}
+
+.hearders-align .panel-categoria-ubicacion{
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  font-weight: 600;
+  font-size: 12px;
+  color: #68696b;
+}
+
+
+/*--------------CUERPO DEL EXPANSION PANEL--------------------*/
+
+.hearders-align .state-container{
+  display: flex;
+  align-items: center;
+} 
+
+.hearders-align .consolidacion-container {
+  width: 100%;
+  height: auto;          
+  display: grid;          
+  grid-column: 1fr;
+  margin: 0px 20px;
+}
+
+.hearders-align .info-conteiner{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0;
+  margin: 10px 0px;
+}
+
+.hearders-align .info-conteiner .category-content span {
+  font-weight: 700;
+  font-size: 15px;
+  color: #47484b;
+}
+
+.hearders-align .info-conteiner .category-content {
+  margin: 0%;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #5f6064;
+}
+
+.hearders-align .info-conteiner .comment-content {
+  margin: 0%;
+  font-size: 14px;
+  line-height: 16px;
+  color: #5f6064;
+}
+
+.hearders-align .info-conteiner .location-content span{
+  font-weight: 700;
+  font-size: 15px;
+  color: #47484b;
+}
+
+.hearders-align .info-conteiner .location-content {
+  margin: 0%;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #5f6064;
+}

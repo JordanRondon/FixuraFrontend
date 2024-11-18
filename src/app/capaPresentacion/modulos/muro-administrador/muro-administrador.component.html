@@ -57,17 +57,11 @@
                     
                 </div>
 
-                <app-post-incidencia 
+                <app-expansion-panel
                     *ngFor="let infoIncidente of listIncidentes"
                     [infoIncidente]="infoIncidente"
-                    [listDistritoCoordenadas]="listDistritoCoordenadas"
-                    (imagenClick)="openImageModal($event)">
-
-                    <ng-container slot="extra-button">
-                        <button type="button" class="btn btn-success"
-                        (click)="openDialog(infoIncidente.id_incidencia)">Añadir a Consolidación</button>
-                    </ng-container>
-                </app-post-incidencia>
+                    [listDistritoCoordenadas]="listDistritoCoordenadas">
+                </app-expansion-panel>
 
             </div>
             <div class="mapa-container" *ngIf="vistaActiva === 'mapa'" [ngClass]="{ 'visible': vistaActiva === 'mapa', 'oculto': vistaActiva !== 'mapa'}">
@@ -100,12 +94,11 @@
 
             <div class="consolidacion-container" *ngIf="vistaActiva === 'consolidacion'" [ngClass]="{ 'visible': vistaActiva === 'consolidacion', 'oculto': vistaActiva !== 'consolidacion'}">
                 <h2 class="consolidacion__title">Incidencias Consolidadas</h2>
-                <app-post-incidencia 
+                <app-expansion-panel
                     *ngFor="let infoIncidente of listIncidentes"
                     [infoIncidente]="infoIncidente"
-                    [listDistritoCoordenadas]="listDistritoCoordenadas"
-                    (imagenClick)="openImageModal($event)">
-                </app-post-incidencia>
+                    [listDistritoCoordenadas]="listDistritoCoordenadas">
+                </app-expansion-panel>
             </div>
         </section>
         <ng-template #noData>

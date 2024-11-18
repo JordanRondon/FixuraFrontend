@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule, AsyncPipe} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NavbarUsuarioComponent } from '../../componentes/navbar-usuario/navbar-usuario.component';
-import { PostIncidenciaComponent } from '../../componentes/post-incidencia/post-incidencia.component';
 import { Usuario } from '../../../Model/Usuario';
 import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { IncidenciaService } from '../../../Service/Incidencia/incidencia.service';
@@ -14,9 +13,8 @@ import { DepartamentoService } from '../../../Service/Departamento/departamento.
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 import { BlockUsersComponent } from "../../componentes/block-users/block-users.component";
 import { UsuarioBlock } from 'app/Model/UsuarioBlock';
-import { FormControl, ReactiveFormsModule, ValueChangeEvent } from '@angular/forms';
-import { debounceTime, map, Observable, startWith } from 'rxjs';
-import { MatOption } from '@angular/material/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime} from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,6 +27,7 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { ExpansionPanelComponent } from "../../componentes/expansion-panel/expansion-panel.component";
 
 @Component({
   selector: 'app-muro-administrador',
@@ -36,24 +35,22 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule,
     NavbarUsuarioComponent,
-    PostIncidenciaComponent,
     MapaIncidenciasComponent,
     InfiniteScrollModule,
     ImageModalComponent,
     BlockUsersComponent,
-    MatOption,
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    AsyncPipe,
     AlertComponent,
     ToastrModule,
     MatIconModule,
     MatMenu,
     MatMenuModule,
     MatButtonModule,
-  ],
+    ExpansionPanelComponent
+],
   templateUrl: './muro-administrador.component.html',
   styleUrl: './muro-administrador.component.css',
 })

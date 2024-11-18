@@ -1,0 +1,30 @@
+<mat-accordion class="hearders-align">
+  <mat-expansion-panel>
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+              <div class="panel-info">
+                  <img src={{infoIncidente?.usuario_foto}} alt="Foto de perfil">
+                  <div class="panel-info-user">
+                    <span>{{infoIncidente?.usuarioFirstName}} {{infoIncidente?.usuarioLastName}}</span>
+                      <p>{{formatearFecha(infoIncidente?.fecha_publicacion)}}</p>
+                  </div>
+              </div>
+              <div class="panel-categoria-ubicacion" *ngIf="!panelOpenState()">
+                  <span>{{infoIncidente?.categoria}}</span>
+                  <span>{{infoIncidente?.ubicacion}}</span>
+              </div>
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <app-post-incidencia
+        [infoIncidente]="infoIncidente"
+        [listDistritoCoordenadas]="listDistritoCoordenadas"
+        (imagenClick)="openImageModal($event)">
+
+        <ng-container slot="extra-button">
+          <button type="button" class="btn btn-success"
+          (click)="openDialog(infoIncidente!.id_incidencia)">Añadir a Consolidación</button>
+        </ng-container>
+      </app-post-incidencia>
+  </mat-expansion-panel>
+</mat-accordion>
