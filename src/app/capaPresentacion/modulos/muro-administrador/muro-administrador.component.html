@@ -12,6 +12,7 @@
                     <div class = "herramienta" (click)="mostrarMapa()">Mapa de Incidencias</div>
                     <div class = "herramienta" (click)="mostrarUsuarios()">Bloquear Usuarios</div>
                     <div class = "herramienta" (click)="mostrarConsolidacion()">Incidencias consolidadas</div>
+                    <div class = "herramienta" (click)="mostrarIncidentesCompletados()">Incidencias Reparadas</div>
                 </div>
             </div>      
         </aside>
@@ -94,6 +95,15 @@
 
             <div class="consolidacion-container" *ngIf="vistaActiva === 'consolidacion'" [ngClass]="{ 'visible': vistaActiva === 'consolidacion', 'oculto': vistaActiva !== 'consolidacion'}">
                 <h2 class="consolidacion__title">Incidencias Consolidadas</h2>
+                <app-expansion-panel
+                    *ngFor="let infoIncidente of listIncidentes"
+                    [infoIncidente]="infoIncidente"
+                    [listDistritoCoordenadas]="listDistritoCoordenadas">
+                </app-expansion-panel>
+            </div>
+
+            <div class="consolidacion-container" *ngIf="vistaActiva === 'incidenteCompletado'" [ngClass]="{ 'visible': vistaActiva === 'incidenteCompletado', 'oculto': vistaActiva !== 'incidenteCompletado'}">
+                <h2 class="consolidacion__title">Incidencias Reparadas</h2>
                 <app-expansion-panel
                     *ngFor="let infoIncidente of listIncidentes"
                     [infoIncidente]="infoIncidente"

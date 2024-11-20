@@ -88,6 +88,15 @@ export class IncidenciaService {
     return this.http.get<Page<InfoIncidente>>(this.apiUrl + '/list/paginated/distrito', { params });
   }
 
+  getListIncidenciaCompletadoDistrito(page: number, size: number, id_distrito: number): Observable<Page<InfoIncidente>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('id_distrito', id_distrito.toString());
+      
+    return this.http.get<Page<InfoIncidente>>(this.apiUrl + '/list/paginated/distrito/estado_completado', { params });
+  }
+
   getListConsolidadoDistrito(page: number, size: number, id_distrito: number): Observable<Page<InfoIncidente>> {
     const params = new HttpParams()
       .set('page', page.toString())
