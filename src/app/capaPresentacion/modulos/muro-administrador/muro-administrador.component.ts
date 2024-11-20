@@ -185,6 +185,12 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
     this.getUsuariosMunicipalidad(this.dataUsuario?.idDist??-1);
   }
 
+  mostrarIncidentesCompletados() {
+    this.vistaActiva = 'incidenteCompletado';
+    this.resetVarsPage();
+    this.loadIncidentesCompletado();
+  }
+
   mostrarConsolidacion() {
     this.vistaActiva = 'consolidacion';
     this.resetVarsPage();
@@ -253,6 +259,33 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
       });
+  }
+
+  loadIncidentesCompletado(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.incidenteService.getListIncidenciaCompletadoDistrito(
+      this.page,
+      this.size,
+      this.dataUsuario?.idDist ?? -1
+    ).subscribe({
+      next: (response: Page<InfoIncidente>) => {
+        this.listIncidentes = [...this.listIncidentes, ...response.content]; // Añadir más incidencias
+        this.totalElements = response.totalElements;
+        this.page += 1; // Incrementar la página para la siguiente carga
+        console.log('Incidentes cargados:', this.listIncidentes);
+        this.loading = false;
+        this.existIncidentes = true;
+      },
+      error: (error) => {
+        console.error('Error al cargar incidentes:', error);
+        this.loading = false;
+      },
+    });
   }
 
   loadConsolidado(): void {
