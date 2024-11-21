@@ -19,7 +19,7 @@ export default class PasswordResetComponent implements OnInit{
 
   resetPassword(): void{
     console.log(this.email);
-    this.http.post('http://localhost:8080/api/usuario/forgot-password', this.email).subscribe(
+    this.http.post('https://fixurabackend.onrender.com/api/usuario/forgot-password', this.email).subscribe(
       () => {
         alert('El enlace para restablecer su contraseña fue enviado a su correo')
         this.email = '';

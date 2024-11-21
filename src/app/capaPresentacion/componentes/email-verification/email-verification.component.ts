@@ -15,7 +15,7 @@ export default class EmailVerificationComponent implements OnInit {
   message: string = '';
   success: boolean = false;
 
-  private readonly API_URL = 'http://localhost:8080/api/usuario/verification';
+  private readonly API_URL = 'https://fixurabackend.onrender.com/api/usuario/verification';
   private readonly SUCCESS_MESSAGE = "Correo Verificado Correctamente";
   private readonly ERROR_MESSAGE = "Error al Verificar el correo";
   private readonly TOKEN_NOT_PROVIDED_MESSAGE = 'Token no proporcionado.';
