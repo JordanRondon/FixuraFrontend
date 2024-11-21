@@ -132,7 +132,8 @@ export class IncidenciaService {
       map((data: any[]) => data.map(item => new IncidenteCoordenada(
         item.id_incidencia,
         item.latitud,
-        item.longitud
+        item.longitud,
+        item.id_categoria
       )))
     );
   }
@@ -141,7 +142,8 @@ export class IncidenciaService {
       map((data: any) => new IncidenteCoordenada(
         data.id_incidencia,
         data.latitud,
-        data.longitud
+        data.longitud,
+        data.id_categoria
       ))
     );
   }  

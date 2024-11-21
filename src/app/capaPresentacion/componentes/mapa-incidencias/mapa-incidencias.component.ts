@@ -41,6 +41,33 @@ export class MapaIncidenciasComponent {
     this.tryInitPolygon();
     console.log("dnizsfdsad:"+this.distrito?.toString())
   }
+  getMarkerIcon(incidente: IncidenteCoordenada): google.maps.Icon  {
+    // Cambia la lógica según tus criterios para elegir el color
+    let color = 'red'; // Color por defecto
+    if (incidente.id_categoria == 1) {
+      color = 'yellow';
+    } else if (incidente.id_categoria == 2) {
+      color = 'ltblue';
+    } else if (incidente.id_categoria == 3) {
+      color = 'purple';
+    }
+    else if (incidente.id_categoria == 4) {
+      color = 'orange';
+    }
+    else if (incidente.id_categoria == 5) {
+      color = 'green';
+    }
+    else if (incidente.id_categoria == 6) {
+      color = 'red';
+    }
+    else if (incidente.id_categoria == 7) {
+      color = 'pink';
+    }
+    return {
+      url: `https://maps.gstatic.com/mapfiles/ms2/micons/${color}-dot.png`,
+      scaledSize: new google.maps.Size(40, 40), // Tamaño del marcador
+    };
+  }
   getCoordenadasIncidentes(id_distrito: number): void {
     this.incidenteService.getListaCoordenadasIncidentes(id_distrito).subscribe(
       (data: IncidenteCoordenada[]) => {

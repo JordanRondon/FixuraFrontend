@@ -291,6 +291,7 @@ export class EditIncidenciaComponent implements OnInit {
         };
         this.markerPosition = this.center; // Actualiza la posición del marcador
         this.zoom = 17; // Mantiene el zoom en 17
+        this.changeDetector.markForCheck();
         // if (this.infoIncidenteEdit){
         //   this.infoIncidenteEdit.latitud = this.Coordenada_incidente.latitud;
         //   this.infoIncidenteEdit.longitud = this.Coordenada_incidente.longitud;
@@ -301,7 +302,6 @@ export class EditIncidenciaComponent implements OnInit {
         console.error('Error al obtener las coordenadas:', error);
       }
     );
-    this.changeDetector.markForCheck();
   }
 
   resetChanges(): void {
@@ -320,6 +320,36 @@ export class EditIncidenciaComponent implements OnInit {
     }
 
     this.changeDetector.markForCheck(); // Forzar actualización de la vista
+  }
+  getMarkerIcon(): google.maps.Icon  {
+    // Cambia la lógica según tus criterios para elegir el color
+    let color = 'red'; // Color por defecto
+    if(this.Coordenada_incidente){
+      if (this.Coordenada_incidente.id_categoria == 1) {
+        color = 'yellow';
+      } else if (this.Coordenada_incidente.id_categoria == 2) {
+        color = 'ltblue';
+      } else if (this.Coordenada_incidente.id_categoria == 3) {
+        color = 'purple';
+      }
+      else if (this.Coordenada_incidente.id_categoria == 4) {
+        color = 'orange';
+      }
+      else if (this.Coordenada_incidente.id_categoria == 5) {
+        color = 'green';
+      }
+      else if (this.Coordenada_incidente.id_categoria == 6) {
+        color = 'red';
+      }
+      else if (this.Coordenada_incidente.id_categoria == 7) {
+        color = 'pink';
+      }
+    }
+    
+    return {
+      url: `https://maps.gstatic.com/mapfiles/ms2/micons/${color}-dot.png`,
+      scaledSize: new google.maps.Size(40, 40), // Tamaño del marcador
+    };
   }
   tryInitPolygon(): void {
     const interval = setInterval(() => {

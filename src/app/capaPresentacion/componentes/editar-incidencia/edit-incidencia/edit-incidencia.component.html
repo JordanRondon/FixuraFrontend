@@ -41,8 +41,9 @@
                 width="94%"
                 [center]="center" 
                 [zoom]="zoom"
+                
                 (mapClick)="onUbicacionSeleccionada($event)">
-                <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+                <map-marker *ngIf="markerPosition" [position]="markerPosition" [icon]="getMarkerIcon()"></map-marker>
             </google-map>
         </div>
 
