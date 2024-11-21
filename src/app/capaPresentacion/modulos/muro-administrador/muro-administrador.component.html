@@ -102,7 +102,7 @@
                 </app-expansion-panel>
             </div>
 
-            <div class="consolidacion-container" *ngIf="vistaActiva === 'incidenteCompletado'" [ngClass]="{ 'visible': vistaActiva === 'incidenteCompletado', 'oculto': vistaActiva !== 'incidenteCompletado'}">
+            <div class="consolidacion-completado-container" *ngIf="vistaActiva === 'incidenteCompletado'" [ngClass]="{ 'visible': vistaActiva === 'incidenteCompletado', 'oculto': vistaActiva !== 'incidenteCompletado'}">
                 <h2 class="consolidacion__title">Incidencias Reparadas</h2>
                 <app-expansion-panel
                     *ngFor="let infoIncidente of listIncidentes"
