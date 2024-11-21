@@ -29,7 +29,7 @@ export default class ResetPasswordComponent {
 
   updatePassword(): void{
     if(this.newPassword === this.confirmPassword){
-      this.http.post('http://localhost:8080/api/usuario/reset-password', {
+      this.http.post('https://fixurabackend.onrender.com/api/usuario/reset-password', {
         token: this.getTokenFromUrl(),
         newPassword: this.newPassword,
         confirmPassword: this.confirmPassword

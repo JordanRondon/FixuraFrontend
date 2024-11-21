@@ -95,10 +95,7 @@ export class UsuariosService {
 
   updatePerfilUsuario(request: any): Observable<any> {
     return this.httpClient
-      .put<any>(
-        'https://fixurabackend.onrender.com/api/usuario/updatePerfil/Usuario',
-        request
-      )
+      .put<any>(`${this.apiUrl}/updatePerfil/Usuario`, request)
       .pipe(map((res) => res));
   }
 
