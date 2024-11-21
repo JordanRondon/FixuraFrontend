@@ -360,6 +360,18 @@ body{
     margin-top: 2rem; /* Muestra el consolidacion cuando está activo */
 }
 
+.consolidacion-completado-container.oculto {
+    display: none; /* Oculta el consolidacion completamente */
+}
+
+.consolidacion-completado-container.visible {
+    display: block; /* Muestra el consolidacion cuando está activo */
+}
+
+.consolidacion-completado-container {
+    margin-top: 2rem; /* Muestra el consolidacion cuando está activo */
+}
+
 .container-search{
     display: flex;
     flex-direction: row;

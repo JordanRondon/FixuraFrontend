@@ -88,7 +88,7 @@ export default class RegisterComponent implements OnInit{
       return;
     }
     
-    this.formUsuario.controls['fotoPerfil'].setValue(null);
+    this.formUsuario.controls['fotoPerfil'].setValue("https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/imagenes/foto_perfil_default.png");
     this.formUsuario.controls['tiempo_ban'].setValue(null);
     this.formUsuario.controls['id_rol'].setValue(3);
     this.formUsuario.controls['id_distrito'].setValue(this.selectedDistrito);
