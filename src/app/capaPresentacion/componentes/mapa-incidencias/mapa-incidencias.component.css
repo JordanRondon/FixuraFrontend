@@ -32,4 +32,51 @@ google-map {
     max-height: 90vh;
     overflow-y: auto;
   }
- 
+/* Leyenda */
+.leyenda {
+  position: absolute; /* Posiciona la leyenda dentro del contenedor del mapa */
+  bottom: 10px;       /* Ajusta la distancia desde la parte inferior */
+  left: 10px;         /* Ajusta la distancia desde la parte izquierda */
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+  padding: 10px;      /* Espaciado interno */
+  border: 1px solid #ddd; /* Borde de la leyenda */
+  border-radius: 5px; /* Bordes redondeados */
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  z-index: 10;        /* Asegura que esté sobre el mapa */
+}
+
+.leyenda h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.leyenda ul {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0;
+}
+
+.leyenda li {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.color {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+
+.color.red { background-color: red; }
+.color.yellow { background-color: yellow; }
+.color.ltblue { background-color: #00bfff; } /* Light Blue */
+.color.purple { background-color: purple; }
+.color.orange { background-color: orange; }
+.color.green { background-color: green; }
+.color.pink { background-color: pink; }
+  

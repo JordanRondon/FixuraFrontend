@@ -6,9 +6,23 @@
         [zoom]="zoom">
         <map-marker *ngFor="let incidente of IncidenteCoordenada"
             [position]="{lat: incidente.latitud, lng: incidente.longitud}"
+            [icon]="getMarkerIcon(incidente)"
             (mapClick)="onMarkerClick(incidente.id_incidencia)">
         </map-marker>
     </google-map>
+    <!-- Leyenda de Categorías -->
+<div class="leyenda">
+    <h4>Categorias</h4>
+    <ul>
+      <li><span class="color red"></span> Seguridad Ciudadana</li>
+      <li><span class="color yellow"></span> Red Eléctrica</li>
+      <li><span class="color ltblue"></span> Agua y Saneamiento</li>
+      <li><span class="color purple"></span> Vía Pública</li>
+      <li><span class="color orange"></span> Infraestructura de Transporte</li>
+      <li><span class="color green"></span> Espacios Públicos</li>
+      <li><span class="color pink"></span> Vivienda y Edificaciones</li>
+    </ul>
+  </div>
 </div>
 
 <div class="overlay" *ngIf="vistaActiva === true" (click)="CerrarIncidencia()">
@@ -20,4 +34,4 @@
         >
     </app-post-incidencia>
     </div>
-  </div>
+</div>
