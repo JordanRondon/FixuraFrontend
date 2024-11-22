@@ -150,8 +150,12 @@ nav .logo a img{
   font-weight: 600;
 }
 
-.container-input select option{
-  background-color: #000; 
+#select-distrito-items{
+  background-color: none;
+  color: #000;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
 }
 
 p{
@@ -191,10 +195,6 @@ p{
   width: 100%;
 }
 
-.invalid {
-  border: 2px solid red;
-}
-
 .container-message{
   display: flex;
   width: 100%;
@@ -206,6 +206,7 @@ p{
   color: red;
   font-size: 13px;
   margin-left: 20px;
+  font-weight: 500;
 }
 
 .container-check{

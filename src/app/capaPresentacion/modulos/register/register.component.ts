@@ -5,8 +5,6 @@ import { AbstractControl, FormsModule, ReactiveFormsModule, ValidationErrors, Va
 import { DepartamentoService} from '../../../Service/Departamento/departamento.service';
 import { UsuariosService } from '../../../Service/Usuarios/usuarios.service';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
-
-
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -44,21 +42,12 @@ export default class RegisterComponent implements OnInit{
       dni: new FormControl(''),
       correo: new FormControl(''),
       contrasenia : new FormControl('', Validators.required),
-      confirmarContrasenia: new FormControl('', [Validators.required, this.matchPasswordValidator()]),
-      fotoPerfil: new FormControl('https://raw.githubusercontent.com/KevinGM02/Galeria-Imagenes-Fixura/main/imagenes/foto_perfil_default.png'),
+      confirmarContrasenia: new FormControl('', Validators.required),
+      fotoPerfil: new FormControl(null),
       tiempo_ban: new FormControl(null),
       id_rol: new FormControl(3),
       id_distrito: new FormControl(this.selectedDistrito),
-    })
-
-    //Actualiza en tiempo "real" los cambios de los campos de contraseña y confirmar contraseña
-    this.formUsuario.get('contrasenia')?.valueChanges.subscribe((value: string) => {
-      this.onPasswordInput(value);
-      this.formUsuario.get('confirmarContrasenia')?.updateValueAndValidity();
-    });
-    this.formUsuario.get('confirmarContrasenia')?.valueChanges.subscribe(() => {
-      this.formUsuario.get('contrasenia')?.updateValueAndValidity();
-    });
+    },{ validators: this.matchPasswordValidator()});
   }
   
   registrarUsuario(){
@@ -125,6 +114,7 @@ export default class RegisterComponent implements OnInit{
         this.loadProvincias(id_departamento);
         this.listDistrito = [];
         this.selectedProvincia = null;
+        target.style.color = '#000'
       }
     }
   }
@@ -145,6 +135,7 @@ export default class RegisterComponent implements OnInit{
       this.selectedProvincia = id_provincia;
       if (this.selectedDepartamento !== null) {
         this.loadDistritos(this.selectedDepartamento, id_provincia);
+        target.style.color = '#000'
       }
     }
   }
@@ -163,17 +154,25 @@ export default class RegisterComponent implements OnInit{
     const id_distrito = Number(target.value);
     if(!isNaN(id_distrito)){
       this.selectedDistrito = id_distrito;
+      target.style.color = '#000'
     }
   }
 
 
   //Validador personalizado para verificar si las contraseñas coinciden
   matchPasswordValidator(): ValidatorFn {
-    return (control: AbstractControl) : ValidationErrors | null =>{
-      const password = this.formUsuario.get('contrasenia')?.value;
-      const confirmPassword = control.value;
-      return password === confirmPassword ? null : {mismatch: true};
-    }
+    return (formGroup: AbstractControl) : ValidationErrors | null =>{
+      const password = formGroup.get('contrasenia');
+      const confirmPassword = formGroup.get('confirmarContrasenia');
+
+      if(!password || !confirmPassword){
+        return null;
+      }
+
+      return password.value === confirmPassword.value 
+        ? null 
+        : {mismatch: true};
+    };
   }
 
   //FUNCION QUE PERMITE DIGITAR SOLO NUMEROS
