@@ -14,6 +14,7 @@ import { Page } from '../../../Model/Page';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImageModalComponent } from '../../componentes/image-modal/image-modal.component';
 import { DepartamentoService } from '../../../Service/Departamento/departamento.service';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 
 @Component({
   selector: 'app-muro-usuario',
@@ -26,6 +27,7 @@ import { DepartamentoService } from '../../../Service/Departamento/departamento.
     EditUsuarioComponent,
     InfiniteScrollModule,
     ImageModalComponent,
+    AlertComponent
   ],
   templateUrl: './muro-usuario.component.html',
   styleUrl: './muro-usuario.component.css',
