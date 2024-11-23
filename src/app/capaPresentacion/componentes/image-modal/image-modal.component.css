@@ -12,4 +12,24 @@
 
 .container-img {
     box-shadow: rgba(0, 0, 0, 0.56) 0px 0px 70px 4px;
+    width: auto;
+    height: 45rem;
+}
+
+.container-img img {
+    width: auto;
+    height: 45rem;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .container-img {
+        width: 20rem;
+        height: auto;
+    }
+
+    .container-img img {
+        width: 20rem;
+        height: auto;
+    }
 }
