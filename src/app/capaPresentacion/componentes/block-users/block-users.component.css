@@ -1,5 +1,4 @@
 .card {
-  width: 100%;
   height: auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -52,7 +51,7 @@
 }
 
 .post-container .user .user-info {
-  flex-grow: 1; 
+  width: 100%;
   padding-left: 10px; 
   display: flex;
   flex-direction: column;
