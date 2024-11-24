@@ -339,7 +339,9 @@ body{
 }
 
 .usuarios-container.visible {
+    width: 100%;
     display: block; /* Muestra el mapa cuando está activo */
+    margin-top: 50px;
 }
 
 .consolidacion-container.oculto {
