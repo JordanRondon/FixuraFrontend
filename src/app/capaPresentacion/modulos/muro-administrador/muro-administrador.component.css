@@ -246,7 +246,7 @@ body{
     padding-top: 3vw;
     margin:0 1vw;
     max-width: 50%;
-  }
+}
 
 .muro__col-izq, .muro__col-der {
     padding-top: 5vw;
@@ -340,11 +340,6 @@ body{
 
 .usuarios-container.visible {
     display: block; /* Muestra el mapa cuando está activo */
-    margin-top: 50px;
-}
-
-.usuarios-container {
-    display: flex;
 }
 
 .consolidacion-container.oculto {

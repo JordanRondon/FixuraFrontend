@@ -369,7 +369,7 @@ export default class MuroAdministradorComponent implements OnInit, OnDestroy {
       nombre: usuario.nombre,
       apellido: usuario.apellido,
       correo: usuario.correo,
-      fotoPerfil: usuario.fotoPerfil,
+      foto_perfil: usuario.foto_perfil,
     }));
   }
 

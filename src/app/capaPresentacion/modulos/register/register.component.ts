@@ -38,6 +38,8 @@ export default class RegisterComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+    this.loadDepartamentos();
+    
     this.formUsuario = new FormGroup({
       dni: new FormControl(''),
       correo: new FormControl(''),
@@ -48,8 +50,6 @@ export default class RegisterComponent implements OnInit{
       id_rol: new FormControl(3),
       id_distrito: new FormControl(this.selectedDistrito),
     },{ validators: this.matchPasswordValidator()});
-
-    this.loadDepartamentos();
   }
   
   registrarUsuario(){

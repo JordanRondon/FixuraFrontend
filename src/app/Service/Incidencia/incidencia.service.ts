@@ -131,7 +131,7 @@ export class IncidenciaService {
         item.nombre,
         item.apellido,
         item.correo,
-        item.fotoPerfil
+        item.foto_perfil
       )))
     );
   }
