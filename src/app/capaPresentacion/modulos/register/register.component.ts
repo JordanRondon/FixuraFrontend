@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
@@ -10,8 +10,7 @@ import { FormControl, FormGroup, Validators} from '@angular/forms';
   standalone: true,
   imports: [RouterModule, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./register.component.css']
 })
 export default class RegisterComponent implements OnInit{
 
@@ -38,7 +37,6 @@ export default class RegisterComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.loadDepartamentos();
     
     this.formUsuario = new FormGroup({
       dni: new FormControl(''),
@@ -50,6 +48,8 @@ export default class RegisterComponent implements OnInit{
       id_rol: new FormControl(3),
       id_distrito: new FormControl(this.selectedDistrito),
     },{ validators: this.matchPasswordValidator()});
+
+    this.loadDepartamentos();
   }
   
   registrarUsuario(){
